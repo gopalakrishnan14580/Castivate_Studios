@@ -12,6 +12,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -68,6 +70,19 @@ public class CastingRegistration extends Activity implements View.OnClickListene
     ProgressDialog pDialog;
     static String remainingDays;
 
+    private String blockCharacterSet = "|:;!@#$%^&*()_+=-~`><?/.,[]{}abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+    private InputFilter filter = new InputFilter() {
+
+        @Override
+        public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
+
+            if (source != null && blockCharacterSet.contains(("" + source))) {
+                return "";
+            }
+            return null;
+        }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,6 +108,7 @@ public class CastingRegistration extends Activity implements View.OnClickListene
 
         btn_submit=(Button) findViewById(R.id.btn_submit);
 
+        /*getting payment type for casting plan activity*/
         payment_type= getIntent().getExtras().getInt("payment_type");
 
         rel_casting_registration.setOnClickListener(this);
@@ -101,7 +117,10 @@ public class CastingRegistration extends Activity implements View.OnClickListene
         btn_submit.setOnClickListener(this);
         et_monthYear.setOnClickListener(this);
 
+        et_cardNumber.setFilters(new InputFilter[] { filter,new InputFilter.LengthFilter(19) });
+
         et_cardNumber.addTextChangedListener(new FourDigitCardFormatWatcher());
+
     }
 
     @Override
@@ -478,6 +497,8 @@ public class CastingRegistration extends Activity implements View.OnClickListene
                 }
             }
             // Insert char where needed.
+
+
             if (s.length() > 0 && (s.length() % 5) == 0) {
                 char c = s.charAt(s.length() - 1);
                 // Only if its a digit where there should be a space we insert a space
