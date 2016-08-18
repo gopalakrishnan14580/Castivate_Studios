@@ -1,0 +1,10 @@
+include ':app'
+
+include ':wheel'
+include ':mixpanel-android'
+include ':google-play-services_lib'
+include ':GooglePlayLikeAnimationActivity'
+include ':UrlImageViewHelper'
+include ':android-support-v7-appcompat'
+
+

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="dark_grey_separator">#2F2F2F</color>
+    <color name="dark_black">#151515</color>
+    <color name="line_separator">#EFEDEE</color>
+    <color name="red">#CB212E</color>
+  <color name="white">#FFFFFF</color>
+   <color name="grey">#E6E4E5</color>
+    <color name="light_grey">#F6F4F5</color>
+    <color name="cast_title_color">#2D2C2D</color>
+ 	 	
+ 	 	 	<color name="top_bar">#C8030C</color>
+ 	 	<color name="submission_info">#E3E3E3</color>
+ 	 	
+ 	 	
+ 	 	
+ 	 	
+ 	 	  <color name="overlay_selector_pressed">#40000000</color>
+  <color name="window_background">#ff202020</color>
+  <color name="list_divider">#ff555555</color>
+    <color name="transparent">@android:color/transparent</color>
+</resources>

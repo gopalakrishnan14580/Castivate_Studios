@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-tvdpi-v4/ic_plusone_medium_off_client.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-tvdpi-v4/ic_plusone_medium_off_client.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-tvdpi-v4/ic_plusone_standard_off_client.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-tvdpi-v4/ic_plusone_standard_off_client.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-tvdpi-v4/ic_plusone_small_off_client.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-tvdpi-v4/ic_plusone_small_off_client.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-tvdpi-v4/ic_plusone_tall_off_client.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-tvdpi-v4/ic_plusone_tall_off_client.png"
+    }
+]

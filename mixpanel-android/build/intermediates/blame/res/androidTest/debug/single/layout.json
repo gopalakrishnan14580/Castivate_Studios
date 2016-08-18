@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/layout/com_mixpanel_android_middle_choice_answer.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/layout/com_mixpanel_android_middle_choice_answer.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/layout/com_mixpanel_android_activity_notification_full.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/layout/com_mixpanel_android_activity_notification_full.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/layout/com_mixpanel_android_first_choice_answer.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/layout/com_mixpanel_android_first_choice_answer.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/layout/com_mixpanel_android_activity_survey.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/layout/com_mixpanel_android_activity_survey.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/layout/com_mixpanel_android_activity_notification_mini.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/layout/com_mixpanel_android_activity_notification_mini.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/layout/com_mixpanel_android_question_card.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/layout/com_mixpanel_android_question_card.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/layout/com_mixpanel_android_last_choice_answer.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/layout/com_mixpanel_android_last_choice_answer.xml"
+    }
+]

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ExpandablePanel"><attr format="reference" name="handle"/><attr format="reference" name="content"/><attr format="dimension" name="collapsedHeight"/><attr format="integer" name="animationDuration"/></declare-styleable>
+    <string name="app_name">AndroidExpanAnimation</string>
+    <string name="hello">Hello World, AndroidExpanAnimationActivity!</string>
+</resources>

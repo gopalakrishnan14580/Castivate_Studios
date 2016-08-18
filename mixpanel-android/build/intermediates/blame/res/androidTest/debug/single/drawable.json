@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/common_signin_btn_icon_light.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable/common_signin_btn_icon_light.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_cta_button.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_cta_button.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/common_signin_btn_icon_dark.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable/common_signin_btn_icon_dark.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_cta_button_highlight.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_cta_button_highlight.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/common_signin_btn_text_light.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable/common_signin_btn_text_light.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_text_answer_border.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_text_answer_border.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_choice_last_states.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_choice_last_states.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_nocolor_list.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_nocolor_list.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_arrowleft_states.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_arrowleft_states.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_arrowleft_insets.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_arrowleft_insets.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_checkmark_states.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_checkmark_states.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_arrowright_states.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_arrowright_states.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_arrowright_insets.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_arrowright_insets.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/common_signin_btn_text_dark.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable/common_signin_btn_text_dark.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_choice_first_states.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_choice_first_states.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/drawable/com_mixpanel_android_choice_middle_states.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/drawable/com_mixpanel_android_choice_middle_states.xml"
+    }
+]

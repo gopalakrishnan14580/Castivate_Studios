@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+  <string name="clear_cache_menu">Clear Caches</string>
+    <string name="clear_cache_complete_toast">Caches have been cleared</string>
+    <string name="imageview_description">Image Thumbnail</string>
+    <string name="no_network_connection_toast">No network connection found</string>
+    
+
+    <string name="app_name">Castivate</string>
+
+    <string name="cast_title">Captian America 3: Civil War</string>
+    <string name="cast_type">Cast Type</string>
+    <string name="cast_paid_status">Paid Status</string>
+    <string name="ethnicity_role">Ethnicity</string>
+    <string name="role_for">Female</string>
+    <string name="cast_union_status">Non-Union</string>
+    <string name="upload_picture">Hey good lookin!\n<u>Upload your \'pic\' to get noticed</u></string>
+    <string name="actor">Actor</string>
+    <string name="singer">Singer</string>
+    <string name="model">Model</string>
+    <string name="dancer">Dancer</string>
+    <string name="distance">12.90</string>
+    <string name="skip">Skip</string>
+    <string name="castivity">Castivate</string>
+    <string name="thank">Thank you for submitting </string>
+ 
+    <string name="thank1">your photo, </string>
+    <string name="add1">Add your Name &amp; Email to be found</string>
+    
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="gender">Gender</string>
+    <string name="done">Done</string>
+    <string name="birth_year">Birth Year</string>
+    <string name="current_location">Current Location</string>
+    <string name="ethnicity">Ethnicity</string>
+    <string name="submit_casting">Post a casting</string>
+    <string name="notification">Notifications</string>
+    <string name="notification_text">Notifications for matched castings</string>
+
+    <string name="settings">Help</string>
+    <string name="social">Social</string>
+    <string name="support">Support</string>
+    <string name="facebook">Help Screen</string>
+    <string name="twitter">Follow us on Twitter</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="terms_of_use">Terms of Use</string>
+
+    <string name="email_us">Please fill this form or email us at\n<a href='mailto:newscasting@castings.com'></a><font color='#D00000'>newscasting@castings.com</font></string>
+
+    <string name="info">Info</string>
+
+    <string name="title_company_name">Company name</string>
+    <string name="email_id">Your Email ID</string>
+    <string name="production_type">Production Type</string>
+    <string name="job_type">Job Type</string>
+    <string name="submit_email">Submit to Email</string>
+    <string name="submit_date">Submit by Date</string>
+    <string name="casting_location">Castivate call Location</string>
+    <string name="next">Next</string>
+
+    <string name="no_thanks">No, Thanks</string>
+    <string name="submit_photo">Submit</string>
+    
+    <string name="details">Details</string>
+    <string name="payment">Payment</string>
+    <string name="union_status">Union Status</string>
+    <string name="paid">Paid</string>
+    <string name="non_paid">Non Paid</string>
+    <string name="tbd">Pay - TBD</string>
+    <string name="union">Union</string>
+    <string name="non_union">Non Union</string>
+    <string name="both_union">Both</string>
+     <string name="production_title">Production Title</string>
+    <string name="age_range">Age Range </string>
+    <string name="from">From</string>
+    <string name="to">To</string>
+    <string name="role_description">Role Description</string>
+  
+    <string name="role_desc_sample">
+Captian America 3: Civil War is the third installment of the widely popular film series.</string>
+    <string name="casting_details">The casting team for this film is searching for CIA/FBI agent types for various background roles. There are 2 sets of work dates that you have the opportunity to work.</string>
+  
+    <string name="submission_details">Submission Details</string>
+    <string name="synopsis">Synopsis</string>
+       <string name="submission_text">Los Angeles, CA - sputnikextras@tscasting.com Submit all info to the email above.
+For more info on the casting and what to submit go to: http://bit.ly/1bdNIha</string>
+    
+      <string name="age_range_value">Age 30-40</string>
+      <string name="ethncity_value">Caucasian</string>
+        <string name="male_text">Male</string>
+          <string name="non_union_text">Non-Union</string>
+    <string name="caucasian">Caucasian</string>
+    <string name="african_american">African American</string>
+    <string name="hispanic">Hispanic</string>
+    <string name="asian">Asian</string>
+    <string name="mixed">Mixed</string>
+    <string name="native_american">Native American</string>
+    <string name="middle_eastern">Middle Eastern</string>
+    <string name="other">Other</string>
+    <string name="favorite">Favorites</string>
+    <string name="internet_not_available">Please check your network connection.</string>
+    
+ 
+     
+    <string name="country_prompt">Production Type</string>
+
+  
+        
+    
+    
+    
+      <string name="sample_widget">Picasso Sample Widget</string>
+  <string name="sample_notification">Picasso Sample Notification</string>
+  <string name="select_picture">Select Picture</string>
+  <string name="disk_cache_description">On Ice Cream Sandwich and above, a disk cache is
+    automatically used so that subsequent requests for the same URL do not re-download the
+    image.\n\nTo enable this functionality on pre-ICS use a standalone HTTP client with caching such
+    as OkHttp.
+  </string>
+
+  <!--new add this -->
+  <string name="btn_apply">Apply Now</string>
+  <string name="back">Back</string>
+
+  <!-- castivate monthly details-->
+
+  <string name="txt_monthfree">Apply to any Casting Instantly</string>
+  <string name="txt_getmonth">Get the first month free</string>
+  <string name="txt_chooseplan">Choose from a plan below. You wont be charged until after your free month ends. You can cancel anytime.</string>
+  <string name="txt_chooseplan1">Choose from a plan below. You wont be charged until after your free month ends.</string>
+  <string name="radio_amt">$9.99 for 12 Months</string>
+  <string name="radio_amt1">$0.99 per month</string>
+  <string name="btn_subscribe">Subscribe Now</string>
+
+  <!--Sign in-->
+
+  <string name="txt_title">Castivate</string>
+  <string name="txt_back">Back</string>
+  <string name="txt_signin">Sign In</string>
+  <string name="et_email">Email</string>
+  <string name="et_password">Password</string>
+  <string name="btn_signin">Sign In</string>
+  <string name="txt_forgot">Forgot Password</string>
+  <string name="txt_sign">Sign In</string>
+
+  <!--  castivate details-->
+  <string name="txt_details">Enter your details</string>
+  <string name="et_name">Name</string>
+  <string name="et_pass">Password</string>
+  <string name="et_cardno">Card Number</string>
+  <string name="et_date">MM/YYYY</string>
+  <string name="et_cv">CVV</string>
+  <string name="btn_submit">Submit</string>
+</resources>

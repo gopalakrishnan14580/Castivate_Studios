@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Castivate_Studios.iml" filepath="$PROJECT_DIR$/Castivate_Studios.iml" />
+      <module fileurl="file://$PROJECT_DIR$/GooglePlayLikeAnimationActivity/GooglePlayLikeAnimationActivity.iml" filepath="$PROJECT_DIR$/GooglePlayLikeAnimationActivity/GooglePlayLikeAnimationActivity.iml" />
+      <module fileurl="file://$PROJECT_DIR$/UrlImageViewHelper/UrlImageViewHelper.iml" filepath="$PROJECT_DIR$/UrlImageViewHelper/UrlImageViewHelper.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" filepath="$PROJECT_DIR$/android-support-v7-appcompat/android-support-v7-appcompat.iml" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" filepath="$PROJECT_DIR$/google-play-services_lib/google-play-services_lib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/mixpanel-android/mixpanel-android.iml" filepath="$PROJECT_DIR$/mixpanel-android/mixpanel-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/wheel/wheel.iml" filepath="$PROJECT_DIR$/wheel/wheel.iml" />
+    </modules>
+  </component>
+</project>

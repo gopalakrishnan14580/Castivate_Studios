@@ -1,0 +1,30 @@
+[
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-nodpi-v4/com_mixpanel_android_square.9.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-nodpi/com_mixpanel_android_square.9.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-nodpi-v4/com_mixpanel_android_rounded_top.9.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-nodpi/com_mixpanel_android_rounded_top.9.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-nodpi-v4/com_mixpanel_android_rounded_bottom.9.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-nodpi/com_mixpanel_android_rounded_bottom.9.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-nodpi-v4/com_mixpanel_android_rounded_bottom_selected.9.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-nodpi/com_mixpanel_android_rounded_bottom_selected.9.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-nodpi-v4/com_mixpanel_android_close.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-nodpi/com_mixpanel_android_close.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-nodpi-v4/com_mixpanel_android_square_selected.9.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-nodpi/com_mixpanel_android_square_selected.9.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-nodpi-v4/com_mixpanel_android_rounded_top_selected.9.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-nodpi/com_mixpanel_android_rounded_top_selected.9.png"
+    }
+]

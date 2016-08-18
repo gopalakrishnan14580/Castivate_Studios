@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:descendantFocusability="beforeDescendants" >
+
+    <RelativeLayout
+        android:id="@+id/rel_casting_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true" >
+
+        <RelativeLayout
+            android:id="@+id/casting_login_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/top_bar"
+            android:visibility="visible" >
+
+
+            <LinearLayout
+                android:id="@+id/casting_login_back_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:padding="5dp"
+                    android:background="@drawable/back_icon"
+                    android:visibility="visible" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/casting_login_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/back"
+                    android:textColor="@android:color/white"
+                    android:textSize="22sp"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
+            <com.sdi.castivate.fonts.RockWell
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/castivity"
+                android:textColor="@android:color/white"
+                android:textSize="30sp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_signin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/casting_login_top_bar"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30sp"
+            android:orientation="vertical">
+
+
+            <com.sdi.castivate.fonts.ProximanovaCondSemiBold
+                android:id="@+id/txt_signin"
+                style="@style/txt_signin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/txt_signin"
+                android:textSize="24sp"/>
+
+
+            <com.sdi.castivate.fonts.ProximaNovaLightEditText
+                android:id="@+id/et_email"
+                style="@style/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sign_back"
+                android:hint="@string/et_email"
+                android:inputType="textEmailAddress"
+                android:padding="20dp"
+                android:textSize="20sp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                android:textColorHint="#737272" />
+
+
+            <com.sdi.castivate.fonts.ProximaNovaLightEditText
+                android:id="@+id/et_password"
+                style="@style/et_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sign_back"
+                android:hint="@string/et_password"
+                android:inputType="textPassword"
+                android:padding="20dp"
+                android:maxLength="20"
+                android:textSize="20sp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                android:textColorHint="#737272" />
+
+
+            <com.sdi.castivate.fonts.ProximaNovaRegularButton
+                android:id="@+id/btn_signin"
+                style="@style/btn_signin"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/btn_signin"
+                android:gravity="center"
+                android:textSize="30dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                android:hint="@string/btn_signin" />
+
+
+            <com.sdi.castivate.fonts.ProximanovaCondSemiBold
+                android:id="@+id/txt_forgot"
+                style="@style/txt_forgot"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="@string/txt_forgot"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginLeft="40dp"
+                android:textSize="24sp"/>
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="65dp"
+        android:background="@color/dark_black"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+          
+              android:layout_height="90dp"
+             android:clickable="false"
+            android:background="@color/top_bar">
+
+          <com.sdi.castivate.fonts.ProximanovaCondSemiBold
+                android:id="@+id/select_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerInParent="true"
+                android:layout_marginRight="20dp"
+                android:textSize="28sp"
+                android:text="@string/done"
+                android:textColor="@color/white"
+                android:padding="5dp" />
+
+          <com.sdi.castivate.fonts.RockWell
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:clickable="false"
+                android:paddingRight="45dp"
+                android:text="@string/castivity"
+                android:textColor="@android:color/white"
+                android:textSize="36sp" />
+            <!-- <com.sdi.castivate.fonts.RockWell
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/select_icon"
+                android:layout_centerHorizontal="true"
+                android:clickable="false"
+                android:text="@string/castivity"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@android:color/white"
+                android:textSize="30sp" /> -->
+        </RelativeLayout>
+
+        <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/top_bar" >
+
+            <RelativeLayout
+                  android:id="@+id/rel_filter_lay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <com.sdi.castivate.fonts.ProximaNovaRegularCheckBox
+                    android:id="@+id/checkbox_actor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/btn_selector"
+                    android:button="@null"
+                    android:checked="false"
+                    android:gravity="center"
+                    android:text="@string/actor"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="22sp" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegularCheckBox
+                    android:id="@+id/txt_model"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignTop="@+id/checkbox_actor"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/checkbox_actor"
+                    android:layout_toRightOf="@+id/checkbox_actor"
+                    android:background="@drawable/btn_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/model"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="22sp" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegularCheckBox
+                    android:id="@+id/txt_singer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/view"
+                    android:layout_alignTop="@+id/txt_model"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@+id/txt_model"
+                    android:layout_toRightOf="@+id/txt_model"
+                    android:background="@drawable/btn_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/singer"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="22sp" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegularCheckBox
+                    android:id="@+id/txt_dancer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@+id/view"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toEndOf="@+id/txt_singer"
+                    android:layout_toRightOf="@+id/txt_singer"
+                    android:background="@drawable/btn_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/dancer"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="22sp" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="match_parent"
+                    android:layout_height="5dp"
+                    android:layout_below="@+id/checkbox_actor"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/dark_grey_separator" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegularCheckBox
+                    android:id="@+id/txt_male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/checkbox_actor"
+                    android:layout_alignStart="@+id/checkbox_actor"
+                    android:layout_below="@+id/view"
+                    android:layout_marginTop="15dp"
+                    android:layout_toLeftOf="@+id/txt_model"
+                    android:layout_toStartOf="@+id/txt_model"
+                    android:background="@drawable/btn_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/male"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="22sp" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegularCheckBox
+                    android:id="@+id/txt_female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/txt_model"
+                    android:layout_alignStart="@+id/txt_model"
+                    android:layout_alignTop="@+id/txt_male"
+                    android:background="@drawable/btn_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/female"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/sep_union_view"
+                    android:layout_width="2dp"
+                    android:layout_height="55dp"
+                    android:layout_alignTop="@+id/txt_male"
+                    android:layout_below="@+id/view"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/txt_female"
+                    android:layout_toRightOf="@+id/txt_female"
+                    android:background="@color/grey"
+                    android:clickable="false"
+                    android:gravity="center" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegularCheckBox
+                    android:id="@+id/chk_union"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/txt_singer"
+                    android:layout_alignStart="@+id/txt_singer"
+                    android:layout_alignTop="@+id/txt_male"
+                    android:layout_toEndOf="@+id/sep_union_view"
+                    android:layout_toRightOf="@+id/sep_union_view"
+                    android:background="@drawable/btn_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/union"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="22sp" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegularCheckBox
+                    android:id="@+id/chk_non_union"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/txt_dancer"
+                    android:layout_alignStart="@+id/txt_dancer"
+                    android:layout_alignTop="@+id/txt_male"
+                    android:layout_toRightOf="@+id/chk_union"
+                    android:background="@drawable/btn_selector"
+                    android:button="@null"
+                    android:gravity="center"
+                    android:text="@string/non_union"
+                    android:textAllCaps="false"
+                    android:textColor="@drawable/text_selector"
+                    android:textSize="22sp" />
+
+                  <RelativeLayout
+                    android:id="@+id/rel_birth_year"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/txt_female"
+                    android:layout_marginTop="20dp"
+                       android:padding="15dp"
+                    android:background="@drawable/text_box" >
+
+                    <com.sdi.castivate.fonts.ProximaNovaRegular
+                        android:id="@+id/birth_year"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/birth_clear"
+                        android:background="@android:color/transparent"
+                        android:ems="10"
+                        android:focusable="false"
+                        android:hint="@string/birth_year"
+                        android:inputType="date"
+                        android:paddingLeft="5dp"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp" />
+
+                    <ImageView
+                        android:id="@+id/birth_clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/delete_icon"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rel_current_location"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/rel_birth_year"
+                    android:layout_marginTop="15dp"
+                    android:padding="15dp"
+                    android:background="@drawable/text_box" >
+
+                    <com.sdi.castivate.fonts.ProximaNovaRegularEditText
+                        android:id="@+id/current_location"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/clear"
+                        android:background="@android:color/transparent"
+                        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ, "
+                        android:ems="10"
+                        android:gravity="center|left"
+                        android:hint="@string/current_location"
+                        android:imeOptions="flagNoExtractUi"
+                        android:paddingLeft="5dp"
+                        android:paddingRight="30dp"
+                        android:singleLine="true"
+                        android:textColor="@android:color/black"
+                        android:textSize="24sp" />
+
+                    <ImageView
+                        android:id="@+id/clear"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:background="@drawable/delete_icon"
+                        android:visibility="visible" />
+                </RelativeLayout>
+
+
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/txt_ethnicity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/rel_current_location"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey"
+                    android:drawableRight="@drawable/arrow_icon"
+                    android:gravity="center|left"
+                    android:hint="@string/ethnicity"
+                 
+                    android:padding="20dp"
+                 
+                    android:singleLine="true"
+                    android:textColor="@color/dark_black"
+                    android:textColorHint="@color/dark_black"
+                    android:textSize="24sp" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/txt_submit_casting"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_ethnicity"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey"
+                    android:drawableRight="@drawable/arrow_icon"
+                    android:gravity="center|left"
+                 
+                    android:padding="20dp"
+                    android:text="@string/submit_casting"
+                    android:textColor="@color/dark_black"
+                    android:textSize="24sp" />
+
+                <RelativeLayout
+                    android:id="@+id/relativeLayout2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_submit_casting"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey"
+                    android:gravity="center|left"
+                    android:paddingBottom="5dp"
+                    android:paddingTop="5dp" >
+
+                    <com.sdi.castivate.fonts.ProximaNovaRegular
+                        android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center|left"
+                        android:text="@string/notification"
+                        android:textColor="@color/dark_black"
+                        android:textSize="18sp"
+                        android:visibility="gone" />
+
+                    <ToggleButton
+                        android:id="@+id/toggleButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/toggle_selector"
+                        android:gravity="right"
+                        android:textOff=""
+                        android:textOn="" />
+
+                    <com.sdi.castivate.fonts.ProximaNovaRegular
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toLeftOf="@+id/toggleButton"
+                        android:gravity="center|left"
+                        android:padding="20dp"
+                        android:text="@string/notification_text"
+                        android:textColor="@color/dark_black"
+                        android:textSize="24sp" />
+                </RelativeLayout>
+
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/text_reset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/relativeLayout2"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey"
+                    android:padding="20dp"
+        
+                    android:text="Reset Filters"
+                    android:textColor="@color/dark_black"
+                    android:textSize="24sp" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/text_help_over_lay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/arrow_icon"
+                    android:gravity="center|left"
+                    android:layout_below="@+id/text_reset"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey"
+                    android:padding="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:text="Help"
+                    android:textColor="@color/dark_black"
+                    android:textSize="24sp" />
+
+                <RelativeLayout
+                    android:id="@+id/tap_current_location"
+                    android:layout_width="fill_parent"
+                    android:layout_height="240dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignTop="@+id/checkbox_actor"
+                    android:background="@drawable/text_box"
+                    android:orientation="vertical"
+                    android:visibility="gone" >
+
+    
+        <include
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            layout="@layout/tap_us_location" />
+    
+                  
+                </RelativeLayout>
+
+             
+            </RelativeLayout>
+        </ScrollView>
+    </RelativeLayout>
+ <RelativeLayout
+        android:id="@+id/rel_cast_outer"
+        android:layout_width="55dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="65dp"
+        
+        android:background="@android:color/transparent" >
+    
+    <RelativeLayout
+        android:id="@+id/rel_cast"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
+        android:layout_marginLeft="25dp"
+        android:background="@android:color/transparent" >
+    </RelativeLayout>
+</RelativeLayout>
+</RelativeLayout>

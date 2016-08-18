@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:descendantFocusability="beforeDescendants" >
+
+    <!-- Refresh view -->
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/swipe_refresh_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/rel_upload_screen" >
+
+        <GridView
+            android:id="@+id/grid_view_photos"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dip"
+            android:cacheColorHint="@color/white"
+            android:choiceMode="singleChoice"
+            android:clickable="true"
+            android:columnWidth="60dp"
+            android:fastScrollEnabled="false"
+            android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:listSelector="@color/grey"
+            android:numColumns="3"
+            android:scrollingCache="true"
+            android:soundEffectsEnabled="true"
+            android:stretchMode="columnWidth"
+            android:visibility="gone" />
+    </android.support.v4.widget.SwipeRefreshLayout>
+    <!-- Refresh view -->
+
+</RelativeLayout>

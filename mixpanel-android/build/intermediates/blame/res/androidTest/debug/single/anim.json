@@ -1,0 +1,14 @@
+[
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/anim/com_mixpanel_android_fade_out.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/anim/com_mixpanel_android_fade_out.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/anim/com_mixpanel_android_fade_in.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/anim/com_mixpanel_android_fade_in.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/androidTest/debug/anim/com_mixpanel_android_slide_down.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/bundles/debug/res/anim/com_mixpanel_android_slide_down.xml"
+    }
+]

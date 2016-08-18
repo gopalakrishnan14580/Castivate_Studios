@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/grey"
+    android:orientation="vertical" >
+
+    <ImageView
+        android:id="@+id/help_overlay"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="@drawable/help_overlay"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/top_bar"
+        android:padding="10dp" >
+
+        <ImageView
+            android:id="@+id/back_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/arrow_back" />
+
+        <com.sdi.castivate.fonts.RockWell
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerInParent="true"
+            android:gravity="center_horizontal"
+            android:text="Help"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"
+            android:textSize="24sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/facebook"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/text_box"
+        android:drawableRight="@drawable/arrow_icon"
+        android:gravity="left|center"
+        android:onClick="help"
+        android:padding="10dp"
+        android:paddingRight="10dp"
+        android:text="@string/facebook"
+        android:textColor="@color/dark_black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/privacy_policy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/text_box"
+        android:drawableRight="@drawable/arrow_icon"
+        android:gravity="left|center"
+        android:onClick="privacyPolicy"
+        android:padding="10dp"
+        android:text="@string/privacy_policy"
+        android:textColor="@color/dark_black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/terms_of_use"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:background="@drawable/text_box"
+        android:drawableRight="@drawable/arrow_icon"
+        android:gravity="left|center"
+        android:onClick="termsOfUse"
+        android:padding="10dp"
+        android:text="@string/terms_of_use"
+        android:textColor="@color/dark_black"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/support"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:autoLink="email"
+        android:background="@drawable/text_box"
+        android:drawableRight="@drawable/arrow_icon"
+        android:gravity="left|center"
+        android:padding="10dp"
+        android:text="@string/support"
+        android:textColor="@color/dark_black"
+        android:textSize="16sp" />
+
+</LinearLayout>

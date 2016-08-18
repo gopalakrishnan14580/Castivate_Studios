@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical" >
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:id="@+id/top_bar"
+                android:layout_width="match_parent"
+              android:layout_height="90dp"
+                android:background="@color/top_bar"
+                android:padding="10dp"
+                android:visibility="visible" >
+
+                <ImageView
+                    android:id="@+id/menu_icon_mirror"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="30dp"
+                    android:background="@drawable/menu_icon"
+                    android:visibility="gone" />
+
+                <com.sdi.castivate.fonts.RockWell
+                    android:id="@+id/skip"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="27dp"
+                    android:paddingTop="5dp"
+                    android:text="@string/skip"
+                    android:textColor="@color/white"
+                    android:textSize="24sp" />
+
+                <com.sdi.castivate.fonts.RockWell
+                    android:id="@+id/textView2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:gravity="center"
+                    android:text="@string/castivity"
+                    android:textColor="@android:color/white"
+                    android:textSize="26sp" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/gender_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/submission_info"
+                android:padding="10dp" >
+
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/gender"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="15dp"
+                    android:text="@string/gender"
+                    android:textColor="@color/dark_black"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/radiogroup_union"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/gender"
+                    android:orientation="horizontal"
+                    android:paddingBottom="10dp" >
+
+                    <RadioButton
+                        android:id="@+id/radio_union"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/radio_selector"
+                        android:button="@null" />
+
+                    <com.sdi.castivate.fonts.ProximaNovaRegular
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="5dp"
+                        android:text="@string/male"
+                        android:textColor="@color/dark_black"
+                        android:textSize="24sp" />
+
+                    <RadioButton
+                        android:id="@+id/radio_non_union"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="60dp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@null" />
+
+                    <com.sdi.castivate.fonts.ProximaNovaRegular
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                     
+                        android:padding="5dp"
+                        android:text="@string/female"
+                        android:textColor="@color/dark_black"
+                        android:textSize="24sp" />
+                </RadioGroup>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/birth_year_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:background="@drawable/text_box_bg"
+                android:padding="10dp" >
+
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/birth_year"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left|center"
+                    android:text="@string/birth_year"
+                    android:textColor="@color/dark_grey_separator"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <kankan.wheel.widget.WheelView
+                    android:id="@+id/birth_year_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_toRightOf="@+id/birth_year" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/ethnicity_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="300dp"
+                android:background="@drawable/text_box_bg"
+                android:padding="10dp" >
+
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/ethnicity"
+                    android:layout_width="200dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="left|center"
+                    android:text="@string/ethnicity"
+                    android:textColor="@color/dark_grey_separator"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+
+                <kankan.wheel.widget.WheelView
+                    android:id="@+id/ethnicity_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_toRightOf="@+id/ethnicity" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="150dp" >
+
+                <ImageView
+                    android:id="@+id/lets_go"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/letsgo_btn" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

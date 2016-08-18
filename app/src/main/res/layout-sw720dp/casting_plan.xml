@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:descendantFocusability="beforeDescendants" >
+
+    <RelativeLayout
+        android:id="@+id/rel_casting_plan"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true" >
+
+        <RelativeLayout
+            android:id="@+id/casting_plan_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/top_bar"
+            android:visibility="visible" >
+
+            <LinearLayout
+                android:id="@+id/casting_plan_back_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:layout_alignParentStart="true">
+
+                <ImageView
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:padding="5dp"
+                    android:background="@drawable/back_icon"
+                    android:visibility="visible" />
+
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/casting_plan_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="@string/back"
+                    android:textColor="@android:color/white"
+                    android:textSize="26sp"
+                    android:visibility="visible" />
+
+
+            </LinearLayout>
+
+            <com.sdi.castivate.fonts.RockWell
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/castivity"
+                android:textColor="@android:color/white"
+                android:textSize="36sp"
+                android:layout_centerVertical="true"
+                android:layout_centerHorizontal="true" />
+
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_below="@+id/casting_plan_top_bar"
+            android:id="@+id/ll_castivate_month"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="40dp"
+            android:background="#f0eeee"
+            android:orientation="vertical"
+            android:gravity="center_horizontal|center_vertical"
+            android:padding="10dp">
+
+
+            <com.sdi.castivate.fonts.ProximanovaCondSemiBold
+                android:id="@+id/txt_get_month"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center_horizontal"
+                android:text="@string/txt_monthfree"
+                android:textColor="#171717"
+                android:textStyle="bold"
+                android:padding="5dp"
+                android:textSize="22sp" />
+
+
+            <com.sdi.castivate.fonts.ProximaNovaRegular
+                android:id="@+id/txt_month_free"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:text="@string/txt_getmonth"
+                android:textColor="#2f2f2f"
+                android:textStyle="normal"
+                android:padding="5dp"
+                android:textSize="18sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/choose_plan_text"
+            android:layout_below="@+id/ll_castivate_month"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
+
+            <com.sdi.castivate.fonts.ProximaNovaRegular
+                android:id="@+id/txt_choose_plan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:padding="10dp"
+                android:textAlignment="center"
+                android:text="@string/txt_chooseplan"
+                android:textColor="#2f2f2f"
+                android:textSize="19sp" />
+
+
+            <com.sdi.castivate.fonts.ProximaNovaRegular
+                android:id="@+id/txt_choose_plan1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:text="@string/txt_chooseplan1"
+                android:textColor="#2f2f2f"
+                android:textSize="19sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_below="@+id/choose_plan_text"
+            android:id="@+id/ll_castivate_choose_pay"
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical"
+            android:background="@drawable/sign_back"
+            android:padding="25dp"
+            android:gravity="center_horizontal|center_vertical"
+            >
+            <RadioGroup
+                android:id="@+id/radioPayment"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                >
+
+
+                <com.sdi.castivate.fonts.ProximanovaLightRadio
+                    android:id="@+id/radio_year"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/radiobutton"
+                    android:layout_gravity="center_horizontal"
+                    android:text="@string/radio_amt"
+                    android:paddingLeft="10dp"
+                    android:textColor="#677477"
+                    android:textSize="22sp"
+                    android:padding="5dp"
+                    android:checked="true" />
+
+
+                <com.sdi.castivate.fonts.ProximanovaLightRadio
+                    android:id="@+id/radio_month"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginRight="15dp"
+                    android:layout_marginTop="10dp"
+                    android:button="@drawable/radiobutton"
+                    android:paddingLeft="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/radio_amt1"
+                    android:textColor="#677477"
+                    android:textSize="22sp"
+                    android:padding="5dp"
+                    android:checked="false"/>
+
+            </RadioGroup>
+
+        </LinearLayout>
+
+        <com.sdi.castivate.fonts.ProximaNovaRegularButton
+            android:layout_below="@+id/ll_castivate_choose_pay"
+            android:id="@+id/btn_subscribe_now"
+            style="@style/btn_signin"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/btn_signin"
+            android:gravity="center"
+            android:layout_marginRight="40dp"
+            android:layout_marginLeft="40dp"
+            android:hint="@string/btn_subscribe"
+            android:textSize="28sp" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -1,0 +1,26 @@
+[
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_top.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/bundles/debug/res/anim/abc_slide_out_top.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_top.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/bundles/debug/res/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_bottom.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/bundles/debug/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_out.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/bundles/debug/res/anim/abc_fade_out.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_bottom.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/bundles/debug/res/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_in.xml",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/android-support-v7-appcompat/build/intermediates/bundles/debug/res/anim/abc_fade_in.xml"
+    }
+]
