@@ -154,4 +154,5 @@ For more info on the casting and what to submit go to: http://bit.ly/1bdNIha</st
   <string name="et_date">MM/YYYY</string>
   <string name="et_cv">CVV</string>
   <string name="btn_submit">Submit</string>
+  <string name="casting_file_upload">Photo / Video</string>
 </resources>

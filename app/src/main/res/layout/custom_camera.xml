@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <SurfaceView
+        android:id="@+id/surfaceView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"/>
+
+    <ImageView
+        android:id="@+id/camera_image_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        />
+
+    <ImageButton
+        android:id="@+id/captureImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/record_icon"
+        android:visibility="visible"/>
+
+
+    <ImageButton
+        android:id="@+id/flash"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/flash_off"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"
+        android:layout_marginTop="10dp"
+        android:visibility="visible"/>
+
+    <ImageButton
+        android:id="@+id/flipCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rear_icon"
+        android:layout_alignTop="@+id/flash"
+        android:layout_toLeftOf="@+id/flash"
+        android:layout_toStartOf="@+id/flash"
+        android:layout_marginRight="30dp"
+        android:layout_marginEnd="30dp"
+        android:visibility="visible"/>
+
+
+    <ImageButton
+        android:id="@+id/closeCamera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/close_icon"
+        android:layout_below="@+id/flipCamera"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:visibility="visible"/>
+
+    <LinearLayout
+        android:id="@+id/camera_reset"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:background="#252222"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/capture_retaken"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:text="Retake"
+            />
+
+        <TextView
+            android:id="@+id/save_image"
+            android:layout_width="200dp"
+            android:layout_height="50dp"
+            android:gravity="center"
+            android:textColor="#FFFFFF"
+            android:text="Use" />
+
+    </LinearLayout>
+
+</RelativeLayout>
