@@ -57,7 +57,7 @@
             android:value="true" />
 
         <activity
-            android:name="com.sdi.castivate.CastingFileUpload"
+            android:name="com.sdi.castivate.SplashScreen"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Black.NoTitleBar">
@@ -126,6 +126,14 @@
 
         <!--new add this 02/09/2016-->
         <activity
+            android:name="com.sdi.castivate.CastingFileUpload"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="stateHidden"/>
+
+        <!--new add this 02/09/2016-->
+        <activity
             android:name="com.sdi.castivate.CastingCustomVideoGallery"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
@@ -148,6 +156,12 @@
             android:theme="@android:style/Theme.Black.NoTitleBar"
             android:windowSoftInputMode="stateHidden"/>
 
+        <!--new add this 06/09/2016-->
+        <activity android:name=".CastingVideoPreview"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            android:windowSoftInputMode="stateHidden"/>
 
 
         <activity

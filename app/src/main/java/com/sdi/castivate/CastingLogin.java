@@ -187,7 +187,11 @@ public class CastingLogin extends Activity implements View.OnClickListener {
                         //System.out.println("Message ------------------------------> " + oneObject.getString("message"));
                         //go to file upload
 
-                        Library.showToast(context, "Login Successfully");
+                        //Library.showToast(context, "Login Successfully");
+
+                        Intent intent = new Intent(CastingLogin.this,CastingFileUpload.class);
+                        startActivity(intent);
+                        finish();
 
                     }
                     if(oneObject.getString("status").equals("201")) {

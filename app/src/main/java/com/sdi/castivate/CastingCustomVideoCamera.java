@@ -17,7 +17,6 @@ import android.hardware.Camera.PictureCallback;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
@@ -31,18 +30,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 @SuppressWarnings("deprecation")
 
-public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.Callback, View.OnClickListener {
+public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.Callback, View.OnClickListener{
 
     private SurfaceView videoSurfaceView;
     private SurfaceHolder videoSurfaceHolder;
@@ -52,41 +49,99 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
     private boolean flashmode = false;
     private int rotation;
     private byte[] mCameraData;
-    public static final String EXTRA_CAMERA_DATA = "camera_data";
     private ImageView videoImageView;
     private LinearLayout recordReset;
     private TextView recordRetake,saveRecordVideo;
 
-
     private MediaRecorder recorder;
     private CamcorderProfile camcorderProfile;
     boolean recording = false;
-    boolean usecamera = true;
-    boolean previewRunning = false;
     private TextView showTimer;
-    SimpleDateFormat simpleDateFormat;
-    String timeStamp;
 
     //Show Timer
     private long startTime = 0L;
-
     private Handler customHandler = new Handler();
-
     long timeInMilliseconds = 0L;
-
     long timeSwapBuff = 0L;
-
     long updatedTime = 0L;
 
+    private  String videoRecordingPath="/sdcard/Video_"+System.currentTimeMillis() +".mp4";
+    Bitmap rotatedBitmap;
+    ImageButton videoPreview;
+    Context context;
+    private static final String TAG = CastingCustomVideoCamera.class.getSimpleName();
+    private static final int REQUEST_CAMERA =2909;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_video_camera);
 
+        context = getApplicationContext();
+/*
+        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
+        }*/
+
+        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Camera permission has not been granted.
+
+            requestCameraPermission();
+
+        } else {
+
+            // Camera permissions is already available, show the camera preview.
+            Log.i(TAG,"CAMERA permission has already been granted. Displaying camera preview.");
+            // camera surface view created
+
+            init();
+        }*/
         init();
 
     }
+    /*private void requestCameraPermission() {
+
+        Log.i(TAG, "CAMERA permission has NOT been granted. Requesting permission.");
+
+        // BEGIN_INCLUDE(camera_permission_request)
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+
+            ActivityCompat.requestPermissions(CastingCustomVideoCamera.this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO},
+                    REQUEST_CAMERA);
+            // Provide an additional rationale to the user if the permission was not granted
+            // and the user would benefit from additional context for the use of the permission.
+            // For example if the user has previously denied the permission.
+
+        } else {
+
+            // Camera permission has not been granted yet. Request it directly.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO},
+                    REQUEST_CAMERA);
+        }
+        // END_INCLUDE(camera_permission_request)
+    }*/
+   /* @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CAMERA: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Log.e("Permission", "Granted");
+
+                    Intent ChangeIntent = new Intent(CastingCustomVideoCamera.this, CastingCustomVideoCamera.class);
+                    startActivity(ChangeIntent);
+                    finish();
+                } else {
+                    Log.e("Permission", "Denied");
+                }
+                return;
+            }
+        }
+    }*/
 
     private void init()
     {
@@ -113,6 +168,9 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
         videoSurfaceView = (SurfaceView) findViewById(R.id.videoSurfaceView);
         videoSurfaceHolder = videoSurfaceView.getHolder();
 
+        videoPreview=(ImageButton) findViewById(R.id.videoPreview);
+        videoPreview.setVisibility(View.GONE);
+
         videoSurfaceHolder.addCallback(this);
         recordFlipCamera.setOnClickListener(this);
         videoRecord.setOnClickListener(this);
@@ -121,7 +179,7 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
         recordRetake.setOnClickListener(this);
         saveRecordVideo.setOnClickListener(this);
         videoRecordFinish.setOnClickListener(this);
-
+        videoPreview.setOnClickListener(this);
 
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
@@ -133,32 +191,9 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
             recordFlash.setVisibility(View.GONE);
         }
 
-        simpleDateFormat = new SimpleDateFormat("ddMMyyyyhhmmss", Locale.ENGLISH);
-        timeStamp = simpleDateFormat.format(new Date());
         camcorderProfile = CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH);
     }
-    @Override
-    public void surfaceCreated(SurfaceHolder holder) {
 
-        if (!openCamera(CameraInfo.CAMERA_FACING_BACK)) {
-            alertCameraDialog();
-        }
-
-        System.out.println("onsurfacecreated");
-
-        /*if (usecamera) {
-            camera = Camera.open(CameraInfo.CAMERA_FACING_BACK);
-
-            try {
-                camera.setPreviewDisplay(holder);
-                camera.startPreview();
-                previewRunning = true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }*/
-
-    }
     private boolean openCamera(int id) {
         boolean result = false;
         cameraId = id;
@@ -209,7 +244,6 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
             case Surface.ROTATION_270:
                 degree = 270;
                 break;
-
             default:
                 break;
         }
@@ -266,56 +300,20 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
     }
 
     @Override
-    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+    public void surfaceCreated(SurfaceHolder holder) {
 
-        System.out.println("onsurface changed");
-
-        if (!recording && usecamera) {
-            if (previewRunning) {
-                camera.stopPreview();
-            }
-
-            try {
-                Camera.Parameters p = camera.getParameters();
-
-                p.setPreviewSize(camcorderProfile.videoFrameWidth,
-                        camcorderProfile.videoFrameHeight);
-                p.setPreviewFrameRate(camcorderProfile.videoFrameRate);
-
-                camera.setParameters(p);
-
-                camera.setPreviewDisplay(holder);
-                camera.startPreview();
-                previewRunning = true;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            /*prepareRecorder();
-            if (!recording) {
-                recording = true;
-                recorder.start();
-            }*/
+        if (!openCamera(CameraInfo.CAMERA_FACING_BACK)) {
+            alertCameraDialog();
         }
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-
-        System.out.println("surfaceDestroyed");
-
-        if (recording) {
-            recorder.stop();
-            recording = false;
-        }
-        recorder.release();
-        if (usecamera) {
-            previewRunning = false;
-            // camera.lock();
-            camera.release();
-        }
-        finish();
 
     }
 
@@ -330,9 +328,8 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
                 break;
             case R.id.videoRecord:
                 recordCom();
-                prepareRecorder();
-                //takeImage();
-                //captureImage();
+                takeImage();
+                recordVideo();
                 break;
             case R.id.closeRecord:
                 finish();
@@ -342,21 +339,89 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
                 break;
             case R.id.videoRecordFinish:
                 recordComVisible();
-                recordStop();
+                recordVideo();
                 break;
             case R.id.saveRecordVideo:
-                setupImageSave();
+                setupVideoImageSave();
                 break;
-
+            case R.id.videoPreview:
+                videoPreview();
+                break;
             default:
                 break;
         }
     }
 
+    private void setupVideoImageSave() {
 
+            Intent intent = new Intent();
+            intent.putExtra("videoRecordingPath", videoRecordingPath);
+            setResult(RESULT_OK, intent);
+            finish();
+    }
+
+    private void recordVideo()
+    {
+        if (recording) {
+            // stop recording and release camera
+            recorder.stop(); // stop the recording
+            releaseMediaRecorder(); // release the MediaRecorder object
+            // Toast.makeText(MainActivity.this, "Video captured!", Toast.LENGTH_LONG).show();
+
+            //video pause
+            videoImageView.setVisibility(View.VISIBLE);
+            videoImageView.setImageBitmap(rotatedBitmap);
+            videoPreview.setVisibility(View.VISIBLE);
+            videoSurfaceView.setVisibility(View.GONE);
+            videoRecord.setVisibility(View.GONE);
+            recordReset.setVisibility(View.VISIBLE);
+            recordFlipCamera.setVisibility(View.GONE);
+            recordFlash.setVisibility(View.GONE);
+            closeRecord.setVisibility(View.GONE);
+
+
+            recording = false;
+        } else {
+            if (!prepareRecorder()) {
+                Toast.makeText(CastingCustomVideoCamera.this, "Fail in prepareMediaRecorder()!\n - Ended -", Toast.LENGTH_LONG).show();
+                finish();
+            }
+            // work on UiThread for better performance
+            runOnUiThread(new Runnable() {
+                public void run() {
+                    // If there are stories, add them to the table
+
+                    try {
+                        recorder.start();
+                    } catch (final Exception ex) {
+                        // Log.i("---","Exception in thread");
+                    }
+                }
+            });
+
+            recording = true;
+        }
+    }
+
+    private void  videoPreview()
+    {
+        Intent intent = new Intent(CastingCustomVideoCamera.this,CastingVideoPreview.class);
+        intent.putExtra("videoRecordingPath",videoRecordingPath);
+        startActivity(intent);
+    }
     private void setupImageCapture() {
 
+        File file = new File(videoRecordingPath);
+
+        boolean deleted = file.delete();
+
+        if(deleted)
+            System.out.println("videoRecordingPath Delete :"+file.getPath());
+        else
+            System.out.println("videoRecordingPath Not Delete :"+file.getPath());
+
         videoImageView.setVisibility(View.GONE);
+        videoPreview.setVisibility(View.GONE);
         videoSurfaceView.setVisibility(View.VISIBLE);
         camera.startPreview();
         recordReset.setVisibility(View.GONE);
@@ -366,116 +431,110 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
         closeRecord.setVisibility(View.VISIBLE);
     }
 
-    private void prepareRecorder() {
+    private boolean prepareRecorder() {
 
         recorder = new MediaRecorder();
         recorder.setPreviewDisplay(videoSurfaceHolder.getSurface());
-        if (usecamera) {
-            //camera.unlock();
-            recorder.setCamera(camera);
-        }
-        recorder.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-        recorder.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
-
+        camera.unlock();
+        recorder.setCamera(camera);
+        recorder.setOrientationHint(rotation);
+        recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+        recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         recorder.setProfile(camcorderProfile);
 
         if (camcorderProfile.fileFormat == MediaRecorder.OutputFormat.MPEG_4) {
-
-            File file = new File(Environment.getExternalStorageDirectory(), "Video_" + System.currentTimeMillis() + ".mp4" );
-
-            recorder.setOutputFile(file.getPath());
-            /*recorder.setOutputFile("/sdcard/XYZApp/" + "XYZAppVideo" + ""
-                    + new SimpleDateFormat("ddMMyyyyHHmmss").format(new Date())
-                    + ".mp4");*/
+            recorder.setOutputFile(videoRecordingPath);
         } else {
-            File file = new File(Environment.getExternalStorageDirectory(), "Video_" + System.currentTimeMillis() + ".mp4" );
-
-            recorder.setOutputFile(file.getPath());
-
-            /*recorder.setOutputFile("/sdcard/XYZApp/" + "XYZAppVideo" + ""
-                    + new SimpleDateFormat("ddMMyyyyHHmmss").format(new Date())
-                    + ".mp4");*/
+            recorder.setOutputFile(videoRecordingPath);
         }
 
         try {
             recorder.prepare();
         } catch (IllegalStateException e) {
-            e.printStackTrace();
-            finish();
+            releaseMediaRecorder();
+            return false;
         } catch (IOException e) {
-            e.printStackTrace();
-            finish();
+            releaseMediaRecorder();
+            return false;
+        }
+        return true;
+    }
+
+    private void releaseMediaRecorder() {
+        if (recorder != null) {
+            recorder.reset(); // clear recorder configuration
+            recorder.release(); // release the recorder object
+            recorder = null;
+            camera.lock(); // lock camera for later use
         }
     }
 
-        private void recordCom() {
+    private void recordCom() {
 
-            showTimer.setVisibility(View.VISIBLE);
-            videoRecordFinish.setVisibility(View.VISIBLE);
-            videoRecord.setVisibility(View.GONE);
-            recordFlash.setVisibility(View.GONE);
-            closeRecord.setVisibility(View.GONE);
-            recordFlipCamera.setVisibility(View.GONE);
-            recordReset.setVisibility(View.GONE);
-            startTime = SystemClock.uptimeMillis();
-
-            customHandler.postDelayed(updateTimerThread, 0);
-        }
+        showTimer.setVisibility(View.VISIBLE);
+        videoRecordFinish.setVisibility(View.VISIBLE);
+        videoRecord.setVisibility(View.GONE);
+        recordFlash.setVisibility(View.GONE);
+        closeRecord.setVisibility(View.GONE);
+        recordFlipCamera.setVisibility(View.GONE);
+        recordReset.setVisibility(View.GONE);
+        startTime = SystemClock.uptimeMillis();
+        customHandler.postDelayed(updateTimerThread, 0);
+    }
     private void recordComVisible() {
 
-            showTimer.setVisibility(View.GONE);
-            videoRecordFinish.setVisibility(View.GONE);
-            videoRecord.setVisibility(View.VISIBLE);
-            recordFlash.setVisibility(View.VISIBLE);
-            closeRecord.setVisibility(View.VISIBLE);
-            recordFlipCamera.setVisibility(View.VISIBLE);
-            recordReset.setVisibility(View.GONE);
-
-            timeSwapBuff += timeInMilliseconds;
-            customHandler.removeCallbacks(updateTimerThread);
-
-        }
+        showTimer.setVisibility(View.GONE);
+        videoRecordFinish.setVisibility(View.GONE);
+        videoRecord.setVisibility(View.VISIBLE);
+        recordFlash.setVisibility(View.VISIBLE);
+        closeRecord.setVisibility(View.VISIBLE);
+        recordFlipCamera.setVisibility(View.VISIBLE);
+        recordReset.setVisibility(View.GONE);
+        timeSwapBuff += timeInMilliseconds;
+        customHandler.removeCallbacks(updateTimerThread);
+        timeSwapBuff=0L;
+        timeInMilliseconds=0L;
+    }
 
     private Runnable updateTimerThread = new Runnable() {
 
         public void run() {
 
             timeInMilliseconds = SystemClock.uptimeMillis() - startTime;
-
             updatedTime = timeSwapBuff + timeInMilliseconds;
-
             int secs = (int) (updatedTime / 1000);
-
             int mins = secs / 60;
-
+            int hours = (secs / 60) % 24;;
             secs = secs % 60;
-
             int milliseconds = (int) (updatedTime % 1000);
-
-            showTimer.setText("" + mins + ":"+ String.format("%02d", secs) + ":"+ String.format("%03d", milliseconds));
+            String Timer=(String.format("%02d", hours) + ":"+String.format("%02d", mins) + ":"+ String.format("%02d", secs));
+            showTimer.setText(Timer);
 
             customHandler.postDelayed(this, 0);
 
+            /*if(Timer.equals("01:01:01"))
+            {
+                recorder.stop(); // stop the recording
+                releaseMediaRecorder(); // release the MediaRecorder object
+                // Toast.makeText(MainActivity.this, "Video captured!", Toast.LENGTH_LONG).show();
+
+                //video pause
+                videoImageView.setVisibility(View.VISIBLE);
+                videoImageView.setImageBitmap(rotatedBitmap);
+                videoPreview.setVisibility(View.VISIBLE);
+                videoSurfaceView.setVisibility(View.GONE);
+                videoRecord.setVisibility(View.GONE);
+                recordReset.setVisibility(View.VISIBLE);
+                recordFlipCamera.setVisibility(View.GONE);
+                recordFlash.setVisibility(View.GONE);
+                closeRecord.setVisibility(View.GONE);
+
+
+                recording = false;
+            }*/
         }
 
     };
-
-    private void recordStop()
-    {
-        System.out.println("recordStop :------------------> ");
-        if (recording) {
-            recorder.stop();
-            if (usecamera) {
-                try {
-                    camera.reconnect();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            recording = false;
-        }
-    }
 
     private void takeImage() {
 
@@ -485,10 +544,9 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
             public void onPictureTaken(byte[] data, Camera camera) {
                 try {
 
-                    //mCameraData=data;
                     // convert byte array into bitmap
                     Bitmap loadedImage = null;
-                    Bitmap rotatedBitmap = null;
+                    rotatedBitmap = null;
                     loadedImage = BitmapFactory.decodeByteArray(data, 0,data.length);
 
                     // rotate Image
@@ -505,38 +563,11 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
                     mCameraData = stream.toByteArray();
 
 
-                    videoImageView.setVisibility(View.VISIBLE);
-                    videoImageView.setImageBitmap(rotatedBitmap);
-
-                    camera.stopPreview();
-
-                    videoSurfaceView.setVisibility(View.GONE);
-                    videoRecord.setVisibility(View.GONE);
-                    recordReset.setVisibility(View.VISIBLE);
-                    recordFlipCamera.setVisibility(View.GONE);
-                    recordFlash.setVisibility(View.GONE);
-                    closeRecord.setVisibility(View.GONE);
-
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         });
-    }
-
-    private void setupImageSave() {
-
-        System.out.println("received");
-
-        if (mCameraData != null) {
-            Intent intent = new Intent();
-            intent.putExtra(EXTRA_CAMERA_DATA, mCameraData);
-            setResult(RESULT_OK, intent);
-        } else {
-            setResult(RESULT_CANCELED);
-        }
-
-        finish();
     }
 
     private void flipCamera() {
@@ -564,8 +595,7 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
     private Builder createAlert(Context context, String title, String message) {
 
         Builder dialog = new Builder(
-                new ContextThemeWrapper(context,
-                        android.R.style.Theme_Holo_Light_Dialog));
+                new ContextThemeWrapper(context,android.R.style.Theme_Holo_Light_Dialog));
         dialog.setIcon(R.drawable.ic_launcher);
         if (title != null)
             dialog.setTitle(title);
@@ -591,6 +621,5 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
 
         }
     }
-
 
 }

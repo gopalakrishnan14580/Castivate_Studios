@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,8 +38,9 @@ public class CastingCustomPhotoGallery extends Activity {
     private int count;
 
     private int max_count=4;
-    private  int update_count = 0;
+    public   int update_count = 0;
     private ArrayList<ImageUrl> imageUpdates = new ArrayList<ImageUrl>();
+    private LinearLayout custom_photo_gallery_back_icon;
 
     /**
      * Overrides methods
@@ -51,6 +53,16 @@ public class CastingCustomPhotoGallery extends Activity {
 
         grdImages= (GridView) findViewById(R.id.grdImages);
         btnSelect= (TextView) findViewById(R.id.btnSelect);
+        custom_photo_gallery_back_icon=(LinearLayout) findViewById(R.id.custom_photo_gallery_back_icon);
+        custom_photo_gallery_back_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Intent Intent = getIntent();
+        update_count= Intent.getIntExtra("update_count", 0);
 
         loadGridView();
     }

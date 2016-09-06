@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +43,7 @@ public class CastingCustomVideoGallery extends Activity {
     private ArrayList<VideoUrl> videoUrls = new ArrayList<VideoUrl>();
 
     Cursor imagecursor;
+    private LinearLayout custom_video_gallery_back_icon;
 
     /**
      * Overrides methods
@@ -54,6 +56,16 @@ public class CastingCustomVideoGallery extends Activity {
 
         grdVideos= (GridView) findViewById(R.id.grdVideos);
         btnSelectV= (TextView) findViewById(R.id.btnSelectV);
+        custom_video_gallery_back_icon=(LinearLayout) findViewById(R.id.custom_video_gallery_back_icon);
+        custom_video_gallery_back_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        Intent Intent = getIntent();
+        update_count= Intent.getIntExtra("update_count", 0);
 
         final String[] columns = {
 

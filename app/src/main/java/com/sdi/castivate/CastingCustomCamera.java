@@ -35,7 +35,7 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 
-public class CastingCustomCamera extends Activity implements SurfaceHolder.Callback, View.OnClickListener {
+public class CastingCustomCamera extends Activity implements SurfaceHolder.Callback, View.OnClickListener{
 
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
@@ -50,12 +50,78 @@ public class CastingCustomCamera extends Activity implements SurfaceHolder.Callb
     private LinearLayout camera_reset;
     private TextView capture_retaken,save_image;
 
-
+    Context context;
+    private static final String TAG = CastingCustomVideoCamera.class.getSimpleName();
+    private static final int REQUEST_CAMERA =2909;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_camera);
 
+        context=getApplicationContext();
+
+
+        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            // Camera permission has not been granted.
+
+            requestCameraPermission();
+
+        } else {
+
+            // Camera permissions is already available, show the camera preview.
+            Log.i(TAG,"CAMERA permission has already been granted. Displaying camera preview.");
+            // camera surface view created
+
+            init();
+        }*/
+
+            init();
+    }
+    /*private void requestCameraPermission() {
+
+        Log.i(TAG, "CAMERA permission has NOT been granted. Requesting permission.");
+
+        // BEGIN_INCLUDE(camera_permission_request)
+        if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
+
+            ActivityCompat.requestPermissions(CastingCustomCamera.this,
+                    new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO},
+                    REQUEST_CAMERA);
+            // Provide an additional rationale to the user if the permission was not granted
+            // and the user would benefit from additional context for the use of the permission.
+            // For example if the user has previously denied the permission.
+
+        } else {
+
+            // Camera permission has not been granted yet. Request it directly.
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                            Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO},
+                    REQUEST_CAMERA);
+        }
+        // END_INCLUDE(camera_permission_request)
+    }*/
+    /*@Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CAMERA: {
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+                    Log.e("Permission", "Granted");
+
+                    Intent ChangeIntent = new Intent(CastingCustomCamera.this, CastingCustomVideoCamera.class);
+                    startActivity(ChangeIntent);
+                    finish();
+                } else {
+                    Log.e("Permission", "Denied");
+                }
+                return;
+            }
+        }
+    }*/
+    private void init()
+    {
         cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
 
         flipCamera = (ImageButton) findViewById(R.id.flipCamera);

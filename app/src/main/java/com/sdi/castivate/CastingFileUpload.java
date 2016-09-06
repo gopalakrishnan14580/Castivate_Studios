@@ -12,7 +12,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sdi.castivate.model.ImageUrl;
@@ -44,11 +46,15 @@ public class CastingFileUpload extends Activity {
     private final int PICK_IMAGE_MULTIPLE =1;
     private final int PICK_VIDEO_MULTIPLE =2;
     private final int TAKE_PICTURE_REQUEST =3;
+    private final int TAKE_VIDEO_REQUEST =4;
 
     private ArrayList<ImageUrl> imageUrls = new ArrayList<ImageUrl>();
-    private ArrayList<VideoUrl> videoUrls;
+    private ArrayList<VideoUrl> videoUrls = new ArrayList<VideoUrl>();
 
     private Bitmap takePictureBitmap;
+    private String video_path;
+    private LinearLayout casting_file_upload_back_icon;
+    private TextView casting_file_upload_done;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -107,6 +113,27 @@ public class CastingFileUpload extends Activity {
         delVideoViewThree.setVisibility(View.INVISIBLE);
         delVideoViewFour.setVisibility(View.INVISIBLE);
 
+        //Casting file upload back
+        casting_file_upload_back_icon=(LinearLayout) findViewById(R.id.casting_file_upload_back_icon);
+        casting_file_upload_back_icon.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        //Casting file upload done.
+        casting_file_upload_done=(TextView) findViewById(R.id.casting_file_upload_done);
+        casting_file_upload_done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(imageUrls.size()>0 && videoUrls.size()>0)
+                    Toast.makeText(CastingFileUpload.this, "Casting file upload done.", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(CastingFileUpload.this, "Minimum one photo and video file can be upload. ", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         //Add photo choose Gallery or Capture
         addPhoto.setOnClickListener(new View.OnClickListener() {
@@ -168,17 +195,6 @@ public class CastingFileUpload extends Activity {
             }
         });
 
-
-        /*try {
-
-            if (imageUrls.size() < 4) addPhoto.setEnabled(true);
-            else addPhoto.setEnabled(false);
-
-        }catch (Exception e)
-        {
-            e.printStackTrace();
-        }*/
-
         //Remove video position for photo view image icon
         delImageViewOne.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -239,35 +255,30 @@ public class CastingFileUpload extends Activity {
         });
     }
 
-    private void cameraIntent() {
-
-        startActivityForResult(new Intent(CastingFileUpload.this, CastingCustomCamera.class), TAKE_PICTURE_REQUEST);
-    }
-
     private void photoGallery() {
 
         Intent intent = new Intent(CastingFileUpload.this,CastingCustomPhotoGallery.class);
         intent.setType("image/*");
+        intent.putExtra("update_count",imageUrls.size());
         startActivityForResult(intent,PICK_IMAGE_MULTIPLE);
     }
 
     private void videoGallery() {
         Intent intent = new Intent(CastingFileUpload.this,CastingCustomVideoGallery.class);
         intent.setType("video/*");
+        intent.putExtra("update_count",videoUrls.size());
         startActivityForResult(intent, PICK_VIDEO_MULTIPLE);
     }
 
-    private void recordVideo() {
-        /*Intent intent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
-        fileUri = Uri.fromFile(getOutputMediaFile(MEDIA_TYPE_VIDEO));
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, fileUri);
-        intent.putExtra(MediaStore.EXTRA_VIDEO_QUALITY, 1);
-        startActivityForResult(intent, VIDEO_CAPTURE);*/
+    private void cameraIntent() {
 
-        Intent intent = new Intent(CastingFileUpload.this,CastingCustomVideoCamera.class);
-        startActivity(intent);
+        startActivityForResult(new Intent(CastingFileUpload.this, CastingCustomCamera.class), TAKE_PICTURE_REQUEST);
     }
 
+    private void recordVideo() {
+
+        startActivityForResult(new Intent(CastingFileUpload.this, CastingCustomVideoCamera.class), TAKE_VIDEO_REQUEST);
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -299,13 +310,26 @@ public class CastingFileUpload extends Activity {
                 byte[] cameraData = extras.getByteArray(CastingCustomCamera.EXTRA_CAMERA_DATA);
                 if (cameraData != null) {
                     takePictureBitmap = BitmapFactory.decodeByteArray(cameraData, 0, cameraData.length);
-
                     saveImageDisplay();
                 }
+            }
+
+            if(requestCode == TAKE_VIDEO_REQUEST)
+            {
+                video_path = data.getStringExtra("videoRecordingPath");
+                saveVideoImage();
             }
         }
     }
 
+    private void saveVideoImage()
+    {
+        VideoUrl videoUrl = new VideoUrl();
+        videoUrl.setUploadVideoUrl(video_path);
+        videoUrls.add(videoUrl);
+
+        showVideoThumbnail();
+    }
     private void saveImageDisplay()
     {
         File saveFile = openFileForImage();
@@ -346,13 +370,9 @@ public class CastingFileUpload extends Activity {
                     Toast.makeText(CastingFileUpload.this, "Unable to save image to file.",
                             Toast.LENGTH_LONG).show();
                 } else {
-                    /*Toast.makeText(CastingFileUpload.this, "Saved image to: " + file.getPath(),
-                            Toast.LENGTH_LONG).show();*/
 
                     ImageUrl imageUrl = new ImageUrl();
-
                     imageUrl.setUploadImageUrl(file.getPath());
-
                     imageUrls.add(imageUrl);
 
                     addImages();
@@ -367,16 +387,12 @@ public class CastingFileUpload extends Activity {
 
     private void onSelectFromGalleryResult(String[] imagesPath) {
 
-        //imageUrls.clear();
-
         List<String> imageList = Arrays.asList(imagesPath);
 
         for(String s:imageList)
         {
             ImageUrl imageUrl = new ImageUrl();
-
             imageUrl.setUploadImageUrl(s);
-
             imageUrls.add(imageUrl);
         }
 
@@ -385,10 +401,12 @@ public class CastingFileUpload extends Activity {
 
     private void addImages() {
 
+        //System.out.println("imageUrls : "+imageUrls.size());
+
         if (imageUrls.size() < 4) addPhoto.setEnabled(true);
         else addPhoto.setEnabled(false);
 
-        Toast.makeText(CastingFileUpload.this, "imageUrls" + imageUrls.size(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(CastingFileUpload.this, "imageUrls" + imageUrls.size(), Toast.LENGTH_SHORT).show();
 
         for (int i = 1; i <= 4; i++) {
             try {
@@ -446,23 +464,16 @@ public class CastingFileUpload extends Activity {
 
     private void onSelectFromVideoGalleryResult(String[] videosPath) {
 
-        videoUrls= new ArrayList<VideoUrl>();
-
-        videoUrls.clear();
-
         List<String> videoList = Arrays.asList(videosPath);
 
         for(String s:videoList)
         {
             VideoUrl videoUrl = new VideoUrl();
-
             videoUrl.setUploadVideoUrl(s);
-
             videoUrls.add(videoUrl);
         }
 
         showVideoThumbnail();
-
     }
 
     private void showVideoThumbnail() {
@@ -470,7 +481,7 @@ public class CastingFileUpload extends Activity {
         if (videoUrls.size() < 4) addVideo.setEnabled(true);
         else addVideo.setEnabled(false);
 
-        Toast.makeText(CastingFileUpload.this, "videoUrls = " + videoUrls.size(), Toast.LENGTH_SHORT).show();
+       // Toast.makeText(CastingFileUpload.this, "videoUrls = " + videoUrls.size(), Toast.LENGTH_SHORT).show();
 
         for (int i = 1; i <= 4; i++) {
             try {

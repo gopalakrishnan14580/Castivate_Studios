@@ -1,12 +1,12 @@
 package com.sdi.castivate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import android.app.Application;
+import android.content.Context;
 
 import com.sdi.castivate.model.CastingDetailsModel;
 
-import android.app.Application;
-import android.content.Context;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 
 
@@ -28,8 +28,6 @@ public class CastivateApplication extends Application {
 
         instance = this;
         context = this;
-
-
 
     }
 

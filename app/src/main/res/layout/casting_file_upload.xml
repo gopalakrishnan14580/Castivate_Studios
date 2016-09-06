@@ -53,7 +53,7 @@
 
 
         <com.sdi.castivate.fonts.ProximaNovaRegular
-            android:id="@+id/casting_registration_signin"
+            android:id="@+id/casting_file_upload_done"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
@@ -135,7 +135,8 @@
             <TextView
                 android:layout_width="1.2dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/dotted" />
+                android:background="@drawable/gap_single_devider"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -189,7 +190,7 @@
             <TextView
                 android:layout_width="1.2dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/dotted" />
+                android:background="@drawable/gap_single_devider" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -215,7 +216,7 @@
             <TextView
                 android:layout_width="1.2dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/dotted" />
+                android:background="@drawable/gap_single_devider" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -295,7 +296,7 @@
             <TextView
                 android:layout_width="1.2dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/dotted" />
+                android:background="@drawable/gap_single_devider" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -366,7 +367,7 @@
             <TextView
                 android:layout_width="1.2dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/dotted" />
+                android:background="@drawable/gap_single_devider" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -400,7 +401,7 @@
             <TextView
                 android:layout_width="1.2dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/dotted" />
+                android:background="@drawable/gap_single_devider" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

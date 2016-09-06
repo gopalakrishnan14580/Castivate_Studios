@@ -13,8 +13,18 @@
         android:id="@+id/videoImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:scaleType="fitXY"
         android:visibility="gone"
         />
+
+    <ImageButton
+        android:id="@+id/videoPreview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/play_icon"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:visibility="gone"/>
 
     <ImageButton
         android:id="@+id/videoRecord"
@@ -81,8 +91,8 @@
         android:layout_height="50dp"
         android:gravity="center"
         android:textSize="16dp"
-        android:textColor="@color/white"
-        android:text="00:00"
+        android:textColor="#FFFFFF"
+        android:text="00:00:00"
         android:visibility="gone"/>
 
     <LinearLayout
@@ -111,7 +121,7 @@
             android:layout_height="50dp"
             android:gravity="center"
             android:textColor="#FFFFFF"
-            android:text="Use" />
+            android:text="Use Video" />
 
     </LinearLayout>
 
