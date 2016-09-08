@@ -11,6 +11,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
 
+import java.io.File;
+
 /**
  * Created by Shreya Kotak on 12/05/16.
  */
@@ -49,6 +51,25 @@ public class Utility {
             }
         } else {
             return true;
+        }
+    }
+
+
+    public static void createDirIfNotExist(String _path) {
+        File lf = new File(_path);
+        try {
+            if (lf.exists()) {
+                //directory already exists
+            } else {
+                if (lf.mkdirs()) {
+                    //Log.v(TAG, "createDirIfNotExist created " + _path);
+                } else {
+                    //Log.v(TAG, "createDirIfNotExist failed to create " + _path);
+                }
+            }
+        } catch (Exception e) {
+            //create directory failed
+            //Log.v(TAG, "createDirIfNotExist failed to create " + _path);
         }
     }
 }

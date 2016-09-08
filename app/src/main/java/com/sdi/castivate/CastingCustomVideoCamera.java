@@ -1,5 +1,6 @@
 package com.sdi.castivate;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -19,6 +20,7 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Surface;
@@ -39,7 +41,7 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 
-public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.Callback, View.OnClickListener{
+public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.Callback,ActivityCompat.OnRequestPermissionsResultCallback, View.OnClickListener{
 
     private SurfaceView videoSurfaceView;
     private SurfaceHolder videoSurfaceHolder;
@@ -66,11 +68,13 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
     long updatedTime = 0L;
 
     private  String videoRecordingPath="/sdcard/Video_"+System.currentTimeMillis() +".mp4";
+    /*private  String videoRecordingPath="/sdcard/casting_video/";
+    private String videoRecordingPath_local ="";*/
     Bitmap rotatedBitmap;
     ImageButton videoPreview;
     Context context;
     private static final String TAG = CastingCustomVideoCamera.class.getSimpleName();
-    private static final int REQUEST_CAMERA =2909;
+    private static final int REQUEST_CAMERA =2919;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,53 +82,38 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
         setContentView(R.layout.custom_video_camera);
 
         context = getApplicationContext();
-/*
-        if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) context, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 0);
-        }*/
 
-        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            // Camera permission has not been granted.
 
             requestCameraPermission();
 
         } else {
-
-            // Camera permissions is already available, show the camera preview.
             Log.i(TAG,"CAMERA permission has already been granted. Displaying camera preview.");
-            // camera surface view created
-
             init();
-        }*/
-        init();
+        }
+        //init();
 
     }
-    /*private void requestCameraPermission() {
+    private void requestCameraPermission() {
 
         Log.i(TAG, "CAMERA permission has NOT been granted. Requesting permission.");
 
-        // BEGIN_INCLUDE(camera_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
             ActivityCompat.requestPermissions(CastingCustomVideoCamera.this,
                     new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO},
                     REQUEST_CAMERA);
-            // Provide an additional rationale to the user if the permission was not granted
-            // and the user would benefit from additional context for the use of the permission.
-            // For example if the user has previously denied the permission.
 
         } else {
 
-            // Camera permission has not been granted yet. Request it directly.
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO},
                     REQUEST_CAMERA);
         }
-        // END_INCLUDE(camera_permission_request)
-    }*/
-   /* @Override
+    }
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CAMERA: {
@@ -141,7 +130,7 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
                 return;
             }
         }
-    }*/
+    }
 
     private void init()
     {
@@ -264,8 +253,8 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
         List<String> focusModes = params.getSupportedFlashModes();
         if (focusModes != null) {
             if (focusModes
-                    .contains(Parameters.FOCUS_MODE_CONTINUOUS_PICTURE)) {
-                params.setFlashMode(Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                    .contains(Parameters.FOCUS_MODE_CONTINUOUS_VIDEO)) {
+                params.setFlashMode(Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
             }
         }
 
@@ -314,6 +303,10 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
+        if (camera != null) {
+            camera.stopPreview();
+            camera.release();
+        }
 
     }
 
@@ -364,7 +357,15 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
     {
         if (recording) {
             // stop recording and release camera
-            recorder.stop(); // stop the recording
+            //recorder.stop();
+
+            try{
+                recorder.stop();
+            }
+            catch (IllegalStateException e) {
+                e.printStackTrace();
+            }
+            // stop the recording
             releaseMediaRecorder(); // release the MediaRecorder object
             // Toast.makeText(MainActivity.this, "Video captured!", Toast.LENGTH_LONG).show();
 
@@ -405,6 +406,8 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
 
     private void  videoPreview()
     {
+        System.out.println("videoRecordingPath : "+videoRecordingPath);
+
         Intent intent = new Intent(CastingCustomVideoCamera.this,CastingVideoPreview.class);
         intent.putExtra("videoRecordingPath",videoRecordingPath);
         startActivity(intent);
@@ -433,22 +436,26 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
 
     private boolean prepareRecorder() {
 
+        //Utility.createDirIfNotExist(videoRecordingPath);
+        try {
         recorder = new MediaRecorder();
         recorder.setPreviewDisplay(videoSurfaceHolder.getSurface());
         camera.unlock();
-        recorder.setCamera(camera);
+            recorder.setCamera(camera);
         recorder.setOrientationHint(rotation);
         recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         recorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
         recorder.setProfile(camcorderProfile);
 
         if (camcorderProfile.fileFormat == MediaRecorder.OutputFormat.MPEG_4) {
+
             recorder.setOutputFile(videoRecordingPath);
+            System.out.println("videoRecordingPath 1 : "+videoRecordingPath);
         } else {
             recorder.setOutputFile(videoRecordingPath);
-        }
 
-        try {
+            System.out.println("videoRecordingPath 2 : "+videoRecordingPath);
+        }
             recorder.prepare();
         } catch (IllegalStateException e) {
             releaseMediaRecorder();
@@ -462,10 +469,17 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
 
     private void releaseMediaRecorder() {
         if (recorder != null) {
-            recorder.reset(); // clear recorder configuration
-            recorder.release(); // release the recorder object
-            recorder = null;
-            camera.lock(); // lock camera for later use
+            try {
+
+                recorder.reset(); // clear recorder configuration
+                recorder.release(); // release the recorder object
+                recorder = null;
+                camera.lock(); // lock camera for later use
+            }
+            catch (IllegalStateException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -507,7 +521,8 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
             int hours = (secs / 60) % 24;;
             secs = secs % 60;
             int milliseconds = (int) (updatedTime % 1000);
-            String Timer=(String.format("%02d", hours) + ":"+String.format("%02d", mins) + ":"+ String.format("%02d", secs));
+            String Timer=(String.format("%02d", mins) + ":"+ String.format("%02d", secs));
+            //String Timer=(String.format("%02d", hours) + ":"+String.format("%02d", mins) + ":"+ String.format("%02d", secs));
             showTimer.setText(Timer);
 
             customHandler.postDelayed(this, 0);
@@ -566,6 +581,7 @@ public class CastingCustomVideoCamera extends Activity implements SurfaceHolder.
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                camera.startPreview();
             }
         });
     }

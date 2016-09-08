@@ -92,7 +92,7 @@
         android:gravity="center"
         android:textSize="16dp"
         android:textColor="#FFFFFF"
-        android:text="00:00:00"
+        android:text="00:00"
         android:visibility="gone"/>
 
     <LinearLayout

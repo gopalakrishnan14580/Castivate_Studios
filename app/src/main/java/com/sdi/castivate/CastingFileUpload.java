@@ -26,7 +26,6 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -150,7 +149,7 @@ public class CastingFileUpload extends Activity {
 
                         if (items[item].equals("Capture")) {
                             photoChoose = "Capture";
-                            if (result) cameraIntent();
+                            /*if (result)*/ cameraIntent();
 
                         } else if (items[item].equals("Gallery")) {
                             photoChoose = "Gallery";
@@ -180,7 +179,7 @@ public class CastingFileUpload extends Activity {
 
                         if (items[item].equals("Record")) {
                             videoChoose = "Record";
-                            if (result) recordVideo();
+                            /*if (result)*/ recordVideo();
 
                         } else if (items[item].equals("Gallery")) {
                             videoChoose = "Gallery";
@@ -288,14 +287,12 @@ public class CastingFileUpload extends Activity {
             if(requestCode == PICK_IMAGE_MULTIPLE){
 
                 String[] imagesPath = data.getStringExtra("data").split("\\|");
-
                 onSelectFromGalleryResult(imagesPath);
             }
 
             if(requestCode == PICK_VIDEO_MULTIPLE)
             {
                 String[] videosPath = data.getStringExtra("data").split("\\|");
-
                 onSelectFromVideoGalleryResult(videosPath);
             }
 
@@ -306,6 +303,7 @@ public class CastingFileUpload extends Activity {
                     takePictureBitmap.recycle();
                     takePictureBitmap = null;
                 }
+
                 Bundle extras = data.getExtras();
                 byte[] cameraData = extras.getByteArray(CastingCustomCamera.EXTRA_CAMERA_DATA);
                 if (cameraData != null) {
@@ -351,12 +349,13 @@ public class CastingFileUpload extends Activity {
             if (!imageDirectory.exists() && !imageDirectory.mkdirs()) {
                 imageDirectory = null;
             } else {
+
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_mm_dd_hh_mm",
                         Locale.getDefault());
 
                 return new File(imageDirectory.getPath() +
                         File.separator + "image_" +
-                        dateFormat.format(new Date()) + ".png");
+                        System.currentTimeMillis()+ ".png");
             }
         }
         return null;
@@ -370,6 +369,8 @@ public class CastingFileUpload extends Activity {
                     Toast.makeText(CastingFileUpload.this, "Unable to save image to file.",
                             Toast.LENGTH_LONG).show();
                 } else {
+
+                    System.out.println("File Name :"+file.getPath());
 
                     ImageUrl imageUrl = new ImageUrl();
                     imageUrl.setUploadImageUrl(file.getPath());

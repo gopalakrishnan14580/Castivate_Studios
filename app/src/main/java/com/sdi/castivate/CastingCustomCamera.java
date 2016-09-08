@@ -1,5 +1,6 @@
 package com.sdi.castivate;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -16,6 +17,7 @@ import android.hardware.Camera.ErrorCallback;
 import android.hardware.Camera.Parameters;
 import android.hardware.Camera.PictureCallback;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.Surface;
@@ -35,7 +37,7 @@ import java.util.List;
 
 @SuppressWarnings("deprecation")
 
-public class CastingCustomCamera extends Activity implements SurfaceHolder.Callback, View.OnClickListener{
+public class CastingCustomCamera extends Activity implements SurfaceHolder.Callback,ActivityCompat.OnRequestPermissionsResultCallback, View.OnClickListener{
 
     private SurfaceView surfaceView;
     private SurfaceHolder surfaceHolder;
@@ -60,49 +62,39 @@ public class CastingCustomCamera extends Activity implements SurfaceHolder.Callb
 
         context=getApplicationContext();
 
-
-        /*if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            // Camera permission has not been granted.
 
             requestCameraPermission();
 
         } else {
 
-            // Camera permissions is already available, show the camera preview.
             Log.i(TAG,"CAMERA permission has already been granted. Displaying camera preview.");
-            // camera surface view created
 
             init();
-        }*/
+        }
 
-            init();
     }
-    /*private void requestCameraPermission() {
+    private void requestCameraPermission() {
 
         Log.i(TAG, "CAMERA permission has NOT been granted. Requesting permission.");
 
-        // BEGIN_INCLUDE(camera_permission_request)
         if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CAMERA)) {
 
             ActivityCompat.requestPermissions(CastingCustomCamera.this,
                     new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO},
                     REQUEST_CAMERA);
-            // Provide an additional rationale to the user if the permission was not granted
-            // and the user would benefit from additional context for the use of the permission.
-            // For example if the user has previously denied the permission.
 
         } else {
 
-            // Camera permission has not been granted yet. Request it directly.
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
                             Manifest.permission.READ_EXTERNAL_STORAGE,Manifest.permission.RECORD_AUDIO},
                     REQUEST_CAMERA);
         }
-        // END_INCLUDE(camera_permission_request)
-    }*/
-    /*@Override
+
+    }
+    @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
             case REQUEST_CAMERA: {
@@ -110,7 +102,7 @@ public class CastingCustomCamera extends Activity implements SurfaceHolder.Callb
 
                     Log.e("Permission", "Granted");
 
-                    Intent ChangeIntent = new Intent(CastingCustomCamera.this, CastingCustomVideoCamera.class);
+                    Intent ChangeIntent = new Intent(CastingCustomCamera.this, CastingCustomCamera.class);
                     startActivity(ChangeIntent);
                     finish();
                 } else {
@@ -119,11 +111,16 @@ public class CastingCustomCamera extends Activity implements SurfaceHolder.Callb
                 return;
             }
         }
-    }*/
+    }
     private void init()
     {
-        cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
 
+        final int maxMemory = (int) (Runtime.getRuntime().maxMemory() / 1024);
+        final int cacheSize = maxMemory / 8;
+
+        System.out.println("cacheSize : "+cacheSize);
+
+        cameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
         flipCamera = (ImageButton) findViewById(R.id.flipCamera);
         flashCameraButton = (ImageButton) findViewById(R.id.flash);
         captureImage = (ImageButton) findViewById(R.id.captureImage);
@@ -277,13 +274,15 @@ public class CastingCustomCamera extends Activity implements SurfaceHolder.Callb
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
 
-
-
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
 
+        if (camera != null) {
+            camera.stopPreview();
+            camera.release();
+        }
     }
 
     @Override
@@ -314,19 +313,18 @@ public class CastingCustomCamera extends Activity implements SurfaceHolder.Callb
         }
     }
 
-
     private void setupImageCapture() {
 
         mCameraImage.setVisibility(View.GONE);
         surfaceView.setVisibility(View.VISIBLE);
         camera.startPreview();
+       // camera.release();
         camera_reset.setVisibility(View.GONE);
         flipCamera.setVisibility(View.VISIBLE);
         captureImage.setVisibility(View.VISIBLE);
         flashCameraButton.setVisibility(View.VISIBLE);
         closeCamera.setVisibility(View.VISIBLE);
     }
-
 
     private void takeImage() {
 
@@ -349,12 +347,10 @@ public class CastingCustomCamera extends Activity implements SurfaceHolder.Callb
                             loadedImage.getWidth(), loadedImage.getHeight(),
                             rotateMatrix, false);
 
-
                     Bitmap bmp = rotatedBitmap;
                     ByteArrayOutputStream stream = new ByteArrayOutputStream();
                     bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
                     mCameraData = stream.toByteArray();
-
 
                     mCameraImage.setVisibility(View.VISIBLE);
                     mCameraImage.setImageBitmap(rotatedBitmap);
@@ -439,7 +435,6 @@ public class CastingCustomCamera extends Activity implements SurfaceHolder.Callb
             } catch (Exception e) {
                 // TODO: handle exception
             }
-
         }
     }
 
@@ -450,10 +445,10 @@ public class CastingCustomCamera extends Activity implements SurfaceHolder.Callb
 
         if (camera == null) {
             try {
+                //camera = Camera.open(cameraId);
                 camera = Camera.open();
                 camera.setPreviewDisplay(surfaceView.getHolder());
-
-                    camera.startPreview();
+                camera.startPreview();
 
             } catch (Exception e) {
                 Toast.makeText(CastingCustomCamera.this, "Unable to open camera.", Toast.LENGTH_LONG)
@@ -461,14 +456,14 @@ public class CastingCustomCamera extends Activity implements SurfaceHolder.Callb
             }
         }
     }
-    @Override
+    /*@Override
     protected void onPause() {
         super.onPause();
         if (camera != null) {
             camera.stopPreview();
         }
     }
-
+*/
     /**
      * Releases the resources associated with the camera source, the associated detectors, and the
      * rest of the processing pipeline.
