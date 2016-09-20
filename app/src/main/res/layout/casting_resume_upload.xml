@@ -69,6 +69,7 @@
     </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/upload_hide"
             android:layout_below="@+id/casting_resume_upload_top_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -88,6 +89,40 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:textStyle="bold" />
+            <LinearLayout
+                android:id="@+id/drive_files_display_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:visibility="gone">
+                <com.sdi.castivate.fonts.ProximanovaCondSemiBold
+                    android:id="@+id/drive_files_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:text="@string/resume"
+                    android:textColor="@color/dark_black"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:textStyle="normal"
+                    android:visibility="visible"/>
+
+                <ImageView
+                    android:id="@+id/drive_files_delete"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:padding="15dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/image_delete_icon"
+                    />
+
+            </LinearLayout>
+
+
 
             <RelativeLayout
                 android:id="@+id/resume_upload"
@@ -96,7 +131,8 @@
                 android:layout_gravity="center_horizontal"
                 android:background="@drawable/dotted"
                 android:padding="15dp"
-                android:gravity="center_horizontal">
+                android:gravity="center_horizontal"
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/image_resume"
@@ -121,5 +157,12 @@
 
     </LinearLayout>
 
+    <ListView
+        android:id="@+id/drive_files"
+        android:layout_below="@+id/casting_resume_upload_top_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:divider="@color/dark_black"
+        android:visibility="gone"/>
 
     </RelativeLayout>

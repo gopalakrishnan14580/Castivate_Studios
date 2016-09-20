@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.multidex.MultiDexApplication;
 
 import com.sdi.castivate.model.CastingDetailsModel;
+import com.sdi.castivate.model.DriveModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,14 +14,21 @@ import java.util.HashMap;
  * Created by Balachandar on 21-Apr-15.
  */
 
-
-
 public class CastivateApplication extends MultiDexApplication {
 
     private static CastivateApplication instance ;
      static Context context;
 
-   
+    private ArrayList<DriveModel> commonDriveModels;
+
+    public ArrayList<DriveModel> getCommonDriveModels() {
+        return commonDriveModels;
+    }
+
+    public void setCommonDriveModels(ArrayList<DriveModel> commonDriveModels) {
+        this.commonDriveModels = commonDriveModels;
+    }
+
     @Override
     public void onCreate() {
         // TODO Auto-generated method stub
@@ -28,7 +36,6 @@ public class CastivateApplication extends MultiDexApplication {
 
         instance = this;
         context = this;
-
     }
 
     public static  Context getAppContext() {
@@ -48,8 +55,7 @@ public class CastivateApplication extends MultiDexApplication {
 	}
 	
 	HashMap<Integer, ArrayList<CastingDetailsModel>> hashMap = new HashMap<Integer, ArrayList<CastingDetailsModel>>();
-	
-   
+
 
     @Override
     public void onTerminate() {

@@ -28,6 +28,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+    dexOptions {
+        incremental true
+        javaMaxHeapSize "4g"
+    }
 }
 repositories {
     jcenter()
@@ -73,7 +84,7 @@ dependencies {
     // Include supported authentication methods for your application
     compile ('com.microsoft.services.msa:msa-auth:0.8.+')
     compile ('com.microsoft.aad:adal:1.1.+')
-    compile 'com.android.support:multidex:1.0.0'
+    compile 'com.android.support:multidex:1.0.1'
 
     //Google Drive
     //compile 'com.google.android.gms:play-services-auth:9.0.2'
@@ -85,7 +96,7 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
     // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient-android
-    compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.3'
+    //compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.3'
     // https://mvnrepository.com/artifact/com.google.api-client/google-api-client-gson
     compile group: 'com.google.api-client', name: 'google-api-client-gson', version: '1.22.0'
 

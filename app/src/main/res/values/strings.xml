@@ -163,4 +163,6 @@ For more info on the casting and what to submit go to: http://bit.ly/1bdNIha</st
   <string name="wifi_unavailable_error_message">Unable to access the internet, please visit connection settings</string>
   <string name="thumbnail_description">Thumbnail for %1$s</string>
   <string name="empty_file">You can use the action bar to modify this file or press the back button to return to the parent folder.</string>
+  <string name="google_app_id">1041447625260-334gbu4538214rrgt2rvrdnnmkhnpne5.apps.googleusercontent.com</string>
+  <!--<string name="google_app_idq">1020916109724-t3ol75atu8js1a9qkc552ab303hvb6d9.apps.googleusercontent.com</string>-->
 </resources>

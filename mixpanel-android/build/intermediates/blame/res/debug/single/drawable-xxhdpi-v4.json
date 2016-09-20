@@ -100,12 +100,12 @@
         "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-xxhdpi-v4/common_signin_btn_icon_disabled_light.9.png"
     },
     {
-        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/common_signin_btn_icon_disabled_focus_dark.9.png",
-        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-xxhdpi-v4/common_signin_btn_icon_disabled_focus_dark.9.png"
-    },
-    {
         "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/com_mixpanel_android_ic_clipboard_checkmark.png",
         "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-xxhdpi/com_mixpanel_android_ic_clipboard_checkmark.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/common_signin_btn_icon_disabled_focus_dark.9.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-xxhdpi-v4/common_signin_btn_icon_disabled_focus_dark.9.png"
     },
     {
         "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/debug/drawable-xxhdpi-v4/com_mixpanel_android_arrowleft.png",
