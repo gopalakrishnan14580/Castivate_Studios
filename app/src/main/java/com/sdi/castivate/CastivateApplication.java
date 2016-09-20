@@ -1,13 +1,12 @@
 package com.sdi.castivate;
 
-import android.app.Application;
 import android.content.Context;
+import android.support.multidex.MultiDexApplication;
 
 import com.sdi.castivate.model.CastingDetailsModel;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-
 
 
 /**
@@ -16,10 +15,11 @@ import java.util.HashMap;
 
 
 
-public class CastivateApplication extends Application {
+public class CastivateApplication extends MultiDexApplication {
 
     private static CastivateApplication instance ;
      static Context context;
+
    
     @Override
     public void onCreate() {
@@ -30,7 +30,6 @@ public class CastivateApplication extends Application {
         context = this;
 
     }
-
 
     public static  Context getAppContext() {
         return CastivateApplication.context;
@@ -56,7 +55,6 @@ public class CastivateApplication extends Application {
     public void onTerminate() {
         // TODO Auto-generated method stub
         super.onTerminate();
-
 
     }
 }

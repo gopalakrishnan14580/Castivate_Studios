@@ -1,33 +1,34 @@
 package com.sdi.castivate;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.content.pm.PackageManager;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialcamera.MaterialCamera;
 import com.sdi.castivate.model.ImageUrl;
 import com.sdi.castivate.model.VideoUrl;
 import com.sdi.castivate.utils.Utility;
 
 import java.io.File;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Created by twilightuser on 1/9/16.
@@ -40,7 +41,7 @@ public class CastingFileUpload extends Activity {
                       delVideoViewOne,delVideoViewTwo,delVideoViewThree,delVideoViewFour;
     private ImageView VideoViewIconOne,VideoViewIconTwo,VideoViewIconThree,VideoViewIconFour;
 
-    private RelativeLayout addPhoto,addVideo;
+    private LinearLayout addPhoto,addVideo;
     private String photoChoose,videoChoose;
     private final int PICK_IMAGE_MULTIPLE =1;
     private final int PICK_VIDEO_MULTIPLE =2;
@@ -50,19 +51,25 @@ public class CastingFileUpload extends Activity {
     private ArrayList<ImageUrl> imageUrls = new ArrayList<ImageUrl>();
     private ArrayList<VideoUrl> videoUrls = new ArrayList<VideoUrl>();
 
-    private Bitmap takePictureBitmap;
-    private String video_path;
+    private String video_path,image_path;
     private LinearLayout casting_file_upload_back_icon;
     private TextView casting_file_upload_done;
+
+    private final static int PERMISSION_RQ = 84;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.casting_file_upload);
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            // Request permission to save videos in external storage
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_RQ);
+        }
+
         //Add photo and video action
-        addPhoto=(RelativeLayout) findViewById(R.id.add_Photo);
-        addVideo=(RelativeLayout) findViewById(R.id.add_Video);
+        addPhoto=(LinearLayout) findViewById(R.id.add_Photo);
+        addVideo=(LinearLayout) findViewById(R.id.add_Video);
 
         //Photo upload image view
         imageViewOne=(ImageView) findViewById(R.id.imageViewOne);
@@ -138,21 +145,21 @@ public class CastingFileUpload extends Activity {
         addPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final CharSequence[] items = {"Capture", "Gallery","Cancel"};
+                final CharSequence[] items = {"Take Photo", "Photo Library","Cancel"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(CastingFileUpload.this);
-                builder.setTitle("Add Photo!");
+                builder.setTitle("Add Photo");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
                         boolean result = Utility.checkPermission(CastingFileUpload.this);
 
-                        if (items[item].equals("Capture")) {
-                            photoChoose = "Capture";
+                        if (items[item].equals("Take Photo")) {
+                            photoChoose = "Take Photo";
                             /*if (result)*/ cameraIntent();
 
-                        } else if (items[item].equals("Gallery")) {
-                            photoChoose = "Gallery";
+                        } else if (items[item].equals("Photo Library")) {
+                            photoChoose = "Photo Library";
                             if (result) photoGallery();
 
                         } else if (items[item].equals("Cancel")) {
@@ -168,21 +175,21 @@ public class CastingFileUpload extends Activity {
         addVideo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final CharSequence[] items = {"Record", "Gallery","Cancel"};
+                final CharSequence[] items = {"Take Video", "Photo Library","Cancel"};
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(CastingFileUpload.this);
-                builder.setTitle("Add Video!");
+                builder.setTitle("Add Video");
                 builder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int item) {
                         boolean result = Utility.checkPermission(CastingFileUpload.this);
 
-                        if (items[item].equals("Record")) {
-                            videoChoose = "Record";
+                        if (items[item].equals("Take Video")) {
+                            videoChoose = "Take Video";
                             /*if (result)*/ recordVideo();
 
-                        } else if (items[item].equals("Gallery")) {
-                            videoChoose = "Gallery";
+                        } else if (items[item].equals("Photo Library")) {
+                            videoChoose = "Photo Library";
                             if (result) videoGallery();
 
                         } else if (items[item].equals("Cancel")) {
@@ -201,21 +208,18 @@ public class CastingFileUpload extends Activity {
                 removeImage(0);
             }
         });
-
         delImageViewTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeImage(1);
             }
         });
-
         delImageViewThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeImage(2);
             }
         });
-
         delImageViewFour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -231,21 +235,18 @@ public class CastingFileUpload extends Activity {
                 removeVideo(0);
             }
         });
-
         delVideoViewTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeVideo(1);
             }
         });
-
         delVideoViewThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 removeVideo(2);
             }
         });
-
         delVideoViewFour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -271,12 +272,48 @@ public class CastingFileUpload extends Activity {
 
     private void cameraIntent() {
 
-        startActivityForResult(new Intent(CastingFileUpload.this, CastingCustomCamera.class), TAKE_PICTURE_REQUEST);
+        File saveDir = null;
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            // Only use external storage directory if permission is granted, otherwise cache directory is used by default
+            saveDir = new File(Environment.getExternalStorageDirectory(), "CastivateFiles");
+            saveDir.mkdirs();
+        }
+
+        MaterialCamera materialCamera = new MaterialCamera(this)
+                .saveDir(saveDir)
+                .stillShot()
+                .labelConfirm(R.string.mcam_use_stillshot);
+        materialCamera.start(TAKE_PICTURE_REQUEST);
     }
 
     private void recordVideo() {
 
-        startActivityForResult(new Intent(CastingFileUpload.this, CastingCustomVideoCamera.class), TAKE_VIDEO_REQUEST);
+        File saveDir = null;
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            // Only use external storage directory if permission is granted, otherwise cache directory is used by default
+            saveDir = new File(Environment.getExternalStorageDirectory(), "CastivateFiles");
+            saveDir.mkdirs();
+        }
+
+        MaterialCamera materialCamera = new MaterialCamera(this)
+                .saveDir(saveDir)
+                .showPortraitWarning(false)
+                .allowRetry(true)
+                .defaultToFrontFacing(true)
+                .labelConfirm(R.string.mcam_use_video);
+        materialCamera.start(TAKE_VIDEO_REQUEST);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
+            // Sample was denied WRITE_EXTERNAL_STORAGE permission
+            Toast.makeText(this, "Videos will be saved in a cache directory instead of an external storage directory since permission was denied.", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -284,8 +321,8 @@ public class CastingFileUpload extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
 
-            if(requestCode == PICK_IMAGE_MULTIPLE){
-
+            if(requestCode == PICK_IMAGE_MULTIPLE)
+            {
                 String[] imagesPath = data.getStringExtra("data").split("\\|");
                 onSelectFromGalleryResult(imagesPath);
             }
@@ -296,30 +333,30 @@ public class CastingFileUpload extends Activity {
                 onSelectFromVideoGalleryResult(videosPath);
             }
 
-            if(requestCode == TAKE_PICTURE_REQUEST)
+            if (requestCode == TAKE_VIDEO_REQUEST)
             {
-                // Recycle the previous bitmap.
-                if (takePictureBitmap != null) {
-                    takePictureBitmap.recycle();
-                    takePictureBitmap = null;
-                }
-
-                Bundle extras = data.getExtras();
-                byte[] cameraData = extras.getByteArray(CastingCustomCamera.EXTRA_CAMERA_DATA);
-                if (cameraData != null) {
-                    takePictureBitmap = BitmapFactory.decodeByteArray(cameraData, 0, cameraData.length);
-                    saveImageDisplay();
-                }
+                    final File file = new File(data.getData().getPath());
+                    video_path=file.getAbsolutePath();
+                    saveVideoImage();
             }
 
-            if(requestCode == TAKE_VIDEO_REQUEST)
+            if (requestCode == TAKE_PICTURE_REQUEST)
             {
-                video_path = data.getStringExtra("videoRecordingPath");
-                saveVideoImage();
+                final File file = new File(data.getData().getPath());
+                image_path=file.getAbsolutePath();
+                saveImagePath();
             }
         }
     }
 
+    private void saveImagePath()
+    {
+        ImageUrl imageUrl = new ImageUrl();
+        imageUrl.setUploadImageUrl(image_path);
+        imageUrls.add(imageUrl);
+
+        addImages();
+    }
     private void saveVideoImage()
     {
         VideoUrl videoUrl = new VideoUrl();
@@ -327,63 +364,6 @@ public class CastingFileUpload extends Activity {
         videoUrls.add(videoUrl);
 
         showVideoThumbnail();
-    }
-    private void saveImageDisplay()
-    {
-        File saveFile = openFileForImage();
-        if (saveFile != null) {
-            saveImageToFile(saveFile);
-        } else {
-            Toast.makeText(CastingFileUpload.this, "Unable to open file for saving image.",
-                    Toast.LENGTH_LONG).show();
-        }
-    }
-    private File openFileForImage()
-    {
-        File imageDirectory = null;
-        String storageState = Environment.getExternalStorageState();
-        if (storageState.equals(Environment.MEDIA_MOUNTED)) {
-            imageDirectory = new File(
-                    Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    "sdi.com.castivate");
-            if (!imageDirectory.exists() && !imageDirectory.mkdirs()) {
-                imageDirectory = null;
-            } else {
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy_mm_dd_hh_mm",
-                        Locale.getDefault());
-
-                return new File(imageDirectory.getPath() +
-                        File.separator + "image_" +
-                        System.currentTimeMillis()+ ".png");
-            }
-        }
-        return null;
-    }
-    private void saveImageToFile(File file) {
-        if (takePictureBitmap != null) {
-            FileOutputStream outStream = null;
-            try {
-                outStream = new FileOutputStream(file);
-                if (!takePictureBitmap.compress(Bitmap.CompressFormat.PNG, 100, outStream)) {
-                    Toast.makeText(CastingFileUpload.this, "Unable to save image to file.",
-                            Toast.LENGTH_LONG).show();
-                } else {
-
-                    System.out.println("File Name :"+file.getPath());
-
-                    ImageUrl imageUrl = new ImageUrl();
-                    imageUrl.setUploadImageUrl(file.getPath());
-                    imageUrls.add(imageUrl);
-
-                    addImages();
-                }
-                outStream.close();
-            } catch (Exception e) {
-                Toast.makeText(CastingFileUpload.this, "Unable to save image to file.",
-                        Toast.LENGTH_LONG).show();
-            }
-        }
     }
 
     private void onSelectFromGalleryResult(String[] imagesPath) {
@@ -396,18 +376,13 @@ public class CastingFileUpload extends Activity {
             imageUrl.setUploadImageUrl(s);
             imageUrls.add(imageUrl);
         }
-
         addImages();
     }
 
     private void addImages() {
 
-        //System.out.println("imageUrls : "+imageUrls.size());
-
         if (imageUrls.size() < 4) addPhoto.setEnabled(true);
         else addPhoto.setEnabled(false);
-
-       // Toast.makeText(CastingFileUpload.this, "imageUrls" + imageUrls.size(), Toast.LENGTH_SHORT).show();
 
         for (int i = 1; i <= 4; i++) {
             try {
@@ -473,7 +448,6 @@ public class CastingFileUpload extends Activity {
             videoUrl.setUploadVideoUrl(s);
             videoUrls.add(videoUrl);
         }
-
         showVideoThumbnail();
     }
 
@@ -481,8 +455,6 @@ public class CastingFileUpload extends Activity {
 
         if (videoUrls.size() < 4) addVideo.setEnabled(true);
         else addVideo.setEnabled(false);
-
-       // Toast.makeText(CastingFileUpload.this, "videoUrls = " + videoUrls.size(), Toast.LENGTH_SHORT).show();
 
         for (int i = 1; i <= 4; i++) {
             try {

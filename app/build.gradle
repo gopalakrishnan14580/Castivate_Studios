@@ -1,5 +1,11 @@
 apply plugin: 'com.android.application'
 
+ext {
+    //PUBLISH_VERSION = "0.3.2"
+    //TARGET_SDK = 24
+    //BUILD_TOOLS = "24.0.1"
+    GOOGLE_LIBS = "24.2.0"
+}
 android {
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
@@ -10,6 +16,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
+
 //        android:versionCode="16"
 //        android:versionName="1.9"
         useLibrary 'org.apache.http.legacy'
@@ -21,13 +29,18 @@ android {
         }
     }
 }
+repositories {
+    jcenter()
+    maven { url "https://dl.bintray.com/drummer-aidan/maven" }
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
-
+    //compile "com.android.support:appcompat-v7:$GOOGLE_LIBS"
+    compile project(':library')
     compile project(':wheel')
     compile project(':mixpanel-android')
     compile project(':google-play-services_lib')
@@ -49,4 +62,31 @@ dependencies {
     //new add 12/08/2016
 
     compile 'com.stripe:stripe-android:+'
+    //OneDrive sdk
+    compile ('com.onedrive.sdk:onedrive-sdk-android:1.2+') {
+        transitive = false
+    }
+
+    // Include the gson dependency
+    compile ('com.google.code.gson:gson:2.3.1')
+
+    // Include supported authentication methods for your application
+    compile ('com.microsoft.services.msa:msa-auth:0.8.+')
+    compile ('com.microsoft.aad:adal:1.1.+')
+    compile 'com.android.support:multidex:1.0.0'
+
+    //Google Drive
+    //compile 'com.google.android.gms:play-services-auth:9.0.2'
+    compile 'pub.devrel:easypermissions:0.1.5'
+    compile('com.google.api-client:google-api-client-android:1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    compile('com.google.apis:google-api-services-drive:v2-rev234-1.22.0') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient-android
+    compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.3'
+    // https://mvnrepository.com/artifact/com.google.api-client/google-api-client-gson
+    compile group: 'com.google.api-client', name: 'google-api-client-gson', version: '1.22.0'
+
 }

@@ -120,10 +120,12 @@
 
             <com.sdi.castivate.fonts.ProximanovaCondSemiBold
                 android:id="@+id/txt_forgot"
-                style="@style/txt_forgot"
+                style="@style/txt_forgot_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="@string/txt_forgot" />
+                android:textStyle="normal"
+                android:text="@string/txt_forgot_sign"
+                />
 
         </LinearLayout>
 

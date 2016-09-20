@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+
+
+    <RelativeLayout
+        android:id="@+id/casting_resume_upload_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/top_bar"
+        android:visibility="visible" >
+
+
+        <LinearLayout
+            android:id="@+id/casting_resume_upload_back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentStart="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:background="@drawable/back_icon"
+                android:visibility="visible" />
+
+            <com.sdi.castivate.fonts.ProximaNovaRegular
+                android:id="@+id/casting_resume_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/back"
+                android:textColor="@android:color/white"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <com.sdi.castivate.fonts.RockWell
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/castivity"
+            android:textColor="@android:color/white"
+            android:textSize="26sp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+
+        <com.sdi.castivate.fonts.ProximaNovaRegular
+            android:id="@+id/casting_resume_upload_done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/done"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:visibility="visible"
+            android:layout_marginEnd="10dp"
+            android:layout_alignTop="@+id/casting_resume_upload_back_icon"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+        <LinearLayout
+            android:layout_below="@+id/casting_resume_upload_top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:paddingRight="30dp"
+            android:paddingLeft="30dp"
+            android:orientation="vertical">
+
+    <com.sdi.castivate.fonts.ProximanovaCondSemiBold
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="15dp"
+        android:text="@string/resume"
+        android:textColor="@color/dark_black"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:textStyle="bold" />
+
+            <RelativeLayout
+                android:id="@+id/resume_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/dotted"
+                android:padding="15dp"
+                android:gravity="center_horizontal">
+
+                <ImageView
+                    android:id="@+id/image_resume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/upload_icon" />
+
+                <com.sdi.castivate.fonts.ProximaNovaLightTextView
+                    android:layout_below="@+id/image_resume"
+                    android:id="@+id/txt_resume_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center"
+                    android:textSize="20sp"
+                    android:textColor="#737272"
+                    android:text="@string/resume_upload" />
+
+            </RelativeLayout>
+
+    </LinearLayout>
+
+
+    </RelativeLayout>

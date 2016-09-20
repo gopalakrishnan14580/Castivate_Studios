@@ -144,6 +144,7 @@ For more info on the casting and what to submit go to: http://bit.ly/1bdNIha</st
   <string name="et_password">Password</string>
   <string name="btn_signin">Sign In</string>
   <string name="txt_forgot">Forgot Password</string>
+  <string name="txt_forgot_sign"><u>Forgot Password</u></string>
   <string name="txt_sign">Sign In</string>
 
   <!--  castivate details-->
@@ -155,4 +156,11 @@ For more info on the casting and what to submit go to: http://bit.ly/1bdNIha</st
   <string name="et_cv">CVV</string>
   <string name="btn_submit">Submit</string>
   <string name="casting_file_upload">Photo / Video</string>
+  <string name="resume">Resume</string>
+  <string name="resume_upload">You can upload a resume from Dropbox,Google Drive or OneDrive</string>
+  <string name="error_title">Error!</string>
+  <string name="close">Close</string>
+  <string name="wifi_unavailable_error_message">Unable to access the internet, please visit connection settings</string>
+  <string name="thumbnail_description">Thumbnail for %1$s</string>
+  <string name="empty_file">You can use the action bar to modify this file or press the back button to return to the parent folder.</string>
 </resources>

@@ -10,7 +10,7 @@
     <RelativeLayout
         android:id="@+id/custom_photo_gallery_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@drawable/top_bar"
         android:visibility="visible" >
 
@@ -62,7 +62,7 @@
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:visibility="visible"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="10dp"
             android:layout_alignTop="@+id/custom_video_gallery_back_icon"
             android:layout_alignParentEnd="true" />
 

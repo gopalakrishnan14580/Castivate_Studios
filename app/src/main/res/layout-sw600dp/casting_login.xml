@@ -30,7 +30,7 @@
                 <ImageView
 
                     android:layout_width="wrap_content"
-                    android:layout_height="30dp"
+                    android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:background="@drawable/back_icon"
                     android:visibility="visible" />
@@ -39,7 +39,8 @@
                     android:id="@+id/casting_login_back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="5dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="-2dp"
                     android:text="@string/back"
                     android:textColor="@android:color/white"
                     android:textSize="22sp"
@@ -80,6 +81,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:text="@string/txt_signin"
+                android:textStyle="bold"
                 android:textSize="24sp"/>
 
 
@@ -123,7 +125,7 @@
                 android:layout_marginTop="40dp"
                 android:background="@drawable/btn_signin"
                 android:gravity="center"
-                android:textSize="30dp"
+                android:textSize="25sp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
                 android:hint="@string/btn_signin" />
@@ -131,13 +133,15 @@
 
             <com.sdi.castivate.fonts.ProximanovaCondSemiBold
                 android:id="@+id/txt_forgot"
-                style="@style/txt_forgot"
+                style="@style/txt_forgot_sign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="@string/txt_forgot"
                 android:layout_marginTop="30dp"
                 android:layout_marginRight="40dp"
                 android:layout_marginLeft="40dp"
+                android:textStyle="normal"
+                android:text="@string/txt_forgot_sign"
                 android:textSize="24sp"/>
 
         </LinearLayout>

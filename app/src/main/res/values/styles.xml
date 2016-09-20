@@ -141,6 +141,13 @@
         <item name="android:textSize">14sp</item>
     </style>
 
+    <style name="txt_forgot_sign">
+        <item name="android:layout_marginTop">18dp</item>
+        <item name="android:layout_marginLeft">23dp</item>
+        <item name="android:textColor">#3d5ed4</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
 
 
     <style name="txt_signin">

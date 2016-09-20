@@ -312,7 +312,7 @@
             android:layout_alignParentBottom="true"
             android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textSize="20sp" />
+            android:textSize="25sp" />
 
     </RelativeLayout>
 

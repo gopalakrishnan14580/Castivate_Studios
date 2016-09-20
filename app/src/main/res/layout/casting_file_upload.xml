@@ -9,7 +9,7 @@
     <RelativeLayout
         android:id="@+id/casting_file_upload_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@drawable/top_bar"
         android:visibility="visible" >
 
@@ -61,7 +61,7 @@
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:visibility="visible"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="10dp"
             android:layout_alignTop="@+id/casting_file_upload_back_icon"
             android:layout_alignParentEnd="true" />
 
@@ -83,15 +83,17 @@
         android:padding="15dp"
         android:text="@string/casting_file_upload"
         android:textColor="@color/dark_black"
-        android:textSize="16sp"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@color/grey"
         android:orientation="vertical">
+        <!--android:background="@color/grey"-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -108,29 +110,31 @@
 
             </LinearLayout>-->
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/add_Photo"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="5dp"
                 android:layout_weight="1">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/scamera_icon" />
 
                 <com.sdi.castivate.fonts.ProximaNovaLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tap to add Photo"
-                    android:textColor="@color/grey"
-                    android:layout_marginTop="50dp"
-                    />
+                    android:textSize="18sp"
+                    android:layout_marginTop="5dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/grey_medium" />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="1.2dp"
@@ -163,6 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginTop="-2dp"
             android:background="@drawable/dotted"
             android:orientation="horizontal">
 
@@ -251,9 +256,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:background="@color/grey"
         android:orientation="vertical">
 
+        <!--android:background="@color/grey"-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -269,29 +274,32 @@
 
             </LinearLayout>-->
 
-            <RelativeLayout
+            <LinearLayout
                 android:id="@+id/add_Video"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:padding="5dp"
                 android:layout_weight="1">
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:src="@drawable/vcamera_icon" />
 
                 <com.sdi.castivate.fonts.ProximaNovaLightTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Tap to add Video"
-                    android:textColor="@color/grey"
-                    android:layout_marginTop="50dp"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/grey_medium"
+                    android:layout_marginTop="5dp"
                     />
 
-            </RelativeLayout>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="1.2dp"
@@ -332,6 +340,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:layout_marginTop="-2dp"
             android:background="@drawable/dotted"
             android:orientation="horizontal">
 

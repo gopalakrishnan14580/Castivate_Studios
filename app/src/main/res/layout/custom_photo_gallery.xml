@@ -11,7 +11,7 @@
     <RelativeLayout
         android:id="@+id/custom_photo_gallery_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="50dp"
         android:background="@drawable/top_bar"
         android:visibility="visible" >
 
@@ -63,7 +63,7 @@
             android:textColor="@android:color/white"
             android:textSize="16sp"
             android:visibility="visible"
-            android:layout_marginEnd="24dp"
+            android:layout_marginEnd="10dp"
             android:layout_alignTop="@+id/custom_photo_gallery_back_icon"
             android:layout_alignParentEnd="true" />
 
@@ -78,13 +78,25 @@
     android:orientation="vertical"
     >
 
-    <!--<ImageView
-        android:id="@+id/photoPreview"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="@drawable/contact_picture_placeholder"
+        android:layout_height="200dp">
 
-        />-->
+        <ImageView
+            android:id="@+id/photoPreview"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/contact_picture_placeholder"/>
+
+            <View
+                android:id="@+id/imageOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gallery_background_gray"
+                android:visibility="gone"/>
+
+    </RelativeLayout>
 
     <GridView
         android:id="@+id/grdImages"
@@ -97,7 +109,6 @@
         android:columnWidth="80dp"
         android:stretchMode="columnWidth"
         android:gravity="center"/>
-
 </LinearLayout>
 
     </RelativeLayout>

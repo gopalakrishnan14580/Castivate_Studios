@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:layout_height="match_parent"
+    tools:context="com.sdi.castivate.CastingCustomPhotoGallery">
+
+    <RelativeLayout
+        android:id="@+id/custom_photo_gallery_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@drawable/top_bar"
+        android:visibility="visible" >
+
+
+        <LinearLayout
+            android:id="@+id/custom_photo_gallery_back_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_alignParentStart="true">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:padding="5dp"
+                android:background="@drawable/back_icon"
+                android:visibility="visible" />
+
+            <com.sdi.castivate.fonts.ProximaNovaRegular
+                android:id="@+id/casting_registration_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:text="@string/back"
+                android:textColor="@android:color/white"
+                android:textSize="25sp"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+        <com.sdi.castivate.fonts.RockWell
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/castivity"
+            android:textColor="@android:color/white"
+            android:textSize="30sp"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+
+
+        <com.sdi.castivate.fonts.ProximaNovaRegular
+            android:id="@+id/btnSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:text="@string/done"
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:visibility="visible"
+            android:layout_marginEnd="10dp"
+            android:layout_alignTop="@+id/custom_photo_gallery_back_icon"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
+
+
+<LinearLayout
+    android:layout_below="@+id/custom_photo_gallery_top_bar"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp">
+
+        <ImageView
+            android:id="@+id/photoPreview"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/contact_picture_placeholder"/>
+
+            <View
+                android:id="@+id/imageOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gallery_background_gray"
+                android:visibility="gone"/>
+
+    </RelativeLayout>
+
+    <GridView
+        android:id="@+id/grdImages"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:columnWidth="190dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"/>
+</LinearLayout>
+
+    </RelativeLayout>
