@@ -1,9 +1,11 @@
 package com.sdi.castivate.model;
 
+import java.io.Serializable;
+
 /**
  * Created by twilightuser on 29/8/16.
  */
-public class ImageUrl {
+public class ImageUrl implements Serializable {
 
     private String uploadImageUrl;
 

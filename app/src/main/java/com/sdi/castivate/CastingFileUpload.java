@@ -21,8 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialcamera.MaterialCamera;
-import com.sdi.castivate.model.ImageUrl;
-import com.sdi.castivate.model.VideoUrl;
+import com.sdi.castivate.model.fileUrlModel;
 import com.sdi.castivate.utils.Utility;
 
 import java.io.File;
@@ -48,8 +47,8 @@ public class CastingFileUpload extends Activity {
     private final int TAKE_PICTURE_REQUEST =3;
     private final int TAKE_VIDEO_REQUEST =4;
 
-    private ArrayList<ImageUrl> imageUrls = new ArrayList<ImageUrl>();
-    private ArrayList<VideoUrl> videoUrls = new ArrayList<VideoUrl>();
+    private ArrayList<fileUrlModel> imageUrls = new ArrayList<fileUrlModel>();
+    private ArrayList<fileUrlModel> videoUrls = new ArrayList<fileUrlModel>();
 
     private String video_path,image_path;
     private LinearLayout casting_file_upload_back_icon;
@@ -135,9 +134,17 @@ public class CastingFileUpload extends Activity {
             public void onClick(View v) {
 
                 if(imageUrls.size()>0 && videoUrls.size()>0)
+                {
                     Toast.makeText(CastingFileUpload.this, "Casting file upload done.", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(CastingFileUpload.this,CastingResumeUpload.class);
+                    intent.putExtra("imageUrls", imageUrls);
+                    intent.putExtra("videoUrls", videoUrls);
+                    startActivity(intent);
+                }
                 else
+                {
                     Toast.makeText(CastingFileUpload.this, "Minimum one photo and video file can be upload. ", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -351,16 +358,16 @@ public class CastingFileUpload extends Activity {
 
     private void saveImagePath()
     {
-        ImageUrl imageUrl = new ImageUrl();
-        imageUrl.setUploadImageUrl(image_path);
+        fileUrlModel imageUrl = new fileUrlModel();
+        imageUrl.setFileUrl(image_path);
         imageUrls.add(imageUrl);
 
         addImages();
     }
     private void saveVideoImage()
     {
-        VideoUrl videoUrl = new VideoUrl();
-        videoUrl.setUploadVideoUrl(video_path);
+        fileUrlModel videoUrl = new fileUrlModel();
+        videoUrl.setFileUrl(video_path);
         videoUrls.add(videoUrl);
 
         showVideoThumbnail();
@@ -372,8 +379,8 @@ public class CastingFileUpload extends Activity {
 
         for(String s:imageList)
         {
-            ImageUrl imageUrl = new ImageUrl();
-            imageUrl.setUploadImageUrl(s);
+            fileUrlModel imageUrl = new fileUrlModel();
+            imageUrl.setFileUrl(s);
             imageUrls.add(imageUrl);
         }
         addImages();
@@ -389,28 +396,28 @@ public class CastingFileUpload extends Activity {
                 switch (i) {
                     case 1:
                         if (imageUrls.get(0) != null) {
-                            imageViewOne.setImageBitmap(BitmapFactory.decodeFile(imageUrls.get(0).getUploadImageUrl()));
+                            imageViewOne.setImageBitmap(BitmapFactory.decodeFile(imageUrls.get(0).getFileUrl()));
                             delImageViewOne.setVisibility(View.VISIBLE);
                         }
                         break;
 
                     case 2:
                         if (imageUrls.get(1) != null) {
-                            imageViewTwo.setImageBitmap(BitmapFactory.decodeFile(imageUrls.get(1).getUploadImageUrl()));
+                            imageViewTwo.setImageBitmap(BitmapFactory.decodeFile(imageUrls.get(1).getFileUrl()));
                             delImageViewTwo.setVisibility(View.VISIBLE);
                         }
                         break;
 
                     case 3:
                         if (imageUrls.get(2) != null) {
-                            imageViewThree.setImageBitmap(BitmapFactory.decodeFile(imageUrls.get(2).getUploadImageUrl()));
+                            imageViewThree.setImageBitmap(BitmapFactory.decodeFile(imageUrls.get(2).getFileUrl()));
                             delImageViewThree.setVisibility(View.VISIBLE);
                         }
                         break;
 
                     case 4:
                         if (imageUrls.get(3) != null) {
-                            imageViewFour.setImageBitmap(BitmapFactory.decodeFile(imageUrls.get(3).getUploadImageUrl()));
+                            imageViewFour.setImageBitmap(BitmapFactory.decodeFile(imageUrls.get(3).getFileUrl()));
                             delImageViewFour.setVisibility(View.VISIBLE);
                         }
                         break;
@@ -444,8 +451,8 @@ public class CastingFileUpload extends Activity {
 
         for(String s:videoList)
         {
-            VideoUrl videoUrl = new VideoUrl();
-            videoUrl.setUploadVideoUrl(s);
+            fileUrlModel videoUrl = new fileUrlModel();
+            videoUrl.setFileUrl(s);
             videoUrls.add(videoUrl);
         }
         showVideoThumbnail();
@@ -461,7 +468,7 @@ public class CastingFileUpload extends Activity {
                 switch (i) {
                     case 1:
                         if (videoUrls.get(0) != null) {
-                            videoViewOne.setImageBitmap(ThumbnailUtils.createVideoThumbnail(videoUrls.get(0).getUploadVideoUrl(), MediaStore.Video.Thumbnails.FULL_SCREEN_KIND));
+                            videoViewOne.setImageBitmap(ThumbnailUtils.createVideoThumbnail(videoUrls.get(0).getFileUrl(), MediaStore.Video.Thumbnails.FULL_SCREEN_KIND));
                             delVideoViewOne.setVisibility(View.VISIBLE);
                             VideoViewIconOne.setVisibility(View.VISIBLE);
                         }
@@ -469,7 +476,7 @@ public class CastingFileUpload extends Activity {
 
                     case 2:
                         if (videoUrls.get(1) != null) {
-                            videoViewTwo.setImageBitmap(ThumbnailUtils.createVideoThumbnail(videoUrls.get(1).getUploadVideoUrl(), MediaStore.Video.Thumbnails.FULL_SCREEN_KIND));
+                            videoViewTwo.setImageBitmap(ThumbnailUtils.createVideoThumbnail(videoUrls.get(1).getFileUrl(), MediaStore.Video.Thumbnails.FULL_SCREEN_KIND));
                             delVideoViewTwo.setVisibility(View.VISIBLE);
                             VideoViewIconTwo.setVisibility(View.VISIBLE);
                         }
@@ -477,7 +484,7 @@ public class CastingFileUpload extends Activity {
 
                     case 3:
                         if (videoUrls.get(2) != null) {
-                            videoViewThree.setImageBitmap(ThumbnailUtils.createVideoThumbnail(videoUrls.get(2).getUploadVideoUrl(), MediaStore.Video.Thumbnails.FULL_SCREEN_KIND));
+                            videoViewThree.setImageBitmap(ThumbnailUtils.createVideoThumbnail(videoUrls.get(2).getFileUrl(), MediaStore.Video.Thumbnails.FULL_SCREEN_KIND));
                             delVideoViewThree.setVisibility(View.VISIBLE);
                             VideoViewIconThree.setVisibility(View.VISIBLE);
                         }
@@ -485,7 +492,7 @@ public class CastingFileUpload extends Activity {
 
                     case 4:
                         if (videoUrls.get(3) != null) {
-                            videoViewFour.setImageBitmap(ThumbnailUtils.createVideoThumbnail(videoUrls.get(3).getUploadVideoUrl(), MediaStore.Video.Thumbnails.FULL_SCREEN_KIND));
+                            videoViewFour.setImageBitmap(ThumbnailUtils.createVideoThumbnail(videoUrls.get(3).getFileUrl(), MediaStore.Video.Thumbnails.FULL_SCREEN_KIND));
                             delVideoViewFour.setVisibility(View.VISIBLE);
                             VideoViewIconFour.setVisibility(View.VISIBLE);
                         }

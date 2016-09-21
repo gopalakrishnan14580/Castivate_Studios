@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -19,17 +21,28 @@ import android.widget.Toast;
 import com.google.api.client.extensions.android.http.AndroidHttp;
 import com.google.api.client.googleapis.extensions.android.gms.auth.GoogleAccountCredential;
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException;
+import com.google.api.client.http.GenericUrl;
 import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.sdi.castivate.adapter.DriveListAdapter;
 import com.sdi.castivate.model.DriveModel;
+import com.sdi.castivate.model.fileUrlModel;
 
+
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 
 public class CastingResumeUpload extends Activity {
@@ -45,6 +58,10 @@ public class CastingResumeUpload extends Activity {
 
     private ArrayList<DriveModel> googleDriveModels;
     private ArrayList<DriveModel> googleDriveModelsSelected;
+    private ArrayList<fileUrlModel> imageUrls = new ArrayList<fileUrlModel>();
+    private ArrayList<fileUrlModel> videoUrls = new ArrayList<fileUrlModel>();
+    private ArrayList<fileUrlModel> resumeUrls = new ArrayList<fileUrlModel>();
+    private ArrayList<fileUrlModel> zipFiles = new ArrayList<fileUrlModel>();
 
     Context context;
     private GoogleAccountCredential mCredential;
@@ -53,8 +70,10 @@ public class CastingResumeUpload extends Activity {
     private static Drive mService;
     private List<File> mResultList;
     private DriveListAdapter driveListAdapter;
+    private String 					mDLVal;
+    private  String zipName;
 
-
+    @SuppressWarnings("unchecked")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,6 +93,16 @@ public class CastingResumeUpload extends Activity {
         drive_files_display_lay=(LinearLayout) findViewById(R.id.drive_files_display_lay);
         drive_files_display_lay.setVisibility(View.GONE);
 
+        try{
+            imageUrls = (ArrayList<fileUrlModel>) getIntent().getSerializableExtra("imageUrls");
+            videoUrls = (ArrayList<fileUrlModel>) getIntent().getSerializableExtra("videoUrls");
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
         //Casting resume upload back
         casting_resume_upload_back_icon=(LinearLayout) findViewById(R.id.casting_resume_upload_back_icon);
         casting_resume_upload_back_icon.setOnClickListener(new View.OnClickListener() {
@@ -90,6 +119,12 @@ public class CastingResumeUpload extends Activity {
             public void onClick(View v) {
 
                 Toast.makeText(CastingResumeUpload.this, "Casting Resume upload done.", Toast.LENGTH_SHORT).show();
+                if(googleDriveModelsSelected.size()>0)
+                {
+                    System.out.println("Download file");
+                    downloadItemFromList();
+                }
+
 
             }
         });
@@ -305,7 +340,6 @@ public class CastingResumeUpload extends Activity {
                                             System.out.println("deleted");
                                             drive_files_display_lay.setVisibility(View.GONE);
                                             resume_upload.setVisibility(View.VISIBLE);
-
                                         }
                                     });
                                 }
@@ -320,12 +354,192 @@ public class CastingResumeUpload extends Activity {
             }
         });
     }
+    private void downloadItemFromList()
+    {
+        mDLVal = googleDriveModelsSelected.get(0).getFileName();
 
+        Thread t = new Thread(new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                for(File tmp : mResultList)
+                {
+                    if (tmp.getTitle().equalsIgnoreCase(mDLVal))
+                    {
+                        if (tmp.getDownloadUrl() != null && tmp.getDownloadUrl().length() >0)
+                        {
+                            try
+                            {
+                                com.google.api.client.http.HttpResponse resp =
+                                        mService.getRequestFactory()
+                                                .buildGetRequest(new GenericUrl(tmp.getDownloadUrl()))
+                                                .execute();
+                                InputStream iStream = resp.getContent();
+
+                                try
+                                {
+                                    final java.io.File file = new java.io.File(Environment
+                                            .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath(),
+                                            tmp.getOriginalFilename());
+
+                                    fileUrlModel resumeUrl = new fileUrlModel();
+                                    resumeUrl.setFileUrl(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getPath()+"/"+tmp.getTitle());
+                                    resumeUrls.add(resumeUrl);
+
+                                    storeFile(file, iStream);
+
+                                    getFileList();
+
+                                } finally {
+                                    iStream.close();
+                                }
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                }
+            }
+        });
+        t.start();
+    }
+
+    public void showToast(final String toast) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(getApplicationContext(), toast, Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    private void storeFile(java.io.File file, InputStream iStream)
+    {
+        try
+        {
+            final OutputStream oStream = new FileOutputStream(file);
+            try
+            {
+                try
+                {
+                    final byte[] buffer = new byte[1024];
+                    int read;
+                    while ((read = iStream.read(buffer)) != -1)
+                    {
+                        oStream.write(buffer, 0, read);
+                    }
+                    oStream.flush();
+                } finally {
+                    oStream.close();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void getFileList()
+    {
+       // System.out.println("imageUrls Size :"+imageUrls.size());
+        //System.out.println("videoUrls Size :"+videoUrls.size());
+        //System.out.println("resumeUrls Size :"+resumeUrls.size());
+
+        zipFiles.addAll(imageUrls);
+        zipFiles.addAll(videoUrls);
+        zipFiles.addAll(resumeUrls);
+
+        //System.out.println("zip Files Size : "+zipFiles.size());
+
+        java.io.File dir = new java.io.File(Environment.getExternalStorageDirectory(),"/ZipFile.zip");
+         zipName = dir.toString();
+
+       // System.out.println("zip Files path : "+zipName);
+
+        ArrayList<fileUrlModel> fileUrlModels = new ArrayList<fileUrlModel>(zipFiles);
+        Compress c = new Compress(fileUrlModels, zipName);
+        c.zip();
+        //uploadVideo(zipName);
+    }
+
+    public class Compress {
+
+        private static final int BUFFER = 2048;
+        ArrayList<fileUrlModel> _files;
+        private String _zipFile;
+
+        public Compress(ArrayList<fileUrlModel> files, String zipFile) {
+            _files = files;
+            _zipFile = zipFile;
+        }
+
+        public void zip() {
+            try  {
+                BufferedInputStream origin = null;
+                FileOutputStream dest = new FileOutputStream(_zipFile);
+                ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
+
+                byte data[] = new byte[BUFFER];
+
+                for(int i=0; i < _files.size(); i++) {
+                    Log.v("Compress", "Adding: " + _files.get(i).getFileUrl());
+                    FileInputStream fi = new FileInputStream(String.valueOf(_files.get(i).getFileUrl()));
+                    origin = new BufferedInputStream(fi, BUFFER);
+                    ZipEntry entry = new ZipEntry(_files.get(i).getFileUrl().substring(_files.get(i).getFileUrl().lastIndexOf("/") + 1));
+                    out.putNextEntry(entry);
+                    int count;
+                    while ((count = origin.read(data, 0, BUFFER)) != -1) {
+                        out.write(data, 0, count);
+                    }
+                    origin.close();
+                }
+                out.close();
+            } catch(Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+   /* private void uploadVideo(String videoPath) {
+        try
+        {
+            //http://114.69.235.57:9998/castivate/castingNewVer1/public/fileupload
+            *//*
+            * userid: “8”,
+        role_id: ”77”,
+        enthicity: ”African American”,
+        age_range: ”10 - 30”,
+        gender: ”male”,
+        uploads[]: User8_role77.zip
+        *//*
+            HttpClient client = new DefaultHttpClient();
+            java.io.File file = new java.io.File(videoPath);
+            HttpPost post = new HttpPost("");
+
+            MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
+            entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            entityBuilder.addBinaryBody("uploads[]", file);
+
+            HttpEntity entity = entityBuilder.build();
+            post.setEntity(entity);
+
+            HttpResponse response = client.execute(post);
+            HttpEntity httpEntity = response.getEntity();
+
+            Log.v("result", EntityUtils.toString(httpEntity));
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }*/
     private String convertMimeType(String mimeType)
     {
         String mimeTypeConvert="";
         if(mimeType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
-        mimeTypeConvert ="docx";
+            mimeTypeConvert ="docx";
         else if (mimeType.equals("application/msword"))
             mimeTypeConvert ="docx";
         else if (mimeType.equals("application/pdf"))

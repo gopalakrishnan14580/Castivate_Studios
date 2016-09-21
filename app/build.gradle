@@ -100,4 +100,11 @@ dependencies {
     // https://mvnrepository.com/artifact/com.google.api-client/google-api-client-gson
     compile group: 'com.google.api-client', name: 'google-api-client-gson', version: '1.22.0'
 
+    /*compile('org.apache.httpcomponents:httpmime:4.+') {
+        exclude module: "httpclient"
+    }
+    compile('org.apache.httpcomponents:httpcore:4.+') {
+        exclude module: "httpclient"
+    }*/
+
 }
