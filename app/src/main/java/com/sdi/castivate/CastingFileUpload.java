@@ -1,6 +1,7 @@
 package com.sdi.castivate;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.afollestad.materialcamera.MaterialCamera;
+import com.sdi.castivate.model.CastingDetailsModel;
 import com.sdi.castivate.model.fileUrlModel;
 import com.sdi.castivate.utils.Utility;
 
@@ -32,6 +34,8 @@ import java.util.List;
 /**
  * Created by twilightuser on 1/9/16.
  */
+@SuppressWarnings({"deprecation","unchecked"})
+@SuppressLint({ "ResourceAsColor", "InlinedApi", "ShowToast", "UseSparseArrays" })
 public class CastingFileUpload extends Activity {
 
     private ImageView imageViewOne,imageViewTwo,imageViewThree,imageViewFour,
@@ -55,6 +59,7 @@ public class CastingFileUpload extends Activity {
     private TextView casting_file_upload_done;
 
     private final static int PERMISSION_RQ = 84;
+    private ArrayList<CastingDetailsModel> selectedCastingDetailsModels = new ArrayList<CastingDetailsModel>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,13 @@ public class CastingFileUpload extends Activity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_RQ);
         }
 
+        try{
+            selectedCastingDetailsModels = (ArrayList<CastingDetailsModel>) getIntent().getSerializableExtra("selectedCastingDetailsModels");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
         //Add photo and video action
         addPhoto=(LinearLayout) findViewById(R.id.add_Photo);
         addVideo=(LinearLayout) findViewById(R.id.add_Video);
@@ -139,6 +151,7 @@ public class CastingFileUpload extends Activity {
                     Intent intent = new Intent(CastingFileUpload.this,CastingResumeUpload.class);
                     intent.putExtra("imageUrls", imageUrls);
                     intent.putExtra("videoUrls", videoUrls);
+                    intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
                     startActivity(intent);
                 }
                 else

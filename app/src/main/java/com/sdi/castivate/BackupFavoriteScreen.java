@@ -1,40 +1,5 @@
 package com.sdi.castivate;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URLEncodedUtils;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.util.EntityUtils;
-
-
-
-
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -91,6 +56,36 @@ import com.sdi.castivate.utils.Library;
 import com.sdi.castivate.utils.Network;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.utils.URLEncodedUtils;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
+import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @SuppressLint({ "InlinedApi", "UseSparseArrays" })
 @SuppressWarnings("deprecation")
@@ -155,7 +150,7 @@ public class BackupFavoriteScreen extends Activity implements GridInterface {
 	private static int RESULT_LOAD_IMAGE = 2000;
 	final int CAMERA_CAPTURE = 1000;
 	final int IMAGE_MAX_SIZE = 600;
-	Button btnGallery, btnCamera, btnCancel;
+	Button btnGallery, btnCamera, btnCancel,btn_apply;
 	Dialog dialogCamera;
 	File profileImage;
 	String imagePath = "";
@@ -254,6 +249,36 @@ public class BackupFavoriteScreen extends Activity implements GridInterface {
 		textRoleForGenderNoImage = (TextView) findViewById(R.id.gender_no_image);
 		textUnionStatusNoImage = (TextView) findViewById(R.id.union_status_no_image);
 		textSynopsisNoImage = (TextView) findViewById(R.id.submission_info_no_image);
+
+		/*btn_apply=(Button) findViewById(R.id.btn_apply);
+
+		btn_apply.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+
+				System.out.println("load position");
+
+				*//*System.out.println("REMAINING DAYS ---------------> "+Library.remainingDays);
+
+				//String rdays="0";
+
+				if(Library.remainingDays.equals("0"))
+				{
+					Intent intent = new Intent(CastingScreen.this, CastingPlan.class);
+					//overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_left);
+					startActivity(intent);
+				}
+				else {
+
+					Intent intent = new Intent(CastingScreen.this, CastingLogin.class);
+					//overridePendingTransition(R.anim.pull_in_left, R.anim.push_out_left);
+					startActivity(intent);
+				}*//*
+
+
+			}
+		});*/
 
 		// Nivetha
 
@@ -1251,7 +1276,7 @@ public class BackupFavoriteScreen extends Activity implements GridInterface {
 									json_data.getString("casting_paid_status"), json_data.getString("casting_union_status"), json_data.getString("casting_union_type"),
 									json_data.getString("casting_submission_detail"), json_data.getString("casting_synopsis"), "", json_data.getString("role_desc"),
 									json_data.getString("ageRange"), json_data.getString("role_for"), json_data.getString("role_ethnicity"), json_data.getString("fav_flag"), "",
-									"", "", json_data.getString("casting_state"), json_data.getString("casting_city"));
+									"", "", json_data.getString("casting_state"), json_data.getString("casting_city"),json_data.getString("casting_email"),json_data.getString("apply_flag"));
 							favoriteCastings.add(detailsModel);
 						}
 						hashMap.put(page, favoriteCastings);

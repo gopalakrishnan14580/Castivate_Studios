@@ -1,6 +1,7 @@
 package com.sdi.castivate;
 
 import android.accounts.AccountManager;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -27,9 +28,15 @@ import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.DriveScopes;
 import com.google.api.services.drive.model.File;
 import com.sdi.castivate.adapter.DriveListAdapter;
+import com.sdi.castivate.model.CastingDetailsModel;
 import com.sdi.castivate.model.DriveModel;
 import com.sdi.castivate.model.fileUrlModel;
+import com.sdi.castivate.utils.HttpUri;
+import com.sdi.castivate.utils.Library;
+import com.sdi.castivate.utils.MultipartUtility;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -44,7 +51,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-
+@SuppressWarnings({"deprecation","unchecked"})
+@SuppressLint({ "ResourceAsColor", "InlinedApi", "ShowToast", "UseSparseArrays" })
 public class CastingResumeUpload extends Activity {
 
     private LinearLayout casting_resume_upload_back_icon;
@@ -73,7 +81,9 @@ public class CastingResumeUpload extends Activity {
     private String 					mDLVal;
     private  String zipName;
 
-    @SuppressWarnings("unchecked")
+    private ArrayList<CastingDetailsModel> selectedCastingDetailsModels = new ArrayList<CastingDetailsModel>();
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,7 +106,7 @@ public class CastingResumeUpload extends Activity {
         try{
             imageUrls = (ArrayList<fileUrlModel>) getIntent().getSerializableExtra("imageUrls");
             videoUrls = (ArrayList<fileUrlModel>) getIntent().getSerializableExtra("videoUrls");
-
+            selectedCastingDetailsModels = (ArrayList<CastingDetailsModel>) getIntent().getSerializableExtra("selectedCastingDetailsModels");
         }
         catch (Exception e)
         {
@@ -462,6 +472,8 @@ public class CastingResumeUpload extends Activity {
         Compress c = new Compress(fileUrlModels, zipName);
         c.zip();
         //uploadVideo(zipName);
+
+        uploadFiles();
     }
 
     public class Compress {
@@ -501,6 +513,125 @@ public class CastingResumeUpload extends Activity {
             }
         }
     }
+    InputStream is = null;
+    String json = "";
+    JSONObject jObj = null;
+    JSONArray jArr = null;
+    StringBuilder sb;
+
+    String Status;
+    private void uploadFiles()
+    {
+        try {
+
+            java.io.File zipFile = new java.io.File(zipName);
+
+            MultipartUtility multipart = new MultipartUtility(HttpUri.CASTING_FILE_UPLOAD, "UTF-8");
+
+            multipart.addFormField("userid", Library.androidUserID);
+            multipart.addFormField("role_id", selectedCastingDetailsModels.get(0).roleId);
+            multipart.addFormField("enthicity",selectedCastingDetailsModels.get(0).roleForEthnicity);
+            multipart.addFormField("age_range",selectedCastingDetailsModels.get(0).ageRange);
+            multipart.addFormField("gender",selectedCastingDetailsModels.get(0).roleForGender);
+
+            multipart.addFilePart("uploads", zipFile);
+
+            List<String> response = multipart.finish();
+
+            System.out.println("SERVER REPLIED:");
+
+            for (String line : response) {
+                System.out.println("result : "+line);
+            }
+
+            System.out.println("zipFile Delete : "+zipFile.delete());
+            //applyFlag ="1"
+
+        } catch (IOException ex) {
+            System.err.println(ex);
+        }
+
+
+        /*
+        try{
+
+
+            //http://114.69.235.57:9998/castivate/castingNewVer1/public/fileupload
+            *//*
+            * userid: “8”,
+            role_id: ”77”,
+            enthicity: ”African American”,
+            age_range: ”10 - 30”,
+            gender: ”male”,
+            uploads[]: User8_role77.zip
+                    *//*
+
+            System.out.println("userid    : ");
+            System.out.println("role_id   : ");
+            System.out.println("enthicity : ");
+            System.out.println("age_range : ");
+            System.out.println("gender    : ");
+            System.out.println("uploads[] : "+zipName);
+
+
+
+            //java.io.File file = new java.io.File(zipFilePath);
+
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost("");
+        MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
+        multipartEntity.addPart("param1",new StringBody(""));
+        multipartEntity.addPart("param2",new StringBody(""));
+        multipartEntity.addPart("param2",new StringBody(""));
+        //multipartEntity.addPart("uploadFiles",new FileBody(param2));
+
+        post.setEntity(multipartEntity);
+        HttpResponse response = null;
+        response = client.execute(post);
+
+            if (response.getStatusLine().getStatusCode() == 200) {
+
+                HttpEntity responseEntity = response.getEntity();
+
+                try {
+                    is = responseEntity.getContent();
+                } catch (IllegalStateException | IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                try {
+                    BufferedReader reader2 = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
+                    sb = new StringBuilder();
+                    String line = null;
+                    while ((line = reader2.readLine()) != null) {
+                        sb.append(line + "\n");
+                    }
+                    is.close();
+                    json = sb.toString();
+
+                    System.out.println("JSON Result ----------------> "+json);
+
+                    *//*if (json.contains("1")) {
+                        // Library.showToast(context, "success");
+                        DebugReportOnLocat.ln("json response for notif::" + json);
+                    }*//*
+
+                } catch (Exception e) {
+                    Log.e("Buffer Error", "Error converting result " + e.toString());
+                }
+
+            }
+        }
+        catch(Throwable t) {
+            // Handle error here
+            t.printStackTrace();
+        }*/
+
+    }
+
+
+
 
    /* private void uploadVideo(String videoPath) {
         try

@@ -49,7 +49,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.4.0'
-    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
+    //compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     //compile "com.android.support:appcompat-v7:$GOOGLE_LIBS"
     compile project(':library')
     compile project(':wheel')
@@ -95,16 +95,9 @@ dependencies {
     compile('com.google.apis:google-api-services-drive:v2-rev234-1.22.0') {
         exclude group: 'org.apache.httpcomponents'
     }
-    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient-android
     //compile group: 'org.apache.httpcomponents', name: 'httpclient-android', version: '4.3.3'
-    // https://mvnrepository.com/artifact/com.google.api-client/google-api-client-gson
     compile group: 'com.google.api-client', name: 'google-api-client-gson', version: '1.22.0'
-
-    /*compile('org.apache.httpcomponents:httpmime:4.+') {
-        exclude module: "httpclient"
-    }
-    compile('org.apache.httpcomponents:httpcore:4.+') {
-        exclude module: "httpclient"
-    }*/
+    //compile group: 'org.apache.httpcomponents', name: 'httpmime', version: '4.5.2'
+    //compile group: 'org.apache.httpcomponents', name: 'httpcore', version: '4.4.5'
 
 }

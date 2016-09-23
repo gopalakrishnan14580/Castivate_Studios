@@ -53,8 +53,9 @@ public class HttpUri {
     public static String CASTING_REGISTRATION=CastingURL + "insertPerson?";
     public static String CASTING_SIGNIN=CastingURL + "personlogin?";
     public static String CASTING_FORGOT_PASSWORD=CastingURL + "forgotPassword?";
+    public static String CASTING_FILE_UPLOAD=CastingURL + "fileupload?";
 
-
+//http://114.69.235.57:9998/castivate/castingNewVer1/public/fileupload
 
     
     

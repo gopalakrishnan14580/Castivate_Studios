@@ -204,15 +204,9 @@ public class CastingCustomPhotoGallery extends Activity {
         }
 
         public View getView(final int position, View convertView,  ViewGroup parent) {
-
-
             final ViewHolder holder;
             View view = convertView;
-
-
             if (view == null) {
-
-                //System.out.println("convertview is null :"+position);
 
                 holder = new ViewHolder();
                 view = mInflater.inflate(R.layout.custom_image_gallery_item, null);
@@ -220,62 +214,16 @@ public class CastingCustomPhotoGallery extends Activity {
                 holder.photoImageViewOverlay = (ImageView) view.findViewById(R.id.photoImageViewOverlay);
                 holder.photoCount=(TextView) view.findViewById(R.id.photoCount);
 
-                //holder.isSelect = false;
-                //holder.value = 0;
-
-                //holder.photoCount.setVisibility(View.GONE);
-                //holder.photoImageViewOverlay.setVisibility(View.GONE);
-
-                /*if(holder.isSelect){
-                    holder.photoCount.setVisibility(View.VISIBLE);
-                    holder.photoImageViewOverlay.setVisibility(View.VISIBLE);
-                }*/
-
                 view.setTag(holder);
-
             } else {
-
-                //System.out.println("convertview is reuse :"+position);
-
                 holder = (ViewHolder) view.getTag();
-
-               // holder.photoCount.setVisibility(View.GONE);
-                //holder.photoImageViewOverlay.setVisibility(View.GONE);
-
-                /*if(holder.isSelect){
-                    holder.photoCount.setVisibility(View.VISIBLE);
-                    holder.photoImageViewOverlay.setVisibility(View.VISIBLE);
-                }*/
-
             }
-
-
-                /*if (view.isSelected()) {
-
-                    System.out.println("selected only "+position);
-
-                    //holder.photoImageViewOverlay.setVisibility(View.VISIBLE);
-                    view.setBackgroundResource(R.drawable.gallery_background);
-
-                } else {
-
-                    System.out.println("Not selected "+position);
-                }*/
-
-            //holder.photoImageView.setId(position);
-            //holder.photoCount.setId(position);
-
 
             holder.photoImageView .setOnClickListener(new View.OnClickListener() {
 
                 public void onClick(View v) {
 
-
-                    //System.out.println("position1 : "+position);
-
                     if (thumbnailsselection[position]) {
-
-                        //System.out.println("position 2: "+position);
 
                         for (int i = 0; i < imageUpdates.size(); i++) {
 
@@ -284,15 +232,9 @@ public class CastingCustomPhotoGallery extends Activity {
                             if (Objects.equals(imageUpdate.getUploadImageUrl(), String.valueOf(position))) {
                                 System.out.println("remove image");
 
-                                v.setSelected(false);
-                                //v.setBackgroundResource(R.drawable.gallery_background);
-
-                                //holder.photoImageViewOverlay.setVisibility(View.GONE);
-                                //holder.photoImageViewOverlay.setSelected(false);
-
-
                                 imageUpdates.remove(i);
                                 update_count--;
+
                                 holder.isSelect = false;
                                 holder.photoCount.setVisibility(View.GONE);
                                 holder.photoCount.setText(String.valueOf(update_count));
@@ -304,28 +246,13 @@ public class CastingCustomPhotoGallery extends Activity {
 
                     } else {
 
-                        //System.out.println("position 3 : "+position);
-
                         if (update_count < max_count) {
 
                             ImageUrl imageUpdate = new ImageUrl();
-
                             System.out.println("add image");
-
-                           // v.setSelected(true);
-                            //holder.photoImageViewOverlay.setVisibility(View.VISIBLE);
-                            //holder.photoImageViewOverlay.setSelected(true);
-                            //v.setBackgroundResource(R.drawable.gallery_background);
-
-                            //System.out.println("Loading ....");
-
-                            //Bitmap scaledBitmap = scaleDown(BitmapFactory.decodeFile(arrPath[id]),512, true);
-                            //photoPreview.setImageBitmap(scaledBitmap);
 
                             Bitmap bitmap =MediaStore.Images.Thumbnails.getThumbnail(getApplicationContext().getContentResolver(), position, MediaStore.Images.Thumbnails.MICRO_KIND, null);
                             photoPreview.setImageBitmap(bitmap);
-
-                            //System.out.println("Loading Stop....");
 
                             imageUpdate.setUploadImageUrl(String.valueOf(position));
                             imageUpdates.add(imageUpdate);
@@ -333,7 +260,7 @@ public class CastingCustomPhotoGallery extends Activity {
                             holder.photoCount.setVisibility(View.VISIBLE);
                             holder.photoCount.setText(String.valueOf(imageUpdates.size()));
                             thumbnailsselection[position] = true;
-                           holder.photoImageViewOverlay.setVisibility(View.VISIBLE);
+                            holder.photoImageViewOverlay.setVisibility(View.VISIBLE);
                             notifyDataSetChanged();
                         }
                     }
@@ -348,41 +275,30 @@ public class CastingCustomPhotoGallery extends Activity {
                 e.printStackTrace();
             }
 
-
-
-
+            holder.isSelect = false;
             for (int i = 0; i < imageUpdates.size(); i++) {
-
-
                 ImageUrl imageUpdate = imageUpdates.get(i);
-                if (imageUpdate.getUploadImageUrl() == String.valueOf(holder.id) ) {
+                if (Objects.equals(imageUpdate.getUploadImageUrl(), String.valueOf(position))) {
                     holder.isSelect = true;
                     holder.value = i+1;
-
                     holder.photoCount.setVisibility(View.VISIBLE);
                     holder.photoCount.setText(String.valueOf( holder.value));
                     holder.photoImageViewOverlay.setVisibility(View.VISIBLE);
-
-                   // previewImage();
-
+                    previewImage();
                 }
-
             }
 
-
-
-
-            if(holder.isSelect == true){
-
+            if(holder.isSelect){
                 holder.photoCount.setVisibility(View.VISIBLE);
                 holder.photoCount.setText(String.valueOf( holder.value));
                 holder.photoImageViewOverlay.setVisibility(View.VISIBLE);
-                //previewImage();
-
-
+                previewImage();
             }
-
-
+            else
+            {
+                holder.photoImageViewOverlay.setVisibility(View.GONE);
+                holder.photoCount.setText("");
+            }
             holder.id = position;
             return view;
         }
@@ -391,7 +307,6 @@ public class CastingCustomPhotoGallery extends Activity {
         if (pd.isShowing())
             pd.cancel();
     }
-
     private void previewImage()
     {
         if(imageUpdates.size() == 0)
@@ -400,7 +315,6 @@ public class CastingCustomPhotoGallery extends Activity {
             imageOverlay.setVisibility(View.GONE);
         }
         else{
-
             if(imageUpdates.size()>0)
             {
                 try {
@@ -430,25 +344,4 @@ public class CastingCustomPhotoGallery extends Activity {
         int value;
         int id;
     }
-
-    public static Bitmap scaleDown(Bitmap realImage, float maxImageSize,boolean filter)
-    {
-        System.out.println(" or width :"+realImage.getWidth());
-        System.out.println("or height :"+realImage.getHeight());
-
-        float ratio = Math.min(
-                (float) maxImageSize / realImage.getWidth(),
-                (float) maxImageSize / realImage.getHeight());
-        int width = Math.round((float) ratio * realImage.getWidth());
-        int height = Math.round((float) ratio * realImage.getHeight());
-
-        System.out.println("width :"+width);
-        System.out.println("height :"+height);
-
-        Bitmap newBitmap = Bitmap.createScaledBitmap(realImage, width,
-                height, filter);
-        return newBitmap;
-    }
-
-
 }

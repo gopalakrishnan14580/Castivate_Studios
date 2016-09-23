@@ -20,6 +20,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sdi.castivate.model.CastingDetailsModel;
 import com.sdi.castivate.utils.HttpUri;
 import com.sdi.castivate.utils.KeyboardUtility;
 import com.sdi.castivate.utils.Library;
@@ -40,11 +41,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 /**
  * Created by androidusr1 on 11/8/16.
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation","unchecked"})
+@SuppressLint({ "ResourceAsColor", "InlinedApi", "ShowToast", "UseSparseArrays" })
 public class CastingLogin extends Activity implements View.OnClickListener {
 
     LinearLayout casting_login_back_icon;
@@ -56,6 +59,7 @@ public class CastingLogin extends Activity implements View.OnClickListener {
     Context context;
     Activity activity;
     ProgressDialog pDialog;
+    private ArrayList<CastingDetailsModel> selectedCastingDetailsModels = new ArrayList<CastingDetailsModel>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +71,14 @@ public class CastingLogin extends Activity implements View.OnClickListener {
     }
 
     private void findElements() {
+
+        try{
+            selectedCastingDetailsModels = (ArrayList<CastingDetailsModel>) getIntent().getSerializableExtra("selectedCastingDetailsModels");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         txt_forgot=(TextView) findViewById(R.id.txt_forgot);
         casting_login_back_icon=(LinearLayout) findViewById(R.id.casting_login_back_icon);
@@ -190,6 +202,7 @@ public class CastingLogin extends Activity implements View.OnClickListener {
                         //Library.showToast(context, "Login Successfully");
 
                         Intent intent = new Intent(CastingLogin.this,CastingFileUpload.class);
+                        intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
                         startActivity(intent);
                         finish();
 

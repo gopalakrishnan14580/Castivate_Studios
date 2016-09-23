@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.sdi.castivate.model.VideoUrl;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 @SuppressWarnings("deprecation")
 
@@ -187,6 +188,7 @@ public class CastingCustomVideoGallery extends Activity {
 
         public View getView(int position, View convertView, ViewGroup parent) {
             final ViewHolder holder;
+
             if (convertView == null) {
                 holder = new ViewHolder();
                 convertView = mInflater.inflate(R.layout.custom_video_gallery_item, null);
@@ -211,33 +213,26 @@ public class CastingCustomVideoGallery extends Activity {
 
                     int id = v.getId();
                     if (thumbnailsselection[id]) {
-
                         for (int i = 0; i < videoUrls.size(); i++) {
-
                             VideoUrl videoUrl = videoUrls.get(i);
                             if (videoUrl.getUploadVideoUrl() == String.valueOf(id)) {
-
                                 System.out.println("remove video");
 
                                 videoUrls.remove(i);
                                 update_count--;
 
                                 holder.isSelect = false;
-
                                 holder.videoCount.setVisibility(View.GONE);
                                 holder.videoCount.setText(String.valueOf(update_count));
                                 thumbnailsselection[id] = false;
                                 holder.videoImageViewOverlay.setVisibility(View.GONE);
                                 notifyDataSetChanged();
                             }
-
                         }
-
                     } else {
 
                         if (update_count < max_count) {
                             VideoUrl videoUrl = new VideoUrl();
-
                             System.out.println("add video");
 
                             videoUrl.setUploadVideoUrl(String.valueOf(v.getId()));
@@ -245,7 +240,6 @@ public class CastingCustomVideoGallery extends Activity {
                             update_count++;
                             holder.videoCount.setVisibility(View.VISIBLE);
                             holder.videoCount.setText(String.valueOf(videoUrls.size()));
-
                             thumbnailsselection[id] = true;
                             holder.videoImageViewOverlay.setVisibility(View.VISIBLE);
                             notifyDataSetChanged();
@@ -272,28 +266,25 @@ public class CastingCustomVideoGallery extends Activity {
             try {
                 setBitmap(holder.videoImageView, ids[position]);
             } catch (Throwable e) {
+                e.printStackTrace();
             }
 
-
+            holder.isSelect = false;
             for (int i = 0; i < videoUrls.size(); i++) {
 
                 VideoUrl videoUrl = videoUrls.get(i);
-                if (videoUrl.getUploadVideoUrl() == String.valueOf(holder.id) ) {
+                if (Objects.equals(videoUrl.getUploadVideoUrl(), String.valueOf(position))) {
                     holder.isSelect = true;
                     holder.value = i+1;
                 }
             }
 
-            if(holder.isSelect == true){
-
+            if(holder.isSelect){
                 holder.videoCount.setVisibility(View.VISIBLE);
                 holder.videoCount.setText(String.valueOf( holder.value));
-
             }else{
-
                 holder.videoCount.setVisibility(View.GONE);
                 holder.videoCount.setText("");
-
             }
 
             holder.id = position;

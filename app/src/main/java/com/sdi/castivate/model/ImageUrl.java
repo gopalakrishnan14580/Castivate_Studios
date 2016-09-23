@@ -7,6 +7,7 @@ import java.io.Serializable;
  */
 public class ImageUrl implements Serializable {
 
+    public boolean isSelected;
     private String uploadImageUrl;
 
     public String getUploadImageUrl() {

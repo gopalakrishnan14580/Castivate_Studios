@@ -271,6 +271,8 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 	//10-08-2016
 	Button btn_apply;
 
+	private ArrayList<CastingDetailsModel> selectedCastingDetailsModels = new ArrayList<CastingDetailsModel>();
+
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -383,6 +385,7 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 		//10-08-2016 add applay button
 
 		btn_apply=(Button) findViewById(R.id.btn_apply);
+		/*btn_apply=(Button) findViewById(R.id.btn_apply);
 
 		btn_apply.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -407,7 +410,7 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 
 
 			}
-		});
+		});*/
 
 		castingsList.setOnItemClickListener(new OnItemClickListener() {
 
@@ -3351,8 +3354,10 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 
 	String cityAndStateName = "";
 
-	public void setAllData(ArrayList<CastingDetailsModel> myList, int currentPos) {
+	public void setAllData(final ArrayList<CastingDetailsModel> myList, final int currentPos) {
 		try {
+
+			System.out.println("Swipe------------------------------->");
 
 			if (myList.get(currentPos).favCasting.equals("0")) {
 				fav_iconNoImage.setChecked(false);
@@ -3418,6 +3423,53 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 			textUnionStatusNoImage.setText(myList.get(currentPos).castingUnionStatus.toString().trim());
 			textRoleForGenderNoImage.setText(myList.get(currentPos).roleForGender.toString().trim());
 			txtRoleDescriptionNoImage.setText(myList.get(currentPos).roleDescription.toString().trim());
+
+
+			if(myList.get(currentPos).castingEmail.isEmpty())
+			{
+				btn_apply.setVisibility(View.GONE);
+				System.out.println("castingEmail Empty");
+			}
+			else {
+
+				System.out.println("applyFlag : "+myList.get(currentPos).applyFlag);
+
+				if(myList.get(currentPos).applyFlag.equals("1"))
+				{
+					//submitted
+					btn_apply.setVisibility(View.VISIBLE);
+					btn_apply.setText("Submitted");
+					//btn_apply.setBackgroundColor(R.color.green);
+				}
+				else {
+					System.out.println("castingEmail------------>"+myList.get(currentPos).castingEmail);
+					btn_apply.setVisibility(View.VISIBLE);
+					//btn_apply.setBackgroundColor(R.color.red);
+					btn_apply.setOnClickListener(new OnClickListener() {
+						@Override
+						public void onClick(View v) {
+
+							selectedCastingDetailsModels.clear();
+							selectedCastingDetailsModels.add(myList.get(currentPos));
+
+							if(Library.remainingDays.equals("0"))
+							{
+								Intent intent = new Intent(CastingScreen.this, CastingPlan.class);
+								intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
+								startActivity(intent);
+							}
+							else {
+								Intent intent = new Intent(CastingScreen.this, CastingFileUpload.class);
+								intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
+								startActivity(intent);
+							}
+						}
+					});
+				}
+			}
+
+
+
 
 			if (testB == true) {
 
@@ -3573,7 +3625,7 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 									json_data.getString("casting_submission_detail"), json_data.getString("casting_synopsis"), json_data.getString("casting_image"),
 									json_data.getString("role_desc"), json_data.getString("ageRange"), json_data.getString("role_for"), json_data.getString("role_ethnicity"),
 									json_data.getString("fav_flag"), json_data.getString("fav_count"), "", json_data.getString("castingsTotal"),
-									json_data.getString("casting_state"), json_data.getString("casting_city"));
+									json_data.getString("casting_state"), json_data.getString("casting_city"),json_data.getString("casting_email"),json_data.getString("apply_flag"));
 							// listDetailsModel = new
 							// CastingListDetailsModel(json_data.getString("IdRole"),
 							// json_data.getString("casting_title"),
@@ -5231,7 +5283,7 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 									json_data.getString("casting_submission_detail"), json_data.getString("casting_synopsis"), json_data.getString("casting_image"),
 									json_data.getString("role_desc"), json_data.getString("ageRange"), json_data.getString("role_for"), json_data.getString("role_ethnicity"),
 									json_data.getString("fav_flag"), json_data.getString("fav_count"), "", json_data.getString("castingsTotal"),
-									json_data.getString("casting_state"), json_data.getString("casting_city"));
+									json_data.getString("casting_state"), json_data.getString("casting_city"),json_data.getString("casting_email"),json_data.getString("apply_flag"));
 
 							getTotalCastings = Integer.parseInt(json_data.getString("castingsTotal"));
 							favCount = json_data.getString("fav_count");

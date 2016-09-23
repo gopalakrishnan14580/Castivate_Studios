@@ -1,5 +1,6 @@
 package com.sdi.castivate;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,9 +10,15 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.sdi.castivate.model.CastingDetailsModel;
+
+import java.util.ArrayList;
+
 /**
  * Created by androidusr1 on 10/8/16.
  */
+@SuppressWarnings({"deprecation","unchecked"})
+@SuppressLint({ "ResourceAsColor", "InlinedApi", "ShowToast", "UseSparseArrays" })
 public class CastingPlan extends Activity implements View.OnClickListener {
 
     private RadioGroup radioPaymentGroup;
@@ -22,6 +29,8 @@ public class CastingPlan extends Activity implements View.OnClickListener {
     String payment="$9.99 for 12 Months";
 
     int payment_type;
+
+    private ArrayList<CastingDetailsModel> selectedCastingDetailsModels = new ArrayList<CastingDetailsModel>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +49,14 @@ public class CastingPlan extends Activity implements View.OnClickListener {
 
         btn_subscribe_now.setOnClickListener(this);
         casting_plan_back_icon.setOnClickListener(this);
+
+        try{
+            selectedCastingDetailsModels = (ArrayList<CastingDetailsModel>) getIntent().getSerializableExtra("selectedCastingDetailsModels");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
 
         radioPaymentGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -86,6 +103,7 @@ public class CastingPlan extends Activity implements View.OnClickListener {
 
             Intent intent = new Intent(CastingPlan.this, CastingRegistration.class);
             intent.putExtra("payment_type",payment_type);
+            intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
             startActivity(intent);
                 finish();
             } else {
@@ -94,6 +112,7 @@ public class CastingPlan extends Activity implements View.OnClickListener {
 
             Intent intent = new Intent(CastingPlan.this, CastingRegistration.class);
             intent.putExtra("payment_type",payment_type);
+            intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
             startActivity(intent);
                 finish();
             }

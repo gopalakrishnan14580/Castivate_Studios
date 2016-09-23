@@ -1,5 +1,6 @@
 package com.sdi.castivate;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
@@ -25,6 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sdi.castivate.model.CastingDetailsModel;
 import com.sdi.castivate.utils.DatePickerFragment;
 import com.sdi.castivate.utils.HttpUri;
 import com.sdi.castivate.utils.KeyboardUtility;
@@ -47,11 +49,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 
 /**
  * Created by androidusr1 on 11/8/16.
  */
-@SuppressWarnings("deprecation")
+@SuppressWarnings({"deprecation","unchecked"})
+@SuppressLint({ "ResourceAsColor", "InlinedApi", "ShowToast", "UseSparseArrays" })
 public class CastingRegistration extends Activity implements View.OnClickListener {
 
     SharedPreferences sharedpreferences;
@@ -69,6 +73,8 @@ public class CastingRegistration extends Activity implements View.OnClickListene
     Activity activity;
     ProgressDialog pDialog;
     static String remainingDays;
+
+    private ArrayList<CastingDetailsModel> selectedCastingDetailsModels = new ArrayList<CastingDetailsModel>();
 
     private String blockCharacterSet = "|:;!@#$%^&*()_+=-~`><?/.,[]{}abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -109,7 +115,15 @@ public class CastingRegistration extends Activity implements View.OnClickListene
         btn_submit=(Button) findViewById(R.id.btn_submit);
 
         /*getting payment type for casting plan activity*/
-        payment_type= getIntent().getExtras().getInt("payment_type");
+
+        try{
+            payment_type= getIntent().getExtras().getInt("payment_type");
+            selectedCastingDetailsModels = (ArrayList<CastingDetailsModel>) getIntent().getSerializableExtra("selectedCastingDetailsModels");
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
 
         rel_casting_registration.setOnClickListener(this);
         casting_registration_back_icon.setOnClickListener(this);
@@ -337,6 +351,7 @@ public class CastingRegistration extends Activity implements View.OnClickListene
                     editor.commit();
 
                     Intent intent = new Intent(CastingRegistration.this, CastingLogin.class);
+                    intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
                     startActivity(intent);
                     finish();
                 }

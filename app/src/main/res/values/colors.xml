@@ -21,4 +21,5 @@
   <color name="window_background">#ff202020</color>
   <color name="list_divider">#ff555555</color>
     <color name="transparent">@android:color/transparent</color>
+    <color name="green">#3fb957</color>
 </resources>
