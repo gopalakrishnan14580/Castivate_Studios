@@ -1,7 +1,9 @@
 package com.sdi.castivate;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -21,6 +23,7 @@ import android.widget.Toast;
 
 import com.sdi.castivate.model.VideoUrl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -45,6 +48,7 @@ public class CastingCustomVideoGallery extends Activity {
 
     Cursor imagecursor;
     private LinearLayout custom_video_gallery_back_icon;
+    Context context;
 
     /**
      * Overrides methods
@@ -54,6 +58,8 @@ public class CastingCustomVideoGallery extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_video_gallery);
+
+        context=this;
 
         grdVideos= (GridView) findViewById(R.id.grdVideos);
         btnSelectV= (TextView) findViewById(R.id.btnSelectV);
@@ -186,7 +192,7 @@ public class CastingCustomVideoGallery extends Activity {
             return position;
         }
 
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             final ViewHolder holder;
 
             if (convertView == null) {
@@ -232,17 +238,38 @@ public class CastingCustomVideoGallery extends Activity {
                     } else {
 
                         if (update_count < max_count) {
-                            VideoUrl videoUrl = new VideoUrl();
-                            System.out.println("add video");
 
-                            videoUrl.setUploadVideoUrl(String.valueOf(v.getId()));
-                            videoUrls.add(videoUrl);
-                            update_count++;
-                            holder.videoCount.setVisibility(View.VISIBLE);
-                            holder.videoCount.setText(String.valueOf(videoUrls.size()));
-                            thumbnailsselection[id] = true;
-                            holder.videoImageViewOverlay.setVisibility(View.VISIBLE);
-                            notifyDataSetChanged();
+                            File file = new File(arrPath[position]);
+
+                            long length = file.length();
+
+                            length = length/(1024*1024);
+
+                            System.out.println("File size : "+length);
+
+                            if(length < 10)
+                            {
+                                System.out.println("File Size :"+length);
+                                System.out.println("File Size Allowed");
+
+                                VideoUrl videoUrl = new VideoUrl();
+                                System.out.println("add video");
+
+                                videoUrl.setUploadVideoUrl(String.valueOf(v.getId()));
+                                videoUrls.add(videoUrl);
+                                update_count++;
+                                holder.videoCount.setVisibility(View.VISIBLE);
+                                holder.videoCount.setText(String.valueOf(videoUrls.size()));
+                                thumbnailsselection[id] = true;
+                                holder.videoImageViewOverlay.setVisibility(View.VISIBLE);
+                                notifyDataSetChanged();
+                            }
+                            else
+                            {
+                                System.out.println("File Size :"+length);
+                                System.out.println("File Size Not Allowed");
+                                showVideoAlert();
+                            }
                         }
                     }
                 }
@@ -304,5 +331,38 @@ public class CastingCustomVideoGallery extends Activity {
         boolean isSelect;
         int value;
         int id;
+    }
+
+    private void showVideoAlert()
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+        // set title
+        alertDialogBuilder.setTitle("Video File");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("File Size Not Allowed")
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        dialog.cancel();
+                    }
+                });
+                /*.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });*/
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 }

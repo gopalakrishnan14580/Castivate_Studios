@@ -1,8 +1,10 @@
 package com.sdi.castivate;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -23,6 +25,7 @@ import android.widget.Toast;
 
 import com.sdi.castivate.model.ImageUrl;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -49,6 +52,7 @@ public class CastingCustomPhotoGallery extends Activity {
     ProgressDialog pd;
     Context context;
 
+
     /**
      * Overrides methods
      */
@@ -59,6 +63,7 @@ public class CastingCustomPhotoGallery extends Activity {
         setContentView(R.layout.custom_photo_gallery);
 
         context=this;
+
 
         grdImages= (GridView) findViewById(R.id.grdImages);
         btnSelect= (TextView) findViewById(R.id.btnSelect);
@@ -186,7 +191,6 @@ public class CastingCustomPhotoGallery extends Activity {
 
     public class ImageAdapter extends BaseAdapter {
         private LayoutInflater mInflater;
-
         public ImageAdapter() {
             mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
@@ -248,20 +252,40 @@ public class CastingCustomPhotoGallery extends Activity {
 
                         if (update_count < max_count) {
 
-                            ImageUrl imageUpdate = new ImageUrl();
-                            System.out.println("add image");
+                            File file = new File(arrPath[position]);
 
-                            Bitmap bitmap =MediaStore.Images.Thumbnails.getThumbnail(getApplicationContext().getContentResolver(), position, MediaStore.Images.Thumbnails.MICRO_KIND, null);
-                            photoPreview.setImageBitmap(bitmap);
+                            long length = file.length();
 
-                            imageUpdate.setUploadImageUrl(String.valueOf(position));
-                            imageUpdates.add(imageUpdate);
-                            update_count++;
-                            holder.photoCount.setVisibility(View.VISIBLE);
-                            holder.photoCount.setText(String.valueOf(imageUpdates.size()));
-                            thumbnailsselection[position] = true;
-                            holder.photoImageViewOverlay.setVisibility(View.VISIBLE);
-                            notifyDataSetChanged();
+                            length = length/(1024*1024);
+
+                            System.out.println("File size : "+length);
+
+                            if(length < 2)
+                            {
+                                System.out.println("File Size :"+length);
+                                System.out.println("File Size Allowed");
+
+                                ImageUrl imageUpdate = new ImageUrl();
+                                System.out.println("add image");
+
+                                Bitmap bitmap =MediaStore.Images.Thumbnails.getThumbnail(getApplicationContext().getContentResolver(), position, MediaStore.Images.Thumbnails.MICRO_KIND, null);
+                                photoPreview.setImageBitmap(bitmap);
+
+                                imageUpdate.setUploadImageUrl(String.valueOf(position));
+                                imageUpdates.add(imageUpdate);
+                                update_count++;
+                                holder.photoCount.setVisibility(View.VISIBLE);
+                                holder.photoCount.setText(String.valueOf(imageUpdates.size()));
+                                thumbnailsselection[position] = true;
+                                holder.photoImageViewOverlay.setVisibility(View.VISIBLE);
+                                notifyDataSetChanged();
+                            }
+                            else
+                            {
+                                System.out.println("File Size :"+length);
+                                System.out.println("File Size Not Allowed");
+                                showImageAlert();
+                            }
                         }
                     }
                 }
@@ -298,6 +322,7 @@ public class CastingCustomPhotoGallery extends Activity {
             {
                 holder.photoImageViewOverlay.setVisibility(View.GONE);
                 holder.photoCount.setText("");
+                previewImage();
             }
             holder.id = position;
             return view;
@@ -343,5 +368,39 @@ public class CastingCustomPhotoGallery extends Activity {
         boolean isSelect;
         int value;
         int id;
+    }
+
+    private void showImageAlert()
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                context);
+
+        // set title
+        alertDialogBuilder.setTitle("Image File");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage("File Size Not Allowed")
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        dialog.cancel();
+                    }
+                });
+                /*.setNegativeButton("No",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close
+                        // the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });*/
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 }
