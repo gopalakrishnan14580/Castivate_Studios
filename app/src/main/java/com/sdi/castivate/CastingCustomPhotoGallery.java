@@ -372,8 +372,7 @@ public class CastingCustomPhotoGallery extends Activity {
 
     private void showImageAlert()
     {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-                context);
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
         // set title
         alertDialogBuilder.setTitle("Image File");

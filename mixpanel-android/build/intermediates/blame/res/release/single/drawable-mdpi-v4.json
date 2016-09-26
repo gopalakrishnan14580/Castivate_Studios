@@ -16,12 +16,12 @@
         "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-mdpi/com_mixpanel_android_arrowleft.png"
     },
     {
-        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-mdpi-v4/common_signin_btn_icon_disabled_light.9.png",
-        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-mdpi-v4/common_signin_btn_icon_disabled_light.9.png"
-    },
-    {
         "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-mdpi-v4/com_mixpanel_android_square_dropshadow.9.png",
         "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-mdpi/com_mixpanel_android_square_dropshadow.9.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-mdpi-v4/common_signin_btn_icon_disabled_light.9.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-mdpi-v4/common_signin_btn_icon_disabled_light.9.png"
     },
     {
         "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-mdpi-v4/common_signin_btn_text_disabled_focus_dark.9.png",
@@ -88,12 +88,12 @@
         "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/res/drawable-mdpi/com_mixpanel_android_ic_vip.png"
     },
     {
-        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-mdpi-v4/ic_plusone_medium_off_client.png",
-        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-mdpi-v4/ic_plusone_medium_off_client.png"
-    },
-    {
         "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-mdpi-v4/ic_plusone_small_off_client.png",
         "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-mdpi-v4/ic_plusone_small_off_client.png"
+    },
+    {
+        "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-mdpi-v4/ic_plusone_medium_off_client.png",
+        "source": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/exploded-aar/Castivate_Studios/google-play-services_lib/unspecified/res/drawable-mdpi-v4/ic_plusone_medium_off_client.png"
     },
     {
         "merged": "/home/twilightuser/AndroidStudioProjects/Castivate_Studios/mixpanel-android/build/intermediates/res/merged/release/drawable-mdpi-v4/common_signin_btn_icon_pressed_dark.9.png",

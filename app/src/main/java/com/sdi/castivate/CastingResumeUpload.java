@@ -36,6 +36,7 @@ import com.sdi.castivate.utils.Library;
 import com.sdi.castivate.utils.MultipartUtility;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -179,6 +180,7 @@ public class CastingResumeUpload extends Activity {
     private void dropboxApi()
     {
         Toast.makeText(CastingResumeUpload.this, "DropboxApi", Toast.LENGTH_SHORT).show();
+
     }
     //call google drive cloud
     private void googleDriveApi()
@@ -333,25 +335,47 @@ public class CastingResumeUpload extends Activity {
                                     System.out.println("folder");
                                 }
                                 else {
-                                    googleDriveModelsSelected.clear();
-                                    googleDriveModelsSelected.add(googleDriveModels.get(position));
-                                    System.out.println("Selected");
-                                    drive_files.setVisibility(View.GONE);
-                                    resume_upload.setVisibility(View.GONE);
-                                    drive_files_display_lay.setVisibility(View.VISIBLE);
-                                    upload_hide.setVisibility(View.VISIBLE);
-                                    drive_files_display.setVisibility(View.VISIBLE);
-                                    drive_files_display.setText(googleDriveModelsSelected.get(0).getFileName());
-                                    drive_files_delete.setOnClickListener(new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
 
-                                            googleDriveModelsSelected.remove(0);
-                                            System.out.println("deleted");
-                                            drive_files_display_lay.setVisibility(View.GONE);
-                                            resume_upload.setVisibility(View.VISIBLE);
-                                        }
-                                    });
+                                    //if()
+
+                                    long length = Long.parseLong(googleDriveModels.get(position).getItemSize());
+
+                                    length = length/(1024*1024);
+
+                                    System.out.println("File size : "+length);
+
+                                    if(length < 2)
+                                    {
+                                        System.out.println("File Size :"+length);
+                                        System.out.println("File Size Allowed");
+
+                                        googleDriveModelsSelected.clear();
+                                        googleDriveModelsSelected.add(googleDriveModels.get(position));
+                                        System.out.println("Selected");
+                                        drive_files.setVisibility(View.GONE);
+                                        resume_upload.setVisibility(View.GONE);
+                                        drive_files_display_lay.setVisibility(View.VISIBLE);
+                                        upload_hide.setVisibility(View.VISIBLE);
+                                        drive_files_display.setVisibility(View.VISIBLE);
+                                        drive_files_display.setText(googleDriveModelsSelected.get(0).getFileName());
+                                        drive_files_delete.setOnClickListener(new View.OnClickListener() {
+                                            @Override
+                                            public void onClick(View v) {
+
+                                                googleDriveModelsSelected.remove(0);
+                                                System.out.println("deleted");
+                                                drive_files_display_lay.setVisibility(View.GONE);
+                                                resume_upload.setVisibility(View.VISIBLE);
+                                            }
+                                        });
+                                    }
+                                    else {
+
+                                        System.out.println("File Size :"+length);
+                                        System.out.println("File Size Not Allowed");
+                                        showAlert("File Size Not Allowed");
+                                    }
+
                                 }
                             }
                             else
@@ -471,8 +495,6 @@ public class CastingResumeUpload extends Activity {
         ArrayList<fileUrlModel> fileUrlModels = new ArrayList<fileUrlModel>(zipFiles);
         Compress c = new Compress(fileUrlModels, zipName);
         c.zip();
-        //uploadVideo(zipName);
-
         uploadFiles();
     }
 
@@ -524,6 +546,23 @@ public class CastingResumeUpload extends Activity {
     {
         try {
 
+
+           /* ArrayList<String> imgPaths = new ArrayList<String>();
+
+            for (int i=0;i<zipFiles.size();i++){
+
+                fileUrlModel fileUrlModel = new fileUrlModel();
+
+            }
+            String[] array = new String[zipFiles.size()];
+
+            File sourceFile[] = new File[imgPaths.size()];
+            for (int i=0;i<zipFiles.size();i++){
+                sourceFile[i] = new File(imgPaths.get(i));
+                // Toast.makeText(getApplicationContext(),imgPaths.get(i),Toast.LENGTH_SHORT).show();
+            }
+*/
+
             java.io.File zipFile = new java.io.File(zipName);
 
             MultipartUtility multipart = new MultipartUtility(HttpUri.CASTING_FILE_UPLOAD, "UTF-8");
@@ -542,146 +581,103 @@ public class CastingResumeUpload extends Activity {
 
             for (String line : response) {
                 System.out.println("result : "+line);
+                Status=line;
             }
 
-            System.out.println("zipFile Delete : "+zipFile.delete());
+            System.out.println("Server Response : "+Status);
+
+            /*
+            *
+            * {
+        "res": "Casting  inserted",
+        "userid": "8",
+        "message": "Casting  applied",
+        "status": 200
+}
+*/
+            try {
+
+                JSONObject oneObject = new JSONObject(Status);
+
+                if(oneObject.getString("status").equals("200")) {
+
+                    System.out.println("Message ------------------------------> " + oneObject.getString("message"));
+                    System.out.println("zipFile Delete : "+zipFile.delete());
+
+                    castingApplayAlert(oneObject.getString("message"));
+
+                }
+                else
+                {
+                    System.out.println("File upload field ............... ");
+                }
+            }
+            catch (JSONException e) {
+                System.out.println("Exception : "+e.getMessage());
+                // TODO: handle exception
+            }
+
             //applyFlag ="1"
 
         } catch (IOException ex) {
             System.err.println(ex);
         }
-
-
-        /*
-        try{
-
-
-            //http://114.69.235.57:9998/castivate/castingNewVer1/public/fileupload
-            *//*
-            * userid: “8”,
-            role_id: ”77”,
-            enthicity: ”African American”,
-            age_range: ”10 - 30”,
-            gender: ”male”,
-            uploads[]: User8_role77.zip
-                    *//*
-
-            System.out.println("userid    : ");
-            System.out.println("role_id   : ");
-            System.out.println("enthicity : ");
-            System.out.println("age_range : ");
-            System.out.println("gender    : ");
-            System.out.println("uploads[] : "+zipName);
-
-
-
-            //java.io.File file = new java.io.File(zipFilePath);
-
-        HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost("");
-        MultipartEntity multipartEntity = new MultipartEntity(HttpMultipartMode.BROWSER_COMPATIBLE);
-        multipartEntity.addPart("param1",new StringBody(""));
-        multipartEntity.addPart("param2",new StringBody(""));
-        multipartEntity.addPart("param2",new StringBody(""));
-        //multipartEntity.addPart("uploadFiles",new FileBody(param2));
-
-        post.setEntity(multipartEntity);
-        HttpResponse response = null;
-        response = client.execute(post);
-
-            if (response.getStatusLine().getStatusCode() == 200) {
-
-                HttpEntity responseEntity = response.getEntity();
-
-                try {
-                    is = responseEntity.getContent();
-                } catch (IllegalStateException | IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-
-                try {
-                    BufferedReader reader2 = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-                    sb = new StringBuilder();
-                    String line = null;
-                    while ((line = reader2.readLine()) != null) {
-                        sb.append(line + "\n");
-                    }
-                    is.close();
-                    json = sb.toString();
-
-                    System.out.println("JSON Result ----------------> "+json);
-
-                    *//*if (json.contains("1")) {
-                        // Library.showToast(context, "success");
-                        DebugReportOnLocat.ln("json response for notif::" + json);
-                    }*//*
-
-                } catch (Exception e) {
-                    Log.e("Buffer Error", "Error converting result " + e.toString());
-                }
-
-            }
-        }
-        catch(Throwable t) {
-            // Handle error here
-            t.printStackTrace();
-        }*/
-
     }
 
-
-
-
-   /* private void uploadVideo(String videoPath) {
-        try
-        {
-            //http://114.69.235.57:9998/castivate/castingNewVer1/public/fileupload
-            *//*
-            * userid: “8”,
-        role_id: ”77”,
-        enthicity: ”African American”,
-        age_range: ”10 - 30”,
-        gender: ”male”,
-        uploads[]: User8_role77.zip
-        *//*
-            HttpClient client = new DefaultHttpClient();
-            java.io.File file = new java.io.File(videoPath);
-            HttpPost post = new HttpPost("");
-
-            MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
-            entityBuilder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            entityBuilder.addBinaryBody("uploads[]", file);
-
-            HttpEntity entity = entityBuilder.build();
-            post.setEntity(entity);
-
-            HttpResponse response = client.execute(post);
-            HttpEntity httpEntity = response.getEntity();
-
-            Log.v("result", EntityUtils.toString(httpEntity));
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }*/
-    private String convertMimeType(String mimeType)
+    private void showAlert(String message)
     {
-        String mimeTypeConvert="";
-        if(mimeType.equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document"))
-            mimeTypeConvert ="docx";
-        else if (mimeType.equals("application/msword"))
-            mimeTypeConvert ="docx";
-        else if (mimeType.equals("application/pdf"))
-            mimeTypeConvert ="pdf";
-        else if (mimeType.equals("application/rtf"))
-            mimeTypeConvert ="rtf";
-        else if (mimeType.equals("application/plain"))
-            mimeTypeConvert ="txt";
-        else if (mimeType.equals("application/vnd.oasis.opendocument.text"))
-            mimeTypeConvert ="odt";
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 
-        return mimeTypeConvert;
+        // set title
+        alertDialogBuilder.setTitle("Alert");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        dialog.cancel();
+                    }
+                });
+
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
+    private void castingApplayAlert(String message)
+    {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+
+        // set title
+        alertDialogBuilder.setTitle("Alert");
+
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Yes",new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        dialog.cancel();
+
+                    Intent intent = new Intent(CastingResumeUpload.this,CastingScreen.class);
+                    startActivity(intent);
+                    finish();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
     }
 }

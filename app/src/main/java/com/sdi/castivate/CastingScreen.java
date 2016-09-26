@@ -3438,7 +3438,7 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 				{
 					//submitted
 					btn_apply.setVisibility(View.VISIBLE);
-					btn_apply.setText("Submitted");
+					//btn_apply.setText("Submitted");
 					//btn_apply.setBackgroundColor(R.color.green);
 				}
 				else {
