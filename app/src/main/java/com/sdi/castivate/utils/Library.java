@@ -35,6 +35,7 @@ public class Library {
     public static String ethnicity;
     public static String androidUserID;
     public static String remainingDays;
+    public static String loginStatus="0";
     public static boolean helpOverlayView=false;
                                                 //8552fc16f1fbec2869abdcfe3359b126
    //public static final String MIXPANEL_TOKEN = "8552fc16f1fbec2869abdcfe3359b126"; //for testing
@@ -65,7 +66,8 @@ public class Library {
 
     //17/08/2016
     public static final String REMAINING_DAYS = "remainingdays";
-	
+    public static final String LOGIN_STATUS = "loginstatus";
+
 	public static final String NOTIFICATION = "notification";
     // =======================================================================================================
     // push notifications

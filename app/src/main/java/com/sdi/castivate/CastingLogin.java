@@ -7,6 +7,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -49,7 +50,8 @@ import java.util.ArrayList;
 @SuppressWarnings({"deprecation","unchecked"})
 @SuppressLint({ "ResourceAsColor", "InlinedApi", "ShowToast", "UseSparseArrays" })
 public class CastingLogin extends Activity implements View.OnClickListener {
-
+    SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
     LinearLayout casting_login_back_icon;
     RelativeLayout rel_casting_login;
     TextView txt_forgot;
@@ -200,6 +202,12 @@ public class CastingLogin extends Activity implements View.OnClickListener {
                         //go to file upload
 
                         //Library.showToast(context, "Login Successfully");
+
+                        Library.loginStatus="1";
+                        sharedpreferences = getSharedPreferences(Library.MyPREFERENCES, Context.MODE_PRIVATE);
+                        editor = sharedpreferences.edit();
+                        editor.putString(Library.LOGIN_STATUS,Library.loginStatus);
+                        editor.commit();
 
                         Intent intent = new Intent(CastingLogin.this,CastingFileUpload.class);
                         intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);

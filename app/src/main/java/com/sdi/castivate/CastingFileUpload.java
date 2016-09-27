@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.ThumbnailUtils;
 import android.os.Bundle;
@@ -27,9 +28,11 @@ import com.sdi.castivate.model.fileUrlModel;
 import com.sdi.castivate.utils.Utility;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by twilightuser on 1/9/16.
@@ -53,6 +56,7 @@ public class CastingFileUpload extends Activity {
 
     private ArrayList<fileUrlModel> imageUrls = new ArrayList<fileUrlModel>();
     private ArrayList<fileUrlModel> videoUrls = new ArrayList<fileUrlModel>();
+    private ArrayList<fileUrlModel> videoThumbnailsUrls = new ArrayList<fileUrlModel>();
 
     private String video_path,image_path;
     private LinearLayout casting_file_upload_back_icon;
@@ -383,6 +387,7 @@ public class CastingFileUpload extends Activity {
         videoUrl.setFileUrl(video_path);
         videoUrls.add(videoUrl);
 
+        //videoThumbnails();
         showVideoThumbnail();
     }
 
@@ -468,6 +473,66 @@ public class CastingFileUpload extends Activity {
             videoUrl.setFileUrl(s);
             videoUrls.add(videoUrl);
         }
+
+        //showVideoThumbnail();
+        videoThumbnails();
+
+    }
+
+    private void videoThumbnails()
+    {
+
+        try{
+
+            videoThumbnailsUrls=new ArrayList<fileUrlModel>();
+
+        for ( fileUrlModel video :videoUrls) {
+
+            System.out.println("videoUrls"+video.getFileUrl());
+
+            Bitmap  newBitmap = ThumbnailUtils.createVideoThumbnail(video.getFileUrl(), MediaStore.Video.Thumbnails.MICRO_KIND);
+
+            String root = Environment.getExternalStorageDirectory().toString();
+
+            File myDir = new File(root + "/saved_images12");
+
+            myDir.mkdirs();
+
+            Random generator = new Random();
+
+            int n = 10000;
+
+            n = generator.nextInt(n);
+
+            String fname = "Image-"+ n +".jpg";
+
+            File file = new File (myDir, fname);
+
+            System.out.println("FilePath : "+file.getPath());
+
+            if (file.exists ()) file.delete ();
+            try {
+                FileOutputStream out = new FileOutputStream(file);
+                if (newBitmap != null) {
+                    newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                }
+                out.flush();
+                out.close();
+
+                fileUrlModel videoThumbnails = new fileUrlModel();
+                videoThumbnails.setFileUrl(file.getPath());
+                videoThumbnailsUrls.add(videoThumbnails);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         showVideoThumbnail();
     }
 
@@ -520,6 +585,13 @@ public class CastingFileUpload extends Activity {
     private void removeVideo(int arrayId) {
 
         videoUrls.remove(arrayId);
+
+        System.out.println("videoThumbnailsUrls Delete : "+videoThumbnailsUrls.get(arrayId).getFileUrl());
+
+        java.io.File videoThumbnailsUrlsRemove = new java.io.File(videoThumbnailsUrls.get(arrayId).getFileUrl());
+        videoThumbnailsUrlsRemove.delete();
+        videoThumbnailsUrls.remove(arrayId);
+
 
         videoViewOne.setImageBitmap(null);
         videoViewTwo.setImageBitmap(null);

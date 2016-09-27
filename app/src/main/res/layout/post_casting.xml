@@ -220,6 +220,21 @@
                 android:singleLine="true"
                 android:textSize="16sp" />
 
+            <com.sdi.castivate.fonts.ProximaNovaRegularEditText
+                android:id="@+id/txt_zip_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/text_box"
+                android:ems="10"
+                android:hint="@string/zipcode"
+                android:maxLength="5"
+                android:inputType="number"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:textSize="16sp" />
+
             <com.sdi.castivate.fonts.ProximaNovaRegular
                 android:id="@+id/next"
                 android:layout_width="wrap_content"

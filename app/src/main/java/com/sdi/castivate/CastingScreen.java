@@ -170,7 +170,7 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 	public static String favImgCount = "", imageFav;
 
 	ToggleButton toggleButton;
-	TextView birthYear, currentLocation, txtEthnicity, txtSubmitCasting, txtReset, text_help_over_lay, favCountText, select_icon, imgGrid, txtName, local_talent;
+	TextView birthYear, currentLocation, txtEthnicity, txtSubmitCasting, txtReset, text_help_over_lay, favCountText, select_icon, imgGrid, txtName, local_talent,textlogout;
 	RelativeLayout castingViewNoImage, rel_cast_view, rel_cast, rel_upload_screen, rel_cast_outer, rel_info_ListView, home_screen, rel_home_screen, rel_image_screen;
 	CastingsListAdapter castListAdapter;
 	LocationSearchAdapter searchAdapter = null;
@@ -1274,6 +1274,9 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 		txtSubmitCasting = (TextView) findViewById(R.id.txt_submit_casting);
 		txtSubmitCasting.setOnClickListener(this);
 		textCastivate = (TextView) findViewById(R.id.text_castivate);
+		textlogout=(TextView) findViewById(R.id.text_logout);
+		textlogout.setOnClickListener(this);
+
 
 		// new design to view casting no image
 		textCastingTitleNoImage = (TextView) findViewById(R.id.cast_title_no_image);
@@ -1353,6 +1356,14 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 				dialog.dismiss();
 			}
 		});
+
+		/*textlogout.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ethnicityFilter();
+				dialog.dismiss();
+			}
+		});*/
 		// Create and populate ethnicity.
 		// private String[] ethnicity = {"Caucasian",
 		// "African American", "Hispanic", "Asian", "Mixed",
@@ -1834,6 +1845,23 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 		// KeyboardUtility.hideSoftKeyboard(CastingScreen.this);
 		hideSoftKeyboard();
 		((CastingsLinkMovementMethod) CastingsLinkMovementMethod.getInstance()).setContext(context, false);
+
+		try{
+			if(sharedpreferences.getString(Library.LOGIN_STATUS, "").equals("0")) {
+
+				System.out.println("Login Status -----------> 0");
+				textlogout.setVisibility(View.GONE);
+			}
+			else if(sharedpreferences.getString(Library.LOGIN_STATUS, "").equals("1")) {
+				System.out.println("Login Status -----------> 1");
+				textlogout.setVisibility(View.VISIBLE);
+
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 
 		// results = new ArrayList<CastingListDetailsModel>();
 		// _itemListAdapter = new ItemListBaseAdapter(this, image_details);
@@ -3459,9 +3487,24 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 								startActivity(intent);
 							}
 							else {
-								Intent intent = new Intent(CastingScreen.this, CastingFileUpload.class);
-								intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
-								startActivity(intent);
+
+								if(sharedpreferences.getString(Library.LOGIN_STATUS, "").equals("0"))
+								{
+									Intent intent = new Intent(CastingScreen.this, CastingLogin.class);
+									intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
+									startActivity(intent);
+								}
+								else if(sharedpreferences.getString(Library.LOGIN_STATUS, "").equals("1")){
+									Intent intent = new Intent(CastingScreen.this, CastingFileUpload.class);
+									intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
+									startActivity(intent);
+								}
+								else {
+									Intent intent = new Intent(CastingScreen.this, CastingLogin.class);
+									intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
+									startActivity(intent);
+								}
+
 							}
 						}
 					});
@@ -4739,6 +4782,16 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 
 			startActivity(new Intent(context, Help.class));
 
+			break;
+			case R.id.text_logout:
+				Library.loginStatus="0";
+				sharedpreferences = getSharedPreferences(Library.MyPREFERENCES, Context.MODE_PRIVATE);
+				editor = sharedpreferences.edit();
+				editor.putString(Library.LOGIN_STATUS,Library.loginStatus);
+				editor.commit();
+				finish();
+				startActivity(getIntent());
+				//Library.showToast(context, "Logout");
 			break;
 		case R.id.clear:
 

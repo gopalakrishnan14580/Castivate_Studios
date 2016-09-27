@@ -177,10 +177,24 @@
                 android:layout_marginRight="40sp"
                 android:layout_marginTop="15dp"
                 android:padding="10dp"
-                android:maxLength="3"
+                android:maxLength="4"
                 android:inputType="number"
                 android:background="@color/transparent"
                 android:hint="@string/et_cv"
+                android:singleLine="true" />
+            <com.sdi.castivate.fonts.ProximaNovaLightEditText
+                android:id="@+id/zipcode"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="150sp"
+                android:layout_marginRight="40sp"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:maxLength="5"
+                android:inputType="number"
+                android:background="@color/transparent"
+                android:hint="@string/zipcode"
                 android:singleLine="true" />
 
             <com.sdi.castivate.fonts.ProximaNovaRegularButton

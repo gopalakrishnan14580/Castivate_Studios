@@ -210,13 +210,14 @@ public class CastingCustomPhotoGallery extends Activity {
         public View getView(final int position, View convertView,  ViewGroup parent) {
             final ViewHolder holder;
             View view = convertView;
-            if (view == null) {
+            if (view == convertView) {
 
                 holder = new ViewHolder();
                 view = mInflater.inflate(R.layout.custom_image_gallery_item, null);
                 holder.photoImageView = (ImageView) view.findViewById(R.id.photoImageView);
                 holder.photoImageViewOverlay = (ImageView) view.findViewById(R.id.photoImageViewOverlay);
                 holder.photoCount=(TextView) view.findViewById(R.id.photoCount);
+                holder.photoImageView.setImageDrawable(null);
 
                 view.setTag(holder);
             } else {
@@ -388,13 +389,6 @@ public class CastingCustomPhotoGallery extends Activity {
                         dialog.cancel();
                     }
                 });
-                /*.setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
-                });*/
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();

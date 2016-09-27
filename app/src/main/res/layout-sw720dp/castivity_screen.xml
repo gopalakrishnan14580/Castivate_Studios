@@ -420,6 +420,24 @@
                     android:textColor="@color/dark_black"
                     android:textSize="24sp" />
 
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/text_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center|left"
+                    android:layout_below="@+id/text_help_over_lay"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey"
+                    android:padding="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:text="Logout"
+                    android:textColor="@color/dark_black"
+                    android:textSize="24sp"
+                    android:visibility="gone"/>
+
                 <RelativeLayout
                     android:id="@+id/tap_current_location"
                     android:layout_width="fill_parent"

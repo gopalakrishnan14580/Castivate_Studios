@@ -63,11 +63,11 @@ public class CastingRegistration extends Activity implements View.OnClickListene
     LinearLayout casting_registration_back_icon;
     RelativeLayout rel_casting_registration;
     TextView casting_registration_signin;
-    EditText et_name,et_email,et_password,et_cardNumber,et_cvv;
+    EditText et_name,et_email,et_password,et_cardNumber,et_cvv,zipcode;
     TextView et_monthYear;
     Button btn_submit;
 
-    String name,email,password,cardNumber,monthYear,cvv;
+    String name,email,password,cardNumber,monthYear,cvv,zip_code;
     int payment_type;
     Context context;
     Activity activity;
@@ -111,6 +111,7 @@ public class CastingRegistration extends Activity implements View.OnClickListene
         et_cardNumber=(EditText) findViewById(R.id.et_cardNumber);
         et_monthYear=(TextView) findViewById(R.id.et_monthYear);
         et_cvv=(EditText) findViewById(R.id.et_cvv);
+        zipcode=(EditText) findViewById(R.id.zipcode);
 
         btn_submit=(Button) findViewById(R.id.btn_submit);
 
@@ -186,6 +187,7 @@ public class CastingRegistration extends Activity implements View.OnClickListene
         cardNumber=et_cardNumber.getText().toString().trim();
         monthYear=et_monthYear.getText().toString().trim();
         cvv=et_cvv.getText().toString().trim();
+        zip_code=zipcode.getText().toString().trim();
 
         cardNumber = cardNumber.replaceAll("\\s", "");
     }
@@ -217,7 +219,7 @@ public class CastingRegistration extends Activity implements View.OnClickListene
             Library.showToast(context, "Enter your Card Number");
 
         }
-        else if (cardNumber.length() > 16 ) {
+        else if (cardNumber.length() < 15 ||cardNumber.length() > 16) {
 
             Library.showToast(context, "Enter your valid Card Number");
 
@@ -232,10 +234,18 @@ public class CastingRegistration extends Activity implements View.OnClickListene
             Library.showToast(context, "Enter your cvv number");
 
         }
-        else if (cvv.length() >3) {
+        else if (cvv.length() <3 || cvv.length()>4) {
 
             Library.showToast(context, "Enter your valid cvv number");
 
+        }
+        else if(zip_code.length() == 0)
+        {
+            Library.showToast(context, "Enter your zip code");
+        }
+        else if(zip_code.length()>5)
+        {
+            Library.showToast(context, "Enter your valid zip code");
         }
 
         else{
@@ -380,8 +390,7 @@ public class CastingRegistration extends Activity implements View.OnClickListene
             try {
                 HttpPost request = new HttpPost(HttpUri.CASTING_REGISTRATION);
                 request.setHeader("Accept", "application/json");
-                request.setHeader("Content-type",
-                        "application/x-www-form-urlencoded");
+                request.setHeader("Content-type", "application/x-www-form-urlencoded");
 
                 JSONStringer item = null;
 
@@ -394,6 +403,7 @@ public class CastingRegistration extends Activity implements View.OnClickListene
                         "cardexpiry": "08/2018",
                         "cardcvv": "963",
                         "paytype": "2"
+                        "zipcode":"600000";
             }*/
 
                 try {
@@ -415,6 +425,7 @@ public class CastingRegistration extends Activity implements View.OnClickListene
                             .key("cardcvv")
                             .value(cvv)
                             .key("paytype").value(payment_type)
+                            .key("zipcode").value(zip_code)
                             .endObject();
                     Log.d("Casting Registration", item.toString());
                 } catch (JSONException e) {

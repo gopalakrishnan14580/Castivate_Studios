@@ -413,6 +413,21 @@
                     android:textColor="@color/dark_black"
                     android:textSize="16sp" />
 
+                <com.sdi.castivate.fonts.ProximaNovaRegular
+                    android:id="@+id/text_logout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/text_help_over_lay"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey"
+                    android:gravity="center|left"
+                    android:padding="10dp"
+                    android:singleLine="true"
+                    android:text="Logout"
+                    android:textColor="@color/dark_black"
+                    android:textSize="16sp"
+                    android:visibility="gone"/>
+
                 <RelativeLayout
                     android:id="@+id/tap_current_location"
                     android:layout_width="fill_parent"

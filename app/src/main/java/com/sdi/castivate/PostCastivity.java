@@ -1,30 +1,5 @@
 package com.sdi.castivate;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.List;
-import java.util.Locale;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.json.JSONStringer;
-
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -85,6 +60,31 @@ import com.sdi.castivate.utils.Library;
 import com.sdi.castivate.utils.ListExpandable;
 import com.sdi.castivate.utils.Network;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.json.JSONStringer;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * Created by Balachandar on 17-Apr-15.
  */
@@ -102,13 +102,13 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 	String strEmailUs = "<font color='#000000'>Please fill this form or email us at</font><br> \n"
 			+ "<font color='#D00000'><a href='mailto:team@castivate.com'>team@castivate.com</a></font>";
 	String detailsText = "<u>Details</u>", infoText = "<u>Info</u>";
-	EditText titleCompanyName, emailID, submitToEmail, submitByDate;
+	EditText titleCompanyName, emailID, submitToEmail, submitByDate,zipCode;
 	EditText editCastivity, roleDescription, submissionDetails, synopsis;
 	// ArrayList<String> age;
 	ArrayList<String> productionTypeArray;
 	// ArrayList<String> ageRangeArray;
 	String strCompanyName, strEmailID, strProductionType, strJobType,
-			strSubmitToEmail, strSubmitByDate, strCastingCallLocation;
+			strSubmitToEmail, strSubmitByDate, strCastingCallLocation,strZipcode;
 	String strPaidStatus, strGender, strUnionStatus, strCastivityType,
 			strEthnicityType, strAgeRange, strRoleDescription,
 			strSubmissionDetails, strSynopsis;
@@ -512,6 +512,8 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 		submitByDate.setOnClickListener(this);
 		// castingCallLocation=(EditText)findViewById(R.id.casting_call_location);
 
+		zipCode=(EditText) findViewById(R.id.txt_zip_code);
+
 		// details screen
 		paidGroup = (RadioGroup) findViewById(R.id.radioGroup);
 		unionGroup = (RadioGroup) findViewById(R.id.radiogroup_union);
@@ -737,21 +739,66 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 						"]", "");
 			//	txtEthnicity.setText(strEthnicityType);
 				if (strEthnicityType.equals("")) {
+					System.out.println("Selected Not Ok");
 					txtEthnicity.setText("");
 				} else {
+					System.out.println("Selected OK : "+strEthnicityType);
 					txtEthnicity.setText(strEthnicityType);
 				}
 				dialog.dismiss();
 			}
 		});
+
+
 		backBtn.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				//Sugumaran Changes (26th May 16)
+				int count = ethnicityListView.getAdapter().getCount();
+				selchkboxlist = new ArrayList<String>();
+				strEthnicityType="";
+				for (int i = 0; i < count; i++) {
+					RelativeLayout itemLayout = (RelativeLayout) ethnicityListView
+							.getChildAt(i); // Find by under
+					// LinearLayout
+					CheckBox checkbox = (CheckBox) itemLayout
+							.findViewById(R.id.ethnicity_checkbox);
+
+					if (checkbox.isChecked()) {
+						Log.d("Item " + String.valueOf(i), checkbox.getTag()
+								.toString());
+						selchkboxlist.add(checkbox.getTag().toString());
+
+						strEthnicityType = selchkboxlist.toString();
+
+						DebugReportOnLocat.ln("items selected:::"
+								+ selchkboxlist);
+						// Toast.makeText(Activities.this,checkbox.getTag().toString()
+						// ,Toast.LENGTH_LONG).show();
+					}
+				}
+				strEthnicityType = strEthnicityType.replace("[", "").replace(
+						"]", "");
+				//	txtEthnicity.setText(strEthnicityType);
+				if (strEthnicityType.equals("")) {
+					System.out.println("Selected Not Ok");
+					txtEthnicity.setText("");
+				} else {
+					System.out.println("Selected OK : "+strEthnicityType);
+					txtEthnicity.setText(strEthnicityType);
+				}
+				dialog.dismiss();
+			}
+		});
+		/*backBtn.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
 
 				dialog.dismiss();
 			}
-		});
+		});*/
 		// Create and populate ethnicity.
 		// private String[] ethnicity = {"Caucasian",
 		// "African American", "Hispanic", "Asian", "Mixed",
@@ -1077,6 +1124,7 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 					.toString().trim();
 			strCastivityType = editCastivity.getText().toString().trim();
 			strEthnicityType = txtEthnicity.getText().toString().trim();
+			strZipcode=zipCode.getText().toString().trim();
 			// Toast.makeText(context,
 			// "OnClickListener : " +
 			// "\nSpinner 1 : " +
@@ -1087,7 +1135,7 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 					&& strProductionType.length() > 0
 					&& strJobType.length() > 0 && strSubmitToEmail.length() > 0
 					&& strSubmitByDate.length() > 0
-					&& strCastingCallLocation.length() > 0) {
+					&& strCastingCallLocation.length() > 0 && strZipcode.length() >0) {
 				// validate email
 
 				String emailPattern = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}";
@@ -1119,6 +1167,10 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 				} else if (strCastingCallLocation.length() == 0) {
 					Library.showToast(context,
 							"Select the Casting Call Location");
+				}
+				else if (strZipcode.length() == 0)
+				{
+					Library.showToast(context, "Enter the Zip Code");
 				}
 			}
 		} else {
@@ -1374,8 +1426,10 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 				}
 				strAgeRange = strAgeRange.replace("[", "").replace("]", "");
 				if (strAgeRange.equals("")) {
+					System.out.println("selected Not Ok");
 					ageRange.setText("");
 				} else {
+					System.out.println("Selected OK");
 					ageRange.setText(strAgeRange);
 				}
 
@@ -1384,7 +1438,50 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 				dialog.dismiss();
 			}
 		});
+
 		backBtn.setOnClickListener(new View.OnClickListener() {
+
+			@Override
+			public void onClick(View arg0) {
+				//Sugumaran Changes (26th May 16)
+				int count = ethnicityListView.getAdapter().getCount();
+				selchkboxlist = new ArrayList<String>();
+				strAgeRange="";
+				for (int i = 0; i < count; i++) {
+					RelativeLayout itemLayout = (RelativeLayout) ethnicityListView
+							.getChildAt(i); // Find by under LinearLayout
+					CheckBox checkbox = (CheckBox) itemLayout
+							.findViewById(R.id.ethnicity_checkbox);
+
+					if (checkbox.isChecked()) {
+						Log.d("Item " + String.valueOf(i), checkbox.getTag()
+								.toString());
+						selchkboxlist.add(checkbox.getTag().toString());
+
+						strAgeRange = selchkboxlist.toString();
+
+						DebugReportOnLocat.ln("items selected:::"
+								+ selchkboxlist);
+						// Toast.makeText(Activities.this,checkbox.getTag().toString()
+						// ,Toast.LENGTH_LONG).show();
+					}
+				}
+				strAgeRange = strAgeRange.replace("[", "").replace("]", "");
+				if (strAgeRange.equals("")) {
+					System.out.println("selected Not Ok");
+					ageRange.setText("");
+				} else {
+					System.out.println("Selected OK");
+					ageRange.setText(strAgeRange);
+				}
+
+
+
+				dialog.dismiss();
+			}
+		});
+
+		/*backBtn.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View arg0) {
@@ -1393,7 +1490,7 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 				
 				dialog.dismiss();
 			}
-		});
+		});*/
 		// Create and populate ethnicity.
 		// private String[] ethnicity = {"Caucasian", "African American",
 		// "Hispanic", "Asian", "Mixed", "Native American","Middle Eastern",
@@ -1421,8 +1518,7 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 
 		for (int i = 0; i < jobTypeArray.length; i++) {
 
-			EthnicityModel ethnicityModel = new EthnicityModel(jobTypeArray[i],
-					false);
+			EthnicityModel ethnicityModel = new EthnicityModel(jobTypeArray[i],false);
 			ethnicityList.add(ethnicityModel);
 		}
 		if (strJobType != null) {
@@ -1490,6 +1586,7 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 				dialog.dismiss();
 			}
 		});
+
 		backBtn.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -1622,7 +1719,7 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 			// "castingFromAge":"30","castingToAge":"50","userEmail":"Testes@gmail.com",
 			// "castingType":"TestProductionType","castingJob":"TestJobType","castingPaidStatus":"nonpaid",
 			// "castingUnionStatus":"union","castingSynosis":"synosis","castingDate":"2020-05-17",
-			// "castingEthnicity":"Caucasian,Hispanic","castingDesc":"Test Role Description"}
+			// "castingEthnicity":"Caucasian,Hispanic","castingDesc":"Test Role Description","castingZip":"60005"}
 
 			try {
 
@@ -1652,6 +1749,7 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 						.key("castingDate").value(strSubmitByDate)
 						.key("castingEthnicity").value(strEthnicityType)
 						.key("castingDesc").value(strRoleDescription)
+						.key("castingZip").value(strZipcode)
 						.endObject();
 				Log.d("sumit data", item.toString());
 			} catch (JSONException e) {
@@ -1697,6 +1795,8 @@ public class PostCastivity extends Activity implements View.OnClickListener {
 						}
 						is.close();
 						json = sb.toString();
+
+						System.out.println("Casting post result "+json);
 					
 					
 			//			mixpanel.registerSuperProperties(props);

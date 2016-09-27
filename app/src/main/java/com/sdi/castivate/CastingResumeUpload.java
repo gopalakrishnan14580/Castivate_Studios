@@ -573,7 +573,15 @@ public class CastingResumeUpload extends Activity {
             multipart.addFormField("age_range",selectedCastingDetailsModels.get(0).ageRange);
             multipart.addFormField("gender",selectedCastingDetailsModels.get(0).roleForGender);
 
-            multipart.addFilePart("uploads", zipFile);
+            multipart.addFilePart("uploads[]", zipFile);
+
+           /* for(int j=0;imageUrls.size();j++)
+            {
+                java.io.File zipFile = new java.io.File(zipName);
+            multipart.addFilePart("uploads[]", filimageUrls.get(j).getFileUrl());
+            }*/
+
+            //multipart.addFilePart("uploads1", zipFile);
 
             List<String> response = multipart.finish();
 
@@ -602,6 +610,7 @@ public class CastingResumeUpload extends Activity {
                 if(oneObject.getString("status").equals("200")) {
 
                     System.out.println("Message ------------------------------> " + oneObject.getString("message"));
+
                     System.out.println("zipFile Delete : "+zipFile.delete());
 
                     castingApplayAlert(oneObject.getString("message"));

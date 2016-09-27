@@ -22,11 +22,14 @@ public class HttpUri {
     
     //Live
     //public static String CastingURL="http://castivate.com/castingNewVer1/public/" ;
-    public static String CastingURL="http://114.69.235.57:9998/castivate/castingNewVer1/public/" ;
+    //public static String CastingURL="http://114.69.235.57:9998/castivate/castingNewVer1/public/" ;
+    public static String CastingURL="http://php.twilightsoftwares.com:9998/castivateDev/castingNewVer1/public/" ;
     public static String LocalCastingURL="http://114.69.235.57:9998/castivate/castingNewVer1/public/" ;
     //http://114.69.235.57:9998/castivate/castingNewVer1/public/
     //public static String IMAGE_URL= "http://castivate.com/castingNewVer1/public/index.php/getImagesNew/";
-    public static String IMAGE_URL= "http://114.69.235.57:9998/castivate/castingNewVer1/public/index.php/getImagesNew/";
+    //public static String IMAGE_URL= "http://114.69.235.57:9998/castivate/castingNewVer1/public/index.php/getImagesNew/";
+    /*http://php.twilightsoftwares.com:9998/castivateDev/castingNewVer1/public/setCastingFav*/
+    public static String IMAGE_URL= "http://php.twilightsoftwares.com:9998/castivateDev/castingNewVer1/public/index.php/getImagesNew/";
 
 	
     //Devep

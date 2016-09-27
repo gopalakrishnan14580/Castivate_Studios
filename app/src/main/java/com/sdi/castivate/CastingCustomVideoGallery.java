@@ -194,19 +194,20 @@ public class CastingCustomVideoGallery extends Activity {
 
         public View getView(final int position, View convertView, ViewGroup parent) {
             final ViewHolder holder;
+            View view = convertView;
 
-            if (convertView == null) {
+            if (view == null) {
                 holder = new ViewHolder();
-                convertView = mInflater.inflate(R.layout.custom_video_gallery_item, null);
-                holder.videoImageView = (ImageView) convertView.findViewById(R.id.videoImageView);
-                holder.videoImageViewOverlay = (ImageView) convertView.findViewById(R.id.videoImageViewOverlay);
-                holder.videoCount=(TextView) convertView.findViewById(R.id.videoCount);
-                holder.videoDuration=(TextView) convertView.findViewById(R.id.videoDuration);
+                view = mInflater.inflate(R.layout.custom_video_gallery_item, null);
+                holder.videoImageView = (ImageView) view.findViewById(R.id.videoImageView);
+                holder.videoImageViewOverlay = (ImageView) view.findViewById(R.id.videoImageViewOverlay);
+                holder.videoCount=(TextView) view.findViewById(R.id.videoCount);
+                holder.videoDuration=(TextView) view.findViewById(R.id.videoDuration);
 
 
-                convertView.setTag(holder);
+                view.setTag(holder);
             } else {
-                holder = (ViewHolder) convertView.getTag();
+                holder = (ViewHolder) view.getTag();
             }
 
             holder.videoImageView.setId(position);
@@ -218,10 +219,10 @@ public class CastingCustomVideoGallery extends Activity {
                 public void onClick(View v) {
 
                     int id = v.getId();
-                    if (thumbnailsselection[id]) {
+                    if (thumbnailsselection[position]) {
                         for (int i = 0; i < videoUrls.size(); i++) {
                             VideoUrl videoUrl = videoUrls.get(i);
-                            if (videoUrl.getUploadVideoUrl() == String.valueOf(id)) {
+                            if (Objects.equals(videoUrl.getUploadVideoUrl(), String.valueOf(position))) {
                                 System.out.println("remove video");
 
                                 videoUrls.remove(i);
@@ -230,7 +231,7 @@ public class CastingCustomVideoGallery extends Activity {
                                 holder.isSelect = false;
                                 holder.videoCount.setVisibility(View.GONE);
                                 holder.videoCount.setText(String.valueOf(update_count));
-                                thumbnailsselection[id] = false;
+                                thumbnailsselection[position] = false;
                                 holder.videoImageViewOverlay.setVisibility(View.GONE);
                                 notifyDataSetChanged();
                             }
@@ -255,12 +256,12 @@ public class CastingCustomVideoGallery extends Activity {
                                 VideoUrl videoUrl = new VideoUrl();
                                 System.out.println("add video");
 
-                                videoUrl.setUploadVideoUrl(String.valueOf(v.getId()));
+                                videoUrl.setUploadVideoUrl(String.valueOf(position));
                                 videoUrls.add(videoUrl);
                                 update_count++;
                                 holder.videoCount.setVisibility(View.VISIBLE);
                                 holder.videoCount.setText(String.valueOf(videoUrls.size()));
-                                thumbnailsselection[id] = true;
+                                thumbnailsselection[position] = true;
                                 holder.videoImageViewOverlay.setVisibility(View.VISIBLE);
                                 notifyDataSetChanged();
                             }
@@ -307,15 +308,17 @@ public class CastingCustomVideoGallery extends Activity {
             }
 
             if(holder.isSelect){
+                holder.videoImageViewOverlay.setVisibility(View.VISIBLE);
                 holder.videoCount.setVisibility(View.VISIBLE);
                 holder.videoCount.setText(String.valueOf( holder.value));
             }else{
+                holder.videoImageViewOverlay.setVisibility(View.GONE);
                 holder.videoCount.setVisibility(View.GONE);
                 holder.videoCount.setText("");
             }
 
             holder.id = position;
-            return convertView;
+            return view;
         }
     }
 
@@ -351,13 +354,6 @@ public class CastingCustomVideoGallery extends Activity {
                         dialog.cancel();
                     }
                 });
-                /*.setNegativeButton("No",new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog,int id) {
-                        // if this button is clicked, just close
-                        // the dialog box and do nothing
-                        dialog.cancel();
-                    }
-                });*/
 
         // create alert dialog
         AlertDialog alertDialog = alertDialogBuilder.create();
