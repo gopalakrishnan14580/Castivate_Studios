@@ -7,9 +7,12 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
+import android.os.StrictMode;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -31,6 +34,7 @@ import com.sdi.castivate.adapter.DriveListAdapter;
 import com.sdi.castivate.model.CastingDetailsModel;
 import com.sdi.castivate.model.DriveModel;
 import com.sdi.castivate.model.fileUrlModel;
+import com.sdi.castivate.utils.Compress;
 import com.sdi.castivate.utils.HttpUri;
 import com.sdi.castivate.utils.Library;
 import com.sdi.castivate.utils.MultipartUtility;
@@ -39,9 +43,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -49,8 +50,7 @@ import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.util.Random;
 
 @SuppressWarnings({"deprecation","unchecked"})
 @SuppressLint({ "ResourceAsColor", "InlinedApi", "ShowToast", "UseSparseArrays" })
@@ -71,6 +71,8 @@ public class CastingResumeUpload extends Activity {
     private ArrayList<fileUrlModel> videoUrls = new ArrayList<fileUrlModel>();
     private ArrayList<fileUrlModel> resumeUrls = new ArrayList<fileUrlModel>();
     private ArrayList<fileUrlModel> zipFiles = new ArrayList<fileUrlModel>();
+    private ArrayList<fileUrlModel> videoThumbnailsUrls = new ArrayList<fileUrlModel>();
+    private ArrayList<fileUrlModel> fileUploadUrls = new ArrayList<fileUrlModel>();
 
     Context context;
     private GoogleAccountCredential mCredential;
@@ -83,6 +85,7 @@ public class CastingResumeUpload extends Activity {
     private  String zipName;
 
     private ArrayList<CastingDetailsModel> selectedCastingDetailsModels = new ArrayList<CastingDetailsModel>();
+    java.io.File videoThumbnailsTemp;
 
 
     @Override
@@ -90,7 +93,10 @@ public class CastingResumeUpload extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.casting_resume_upload);
 
-        context=getApplicationContext();
+        context=this;
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         //Add resume upload action
         resume_upload=(RelativeLayout) findViewById(R.id.resume_upload);
         upload_hide=(LinearLayout) findViewById(R.id.upload_hide);
@@ -129,12 +135,14 @@ public class CastingResumeUpload extends Activity {
             @Override
             public void onClick(View v) {
 
-                Toast.makeText(CastingResumeUpload.this, "Casting Resume upload done.", Toast.LENGTH_SHORT).show();
+                getFileList();
+                /*Toast.makeText(CastingResumeUpload.this, "Casting Resume upload done.", Toast.LENGTH_SHORT).show();
                 if(googleDriveModelsSelected.size()>0)
                 {
                     System.out.println("Download file");
-                    downloadItemFromList();
-                }
+                    //downloadItemFromList();
+                    getFileList();
+                }*/
 
 
             }
@@ -381,6 +389,7 @@ public class CastingResumeUpload extends Activity {
                             else
                             {
                                 System.out.println("alert");
+                                showAlert("File Size Not Allowed");
                             }
                         }
                     });
@@ -481,59 +490,61 @@ public class CastingResumeUpload extends Activity {
         //System.out.println("videoUrls Size :"+videoUrls.size());
         //System.out.println("resumeUrls Size :"+resumeUrls.size());
 
+        try{
+            videoThumbnailsUrls.clear();
+
+            for ( fileUrlModel video :videoUrls) {
+
+                Bitmap newBitmap = ThumbnailUtils.createVideoThumbnail(video.getFileUrl(), MediaStore.Video.Thumbnails.MICRO_KIND);
+                String root = Environment.getExternalStorageDirectory().toString();
+                videoThumbnailsTemp = new java.io.File(root + "/videoThumbnailsTemp");
+                videoThumbnailsTemp.mkdirs();
+                Random generator = new Random();
+                int n = 10000;
+                n = generator.nextInt(n);
+                String convertImageName = "Image-"+ n +".jpg";
+                java.io.File file = new java.io.File (videoThumbnailsTemp, convertImageName);
+
+                System.out.println("FilePath : "+file.getPath());
+
+                if (file.exists ()) file.delete ();
+                try {
+                    FileOutputStream out = new FileOutputStream(file);
+                    if (newBitmap != null) {
+                        newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                    }
+                    out.flush();
+                    out.close();
+
+                    fileUrlModel videoThumbnails = new fileUrlModel();
+                    videoThumbnails.setFileUrl(file.getPath());
+                    videoThumbnailsUrls.add(videoThumbnails);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         zipFiles.addAll(imageUrls);
         zipFiles.addAll(videoUrls);
-        zipFiles.addAll(resumeUrls);
+        //zipFiles.addAll(resumeUrls);
 
         //System.out.println("zip Files Size : "+zipFiles.size());
 
         java.io.File dir = new java.io.File(Environment.getExternalStorageDirectory(),"/ZipFile.zip");
          zipName = dir.toString();
 
-       // System.out.println("zip Files path : "+zipName);
+        System.out.println("zip Files path : "+zipName);
 
         ArrayList<fileUrlModel> fileUrlModels = new ArrayList<fileUrlModel>(zipFiles);
         Compress c = new Compress(fileUrlModels, zipName);
         c.zip();
         uploadFiles();
-    }
-
-    public class Compress {
-
-        private static final int BUFFER = 2048;
-        ArrayList<fileUrlModel> _files;
-        private String _zipFile;
-
-        public Compress(ArrayList<fileUrlModel> files, String zipFile) {
-            _files = files;
-            _zipFile = zipFile;
-        }
-
-        public void zip() {
-            try  {
-                BufferedInputStream origin = null;
-                FileOutputStream dest = new FileOutputStream(_zipFile);
-                ZipOutputStream out = new ZipOutputStream(new BufferedOutputStream(dest));
-
-                byte data[] = new byte[BUFFER];
-
-                for(int i=0; i < _files.size(); i++) {
-                    Log.v("Compress", "Adding: " + _files.get(i).getFileUrl());
-                    FileInputStream fi = new FileInputStream(String.valueOf(_files.get(i).getFileUrl()));
-                    origin = new BufferedInputStream(fi, BUFFER);
-                    ZipEntry entry = new ZipEntry(_files.get(i).getFileUrl().substring(_files.get(i).getFileUrl().lastIndexOf("/") + 1));
-                    out.putNextEntry(entry);
-                    int count;
-                    while ((count = origin.read(data, 0, BUFFER)) != -1) {
-                        out.write(data, 0, count);
-                    }
-                    origin.close();
-                }
-                out.close();
-            } catch(Exception e) {
-                e.printStackTrace();
-            }
-        }
+        //uploadFiles();
     }
     InputStream is = null;
     String json = "";
@@ -546,24 +557,26 @@ public class CastingResumeUpload extends Activity {
     {
         try {
 
-
-           /* ArrayList<String> imgPaths = new ArrayList<String>();
-
-            for (int i=0;i<zipFiles.size();i++){
-
-                fileUrlModel fileUrlModel = new fileUrlModel();
-
-            }
-            String[] array = new String[zipFiles.size()];
-
-            File sourceFile[] = new File[imgPaths.size()];
-            for (int i=0;i<zipFiles.size();i++){
-                sourceFile[i] = new File(imgPaths.get(i));
-                // Toast.makeText(getApplicationContext(),imgPaths.get(i),Toast.LENGTH_SHORT).show();
-            }
-*/
-
             java.io.File zipFile = new java.io.File(zipName);
+
+            fileUploadUrls.clear();
+
+            fileUrlModel zipUploadUrl= new fileUrlModel();
+            zipUploadUrl.setFileUrl(zipName);
+            fileUploadUrls.add(zipUploadUrl);//ZipFiles
+            fileUploadUrls.addAll(imageUrls);//Image files
+            fileUploadUrls.addAll(videoThumbnailsUrls);//videoThumbnails
+           // fileUploadUrls.addAll(resumeUrls);
+
+            System.out.println("fileUploadUrls : "+fileUploadUrls.size());
+
+            java.io.File sourceFile[] = new java.io.File[fileUploadUrls.size()];
+
+            for (int i=0;i<fileUploadUrls.size();i++){
+                sourceFile[i] = new java.io.File(fileUploadUrls.get(i).getFileUrl());
+            }
+
+            System.gc();
 
             MultipartUtility multipart = new MultipartUtility(HttpUri.CASTING_FILE_UPLOAD, "UTF-8");
 
@@ -573,15 +586,10 @@ public class CastingResumeUpload extends Activity {
             multipart.addFormField("age_range",selectedCastingDetailsModels.get(0).ageRange);
             multipart.addFormField("gender",selectedCastingDetailsModels.get(0).roleForGender);
 
-            multipart.addFilePart("uploads[]", zipFile);
-
-           /* for(int j=0;imageUrls.size();j++)
+            for(int j=0;j<fileUploadUrls.size();j++)
             {
-                java.io.File zipFile = new java.io.File(zipName);
-            multipart.addFilePart("uploads[]", filimageUrls.get(j).getFileUrl());
-            }*/
-
-            //multipart.addFilePart("uploads1", zipFile);
+                multipart.addFilePart("uploads[]",sourceFile[j]);
+            }
 
             List<String> response = multipart.finish();
 
@@ -613,7 +621,14 @@ public class CastingResumeUpload extends Activity {
 
                     System.out.println("zipFile Delete : "+zipFile.delete());
 
-                    castingApplayAlert(oneObject.getString("message"));
+                    System.out.println("videoThumbnailsTemp Size :"+videoThumbnailsUrls.size());
+
+                    for(fileUrlModel videoThumbnails:videoThumbnailsUrls )
+                    {
+                        System.out.println("videoThumbnailsTemp Delete :"+new java.io.File(videoThumbnails.getFileUrl()).delete());
+                    }
+
+                    castingApplayAlert(context,oneObject.getString("message"));
 
                 }
                 else
@@ -660,13 +675,11 @@ public class CastingResumeUpload extends Activity {
         alertDialog.show();
     }
 
-    private void castingApplayAlert(String message)
+    private void castingApplayAlert(Context context,String message)
     {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context,android.R.style.Theme_DeviceDefault_Dialog);
         // set title
         alertDialogBuilder.setTitle("Alert");
-
         // set dialog message
         alertDialogBuilder
                 .setMessage(message)

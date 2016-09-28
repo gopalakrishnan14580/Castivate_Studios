@@ -474,8 +474,8 @@ public class CastingFileUpload extends Activity {
             videoUrls.add(videoUrl);
         }
 
-        //showVideoThumbnail();
-        videoThumbnails();
+        showVideoThumbnail();
+        //videoThumbnails();
 
     }
 
@@ -586,11 +586,11 @@ public class CastingFileUpload extends Activity {
 
         videoUrls.remove(arrayId);
 
-        System.out.println("videoThumbnailsUrls Delete : "+videoThumbnailsUrls.get(arrayId).getFileUrl());
+       /* System.out.println("videoThumbnailsUrls Delete : "+videoThumbnailsUrls.get(arrayId).getFileUrl());
 
         java.io.File videoThumbnailsUrlsRemove = new java.io.File(videoThumbnailsUrls.get(arrayId).getFileUrl());
         videoThumbnailsUrlsRemove.delete();
-        videoThumbnailsUrls.remove(arrayId);
+        videoThumbnailsUrls.remove(arrayId);*/
 
 
         videoViewOne.setImageBitmap(null);

@@ -3466,13 +3466,14 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 				{
 					//submitted
 					btn_apply.setVisibility(View.VISIBLE);
-					//btn_apply.setText("Submitted");
-					//btn_apply.setBackgroundColor(R.color.green);
+					btn_apply.setText("Submitted");
+					btn_apply.setBackgroundColor(getResources().getColor(R.color.green));
 				}
 				else {
 					System.out.println("castingEmail------------>"+myList.get(currentPos).castingEmail);
 					btn_apply.setVisibility(View.VISIBLE);
-					//btn_apply.setBackgroundColor(R.color.red);
+					btn_apply.setText("Apply Now ");
+					btn_apply.setBackgroundColor(getResources().getColor(R.color.red));
 					btn_apply.setOnClickListener(new OnClickListener() {
 						@Override
 						public void onClick(View v) {
@@ -3504,15 +3505,11 @@ public class CastingScreen extends Activity implements SwipeRefreshLayout.OnRefr
 									intent.putExtra("selectedCastingDetailsModels",selectedCastingDetailsModels);
 									startActivity(intent);
 								}
-
 							}
 						}
 					});
 				}
 			}
-
-
-
 
 			if (testB == true) {
 
