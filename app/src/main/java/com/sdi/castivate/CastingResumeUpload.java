@@ -39,7 +39,6 @@ import com.sdi.castivate.utils.HttpUri;
 import com.sdi.castivate.utils.Library;
 import com.sdi.castivate.utils.MultipartUtility;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -512,6 +511,8 @@ public class CastingResumeUpload extends Activity {
                     FileOutputStream out = new FileOutputStream(file);
                     if (newBitmap != null) {
                         newBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+                        newBitmap.recycle();
+                        newBitmap=null;
                     }
                     out.flush();
                     out.close();
@@ -544,13 +545,7 @@ public class CastingResumeUpload extends Activity {
         Compress c = new Compress(fileUrlModels, zipName);
         c.zip();
         uploadFiles();
-        //uploadFiles();
     }
-    InputStream is = null;
-    String json = "";
-    JSONObject jObj = null;
-    JSONArray jArr = null;
-    StringBuilder sb;
 
     String Status;
     private void uploadFiles()
@@ -629,7 +624,6 @@ public class CastingResumeUpload extends Activity {
                     }
 
                     castingApplayAlert(context,oneObject.getString("message"));
-
                 }
                 else
                 {
@@ -640,8 +634,6 @@ public class CastingResumeUpload extends Activity {
                 System.out.println("Exception : "+e.getMessage());
                 // TODO: handle exception
             }
-
-            //applyFlag ="1"
 
         } catch (IOException ex) {
             System.err.println(ex);
